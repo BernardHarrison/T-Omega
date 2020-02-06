@@ -1,0 +1,5 @@
+<ul *ngFor="let item of list$ | async">
+    <li>{{ item.name }}</li>
+</ul>
+
+<h1 *ngIf="loading$ | async">BUSY</h1>
