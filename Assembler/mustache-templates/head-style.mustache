@@ -1,0 +1,125 @@
+  <style type="text/css">
+    html{
+        width: 100%; 
+    }
+
+    body{
+      width: 100%;  
+      margin:0; 
+      padding:0; 
+      -webkit-font-smoothing: antialiased;
+      mso-margin-top-alt:0px; 
+      mso-margin-bottom-alt:0px; 
+      mso-padding-alt: 0px 0px 0px 0px;
+    }
+
+    body,
+    .wrapper {
+    background-color: #add8c7;
+    }
+    .layout {
+    background-color: #ffffff;
+    Margin: 0 auto;
+    width: 320px;
+    }
+     p {
+    Margin: 20px 0;
+    }
+
+    p,h1,h2,h3,h4{
+      margin-top:0;
+      margin-bottom:0;
+      padding-top:0;
+      padding-bottom:0;
+    }
+
+    table{
+      font-size: 14px;
+      border: 0;
+    }
+
+    img{
+      border: none!important;
+    }
+    .layout {
+      display: table;
+        max-width: 600px;
+        min-width: 320px;
+        width: 320px;
+        width: calc(28000% - 173000px);      
+        /*width: calc((Desktop Width - Mobile Width) * 100% - (Desktop Width - Mobile Width) * Breakpoint - Desktop Width);*/
+        /*150 width: calc(((320px - 150px) * (600px - 1px) + 320px) - (320px - 150px) * 100%);*/
+        /*200 width: calc(((320px - 200px) * (600px - 1px) + 320px) - (320px - 200px) * 100%);*/
+        /*300 width: calc(((320px - 300px) * (600px - 1px) + 320px) - (320px - 300px) * 100%);*/
+        /*400 width: calc((400px - 320px) * 100% - (400px - 320px) * 600px - 400px);*/
+    }
+    .col-150 {
+      min-width: 150px;
+      max-width: 320px;
+      width: 320px;
+      width: calc(102150px - 17000%);
+    }
+    .col-200 {
+      min-width: 200px;
+      max-width: 320px;
+      width: 320px;
+      width: calc(72200px - 12000%);
+    }
+    .col-300 {
+      min-width: 300px;
+      max-width: 320px;
+      width: 320px;
+      width: calc(12300px - 2000%);
+    }
+    .col-400 {
+      min-width: 320px;
+      max-width: 400px;
+      width: 320px;
+      width: calc(8000% - 47600px);
+}
+    [owa] .layout {
+      width: 600px !important;
+    }
+    [owa] .column {
+      display: table-cell;
+    }
+    [owa] .col-150 {
+      width: 150px !important;
+    }
+    [owa] .col-200 {
+      width: 200px !important;
+    }
+    [owa] .col-300 {
+      width: 300px !important;
+    }
+    [owa] .col-400 {
+      width: 400px !important;
+}
+@media screen and (max-width: 619px){
+  .column {
+    Float: left;
+    vertical-align:top;
+  }
+}
+@media screen and (min-width: 620px) {
+  .layout {
+    width: 600px !important;
+  }
+  .column {
+    display: table-cell;
+    vertical-align:top;
+  }
+  .col-150  {
+    width: 150px !important;
+  }
+  .col-200  {
+    width: 200px !important;
+  }
+  .col-300  {
+    width: 300px !important;
+  }
+  .col-400 {
+    width: 400px !important;
+  }
+}
+  </style>

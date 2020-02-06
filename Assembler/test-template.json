@@ -1,0 +1,20 @@
+{
+    "backgroundColor": {
+        "val": "#000000",
+        "tests": [
+            {
+                "val": "#ffffff",
+                "test": {
+                    "op": "$.string.startsWith",
+                    "data": "$.firstName",
+                    "val": "test"
+                }
+            }
+        ]
+    },
+    "section": [],
+    "test": {
+        "op": "or",
+        "predicates": []
+    }
+}

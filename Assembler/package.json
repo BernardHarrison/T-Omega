@@ -1,0 +1,18 @@
+{
+  "name": "assembler",
+  "version": "1.0.0",
+  "description": "T-Omega Assembler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
+  },
+  "author": "Bernard Harrison",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.12",
+    "jsonpath": "^1.0.2",
+    "mustache": "^3.1.0",
+    "typescript": "^3.7.2"
+  }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title> Responsive Email Template</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+{{> headStyle }}
+
+</head>
+<body style="margin: 0; padding: 0; background-color:{{#design.backgroundColor}}{{renderCondition}}{{/design.backgroundColor}};" yahoo="fix">
+    {{#design.sections}}
+    <div class="layout">
+    <!--[if (mso)|(IE)]>
+    <table class="layout" 
+           cellpadding="0" 
+           cellspacing="0" 
+           align="center" 
+           bgcolor="{{#backgroundColor}}{{renderCondition}}{{/backgroundColor}}"><tr>
+    <![endif]-->
+      {{#columns}}
+        <!--[if (mso)|(IE)]>
+        <td class="column" 
+            valign="top" 
+            style="width: {{#widthInPixels}}{{renderCondition}}{{/widthInPixels}}px;"
+            bgcolor="{{#backgroundColor}}{{renderCondition}}{{/backgroundColor}}">
+        <![endif]-->
+        <div class="column col-{{#widthInPixels}}{{renderCondition}}{{/widthInPixels}}"
+              style="background-color:{{#backgroundColor}}{{renderCondition}}{{/backgroundColor}};">
+            <div class="spacing"
+                 style="Margin:{{#padding}}{{#top}}{{renderCondition}}{{/top}}px {{#right}}{{renderCondition}}{{/right}}px {{#bottom}}{{renderCondition}}{{/bottom}}px {{#left}}{{renderCondition}}{{/left}}px{{/padding}};">
+                {{#elements}}
+                  <div class="element-alignment"
+                       style="text-align:{{#alignment}}{{renderCondition}}{{/alignment}}">
+                    <div class="element-size"
+                         style="text-align:left;display:inline-block;width:{{#widthInPercentage}}{{renderCondition}}{{/widthInPercentage}}%;Margin:{{#padding}}{{#top}}{{renderCondition}}{{/top}}px {{#right}}{{renderCondition}}{{/right}}px {{#bottom}}{{renderCondition}}{{/bottom}}px {{#left}}{{renderCondition}}{{/left}}px{{/padding}};">
+                      {{#button}}
+                          {{text}}
+                      {{/button}} 
+                      {{#image}}IMAGE{{/image}} 
+                      {{#text}}
+                        {{&content}}
+                      {{/text}} 
+                      {{#divider}}
+                        <hr style ="border: 2px solid {{#color}}{{renderCondition}}{{/color}};"/>
+                      {{/divider}} 
+                    </div>
+                  </div> 
+                {{/elements}}
+            </div>
+        </div>
+      <!--[if (mso)|(IE)]></td><![endif]-->
+    {{/columns}}
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+    {{/design.sections}}
+</body>
+</html>
