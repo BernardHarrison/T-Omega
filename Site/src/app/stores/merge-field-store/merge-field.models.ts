@@ -7,24 +7,37 @@ export enum MergeFieldTypes {
   Date
 }
 
+//model
 export interface MergeField {
   name: string;
   type: MergeFieldTypes;
 }
 
-export interface MergeFieldState {
-  list: MergeField[];
-  loadingStatus: ApiState;
-}
-
-export interface MergeFieldAppState {
-  mergeField: MergeFieldState;
-}
+//reducers
 
 export interface ApiState {
   busy: boolean;
   error: Error;
 }
+
+export interface MergeFieldState {
+  item: MergeField;
+}
+
+export interface MergeFieldsState {
+  list: MergeField[];
+}
+
+//Reducers Map
+export interface MergeFieldAppState {
+  merchFields: MergeFieldsState;
+  loadingStatus: ApiState;
+  merchField: MergeFieldState;
+}
+
+// export interface MergeFieldAppState {
+//   mergeField: MergeFieldState;
+// }
 
 export interface MergeFieldApi {
   get(): Observable<MergeField[]>;

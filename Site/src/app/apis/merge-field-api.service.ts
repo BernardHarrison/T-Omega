@@ -1,16 +1,19 @@
-import { Injectable, Inject } from '@angular/core';
-import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { MergeFieldApi, MergeField } from '../features/merge-field';
-import { Observable, of, interval } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Injectable, Inject } from "@angular/core";
+import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
-const MERGE_FIELD_KEY = "MERGE_FIELD_KEY"
+import { Observable, of, interval } from "rxjs";
+import { map, take } from "rxjs/operators";
+import {
+  MergeField,
+  MergeFieldApi
+} from "../stores/merge-field-store/merge-field.models";
+
+const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MergeFieldApiService implements MergeFieldApi {
-
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     storage.set(MERGE_FIELD_KEY, [{ name: "blahssss", type: "blahssss" }]);
   }
@@ -42,5 +45,4 @@ export class MergeFieldApiService implements MergeFieldApi {
     this.storage.set(MERGE_FIELD_KEY, mergeFields);
     return this.get();
   }
-
 }

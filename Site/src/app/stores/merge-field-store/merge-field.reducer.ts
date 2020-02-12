@@ -3,15 +3,15 @@ import {
   ApiState,
   MergeFieldState,
   MergeFieldAppState,
-  MergeField
+  MergeField,
+  MergeFieldsState
 } from "./merge-field.models";
 import * as fromActions from "./merge-field.actions";
 
 export const mergeFieldFeatureKey = "mergeField";
 
-const initialState: MergeFieldState = {
-  list: undefined,
-  loadingStatus: undefined
+const initialMerchFieldStates: MergeFieldsState = {
+  list: undefined
 };
 
 const initialApiState: ApiState = {
@@ -19,13 +19,12 @@ const initialApiState: ApiState = {
   error: undefined
 };
 
-const initialMerchFieldState: MergeField = {
-  name: undefined,
-  type: undefined
+const initialMerchFieldState: MergeFieldState = {
+  item: undefined
 };
 
-const mergeFieldsReducer = createReducer(
-  initialState,
+export const mergeFieldsReducer = createReducer(
+  initialMerchFieldStates,
   on(fromActions.SetMergeFields, (state, action) => {
     return {
       ...state,
@@ -34,7 +33,7 @@ const mergeFieldsReducer = createReducer(
   })
 );
 
-const mergeFieldReducer = createReducer(
+export const mergeFieldReducer = createReducer(
   initialMerchFieldState,
   on(fromActions.CreateMergeField, (state, action) => {
     return {
@@ -56,7 +55,7 @@ const mergeFieldReducer = createReducer(
   // })
 );
 
-const mergeFieldApiReducer = createReducer(
+export const mergeFieldApiReducer = createReducer(
   initialApiState,
   on(fromActions.LoadingMergeFields, (state, action) => {
     return {

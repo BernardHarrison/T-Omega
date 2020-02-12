@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { MergeField } from "src/app/features/merge-field";
+import { MergeField } from "./merge-field.models";
 
 export enum MergeFieldActionTypes {
   SET_MERGEFIELDS = "[Merge Field] Set the merge field collection",
@@ -71,7 +71,8 @@ export const UpdatingMergeFieldError = createAction(
 );
 
 export const DeleteMergeField = createAction(
-  MergeFieldActionTypes.DELETE_MERGEFIELD
+  MergeFieldActionTypes.DELETE_MERGEFIELD,
+  props<{ payload: MergeField }>()
 );
 
 export const DeletingMergeField = createAction(
