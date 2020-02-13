@@ -37,6 +37,7 @@ export class ManageMergeFieldsComponent implements OnInit {
       name: "name",
       type: fromModels.MergeFieldTypes.String
     };
+    this.store.dispatch(fromActions.createMergeField({ payload: mergeField }));
     this.store.dispatch(fromActions.SetMergeFields({ payload: [mergeField] }));
     this.list$ = this.store.pipe(
       select(state => state.mergeField.mergeFields.list)
