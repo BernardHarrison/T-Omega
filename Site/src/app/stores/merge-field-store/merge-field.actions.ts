@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { MergeField } from "./merge-field.models";
+import { MergeField } from ".";
 
 export enum MergeFieldActionTypes {
   SET_MERGEFIELDS = "[Merge Field] Set the merge field collection",
@@ -23,64 +23,15 @@ export enum MergeFieldActionTypes {
 
 export const SetMergeFields = createAction(
   MergeFieldActionTypes.SET_MERGEFIELDS,
-  props<{ mergeFields: MergeField[] }>()
+  props<{ payload: MergeField[] }>()
 );
 
-export const LoadMergeFields = createAction(
-  MergeFieldActionTypes.LOADING_MERGEFIELDS
-);
-
-export const LoadingMergeFields = createAction(
+export const loadingMergeFields = createAction(
   MergeFieldActionTypes.LOADING_MERGEFIELDS,
   props<{ payload: boolean }>()
 );
 
-export const LoadingMergeFieldsError = createAction(
+export const loadingMergeFieldsError = createAction(
   MergeFieldActionTypes.LOADING_MERGEFIELDS_ERROR,
-  props<{ payload: Error }>()
-);
-
-export const CreateMergeField = createAction(
-  MergeFieldActionTypes.CREATE_MERGEFIELD,
-  props<{ payload: MergeField }>()
-);
-
-export const CreatingMergeField = createAction(
-  MergeFieldActionTypes.CREATE_MERGEFIELD,
-  props<{ payload: boolean }>()
-);
-
-export const CreatingMergeFieldError = createAction(
-  MergeFieldActionTypes.CREATING_MERGEFIELD_ERROR,
-  props<{ payload: Error }>()
-);
-
-export const UpdateMergeField = createAction(
-  MergeFieldActionTypes.UPDATE_MERGEFIELD,
-  props<{ payload: MergeField }>()
-);
-
-export const UpdatingMergeField = createAction(
-  MergeFieldActionTypes.UPDATING_MERGEFIELD,
-  props<{ payload: boolean }>()
-);
-
-export const UpdatingMergeFieldError = createAction(
-  MergeFieldActionTypes.UPDATING_MERGEFIELD_ERROR,
-  props<{ payload: Error }>()
-);
-
-export const DeleteMergeField = createAction(
-  MergeFieldActionTypes.DELETE_MERGEFIELD,
-  props<{ payload: MergeField }>()
-);
-
-export const DeletingMergeField = createAction(
-  MergeFieldActionTypes.DELETING_MERGEFIELD,
-  props<{ payload: boolean }>()
-);
-
-export const DeletingMergeFieldError = createAction(
-  MergeFieldActionTypes.DELETING_MERGEFIELD_ERROR,
   props<{ payload: Error }>()
 );

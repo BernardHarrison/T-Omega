@@ -3,10 +3,7 @@ import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
 import { Observable, of, interval } from "rxjs";
 import { map, take } from "rxjs/operators";
-import {
-  MergeField,
-  MergeFieldApi
-} from "../stores/merge-field-store/merge-field.models";
+import { MergeField, MergeFieldApi } from "../stores/merge-field-store";
 
 const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 

@@ -1,3 +1,3 @@
-import { MergeFieldAppState } from "./stores/merge-field-store/merge-field.models";
+import { MergeFieldAppState } from "./stores/merge-field-store";
 
 export interface AppState extends MergeFieldAppState {}

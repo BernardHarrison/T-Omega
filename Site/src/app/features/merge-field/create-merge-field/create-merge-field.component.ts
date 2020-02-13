@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import {
   MergeFieldTypes,
   MergeFieldAppState
-} from "src/app/stores/merge-field-store/merge-field.models";
+} from "src/app/stores/merge-field-store";
 
 @Component({
   selector: "app-create-merge-field",

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "./app.state";
 import { Observable } from "rxjs";
-import { MergeField } from "./stores/merge-field-store/merge-field.models";
+import { MergeField } from "./stores/merge-field-store";
 
 @Component({
   selector: "app-root",

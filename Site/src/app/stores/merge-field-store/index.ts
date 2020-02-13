@@ -1,4 +1,6 @@
 import { Observable } from "rxjs";
+import { ActionReducerMap } from "@ngrx/store";
+import { apiReducer, mergeFieldsReducer } from "./merge-field.reducer";
 
 export enum MergeFieldTypes {
   String,
@@ -13,31 +15,28 @@ export interface MergeField {
   type: MergeFieldTypes;
 }
 
-//reducers
-
 export interface ApiState {
   busy: boolean;
   error: Error;
 }
 
-export interface MergeFieldState {
-  item: MergeField;
-}
-
-export interface MergeFieldsState {
+export interface MergFieldStates {
   list: MergeField[];
 }
 
-//Reducers Map
-export interface MergeFieldAppState {
-  merchFields: MergeFieldsState;
-  loadingStatus: ApiState;
-  merchField: MergeFieldState;
+export interface MergeFieldState {
+  apiState: ApiState;
+  mergeFields: MergFieldStates;
 }
 
-// export interface MergeFieldAppState {
-//   mergeField: MergeFieldState;
-// }
+export const reducers: ActionReducerMap<MergeFieldState> = {
+  apiState: apiReducer,
+  mergeFields: mergeFieldsReducer
+};
+
+export interface MergeFieldAppState {
+  mergeField: MergeFieldState;
+}
 
 export interface MergeFieldApi {
   get(): Observable<MergeField[]>;
