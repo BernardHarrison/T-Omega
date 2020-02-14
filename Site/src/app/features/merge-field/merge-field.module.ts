@@ -6,6 +6,7 @@ import { ManageMergeFieldsComponent } from "./manage-merge-fields/manage-merge-f
 import { CreateMergeFieldComponent } from "./create-merge-field/create-merge-field.component";
 import { MergeFieldStoreModule } from "src/app/stores/merge-field-store/merge-field-store.module";
 import { MergeFieldRoutingModule } from "./merge-field-routing.module";
+import { MaterialModule } from "src/app/shared/material/material.module";
 
 @NgModule({
   declarations: [ManageMergeFieldsComponent, CreateMergeFieldComponent],
