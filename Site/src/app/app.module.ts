@@ -7,16 +7,20 @@ import { EffectsModule } from "@ngrx/effects";
 import { StorageServiceModule } from "ngx-webstorage-service";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { MergeFieldModule } from "./features/merge-field/merge-field.module";
+import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
+import { HomeComponent } from "./pages/home/home.component";
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent, HomeComponent],
   imports: [
     BrowserModule,
     StorageServiceModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
-    MergeFieldModule
+    MergeFieldModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

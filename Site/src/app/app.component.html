@@ -1,4 +1,12 @@
-<app-manage-merge-fields></app-manage-merge-fields>
+<nav>
+    <a routerLink="/"
+       routerLinkActive="active">Home</a><br>
+    <a routerLink="/manage-merge-fields"
+       routerLinkActive="active">Manage Merge Fields</a><br>
+    <a routerLink="/create-merge-fields"
+       routerLinkActive="active">Create Merge Fields</a>
+</nav>
+<router-outlet></router-outlet>
 
 <ul *ngFor="let item of list$ | async">
     <li>{{ item.name }}</li>
