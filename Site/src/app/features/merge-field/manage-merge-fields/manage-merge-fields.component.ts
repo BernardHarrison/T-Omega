@@ -36,7 +36,7 @@ export class ManageMergeFieldsComponent implements OnInit {
 
   loadMergeFields() {
     this.store.dispatch(
-      fromActions.setMergeField({ payload: this.mergeField })
+      fromActions.setMergeFieldAction({ payload: this.mergeField })
     );
     this.store.dispatch(loadMergeFieldsAction())
 
@@ -44,40 +44,40 @@ export class ManageMergeFieldsComponent implements OnInit {
 
   createMergeFields() {
     this.store.dispatch(
-      fromActions.createMergeFieldLoadBusy({ payload: true })
+      fromActions.createMergeFieldBusyAction({ payload: true })
     );
     this.store.dispatch(
-      fromActions.createMergeField({ payload: this.mergeField })
+      fromActions.createMergeFieldAction({ payload: this.mergeField })
     );
     this.store.dispatch(
-      fromActions.createMergeFieldLoadError({ payload: new Error() })
+      fromActions.createMergeFieldErrorAction({ payload: new Error() })
     );
     this.store.dispatch(
-      fromActions.createMergeFieldLoadBusy({ payload: false })
+      fromActions.createMergeFieldBusyAction({ payload: false })
     );
   }
 
   updateMergeFields() {
     this.store.dispatch(
-      fromActions.updateMergeFieldLoadBusy({ payload: true })
+      fromActions.updateMergeFieldBusyAction({ payload: true })
     );
     this.store.dispatch(
-      fromActions.updateMergeFieldLoadError({ payload: new Error() })
+      fromActions.updateMergeFieldErrorAction({ payload: new Error() })
     );
     this.store.dispatch(
-      fromActions.updateMergeFieldLoadBusy({ payload: false })
+      fromActions.updateMergeFieldBusyAction({ payload: false })
     );
   }
 
   deleteMergeFields() {
     this.store.dispatch(
-      fromActions.deleteMergeFieldLoadBusy({ payload: true })
+      fromActions.deleteMergeFieldBusyAction({ payload: true })
     );
     this.store.dispatch(
-      fromActions.deleteMergeFieldLoadError({ payload: new Error() })
+      fromActions.deleteMergeFieldErrorAction({ payload: new Error() })
     );
     this.store.dispatch(
-      fromActions.deleteMergeFieldLoadBusy({ payload: false })
+      fromActions.deleteMergeFieldBusyAction({ payload: false })
     );
   }
 }

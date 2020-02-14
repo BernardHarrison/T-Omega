@@ -27,57 +27,57 @@ export const loadMergeFieldsAction = createAction(
   MergeFieldActionTypes.LOAD
 );
 
-export const setMergeField = createAction(
+export const setMergeFieldAction = createAction(
   MergeFieldActionTypes.SET_MERGEFIELD,
   props<{ payload: MergeField }>()
 );
 
-export const setMergeFields = createAction(
+export const setMergeFieldsAction = createAction(
   MergeFieldActionTypes.SET_MERGEFIELDS,
   props<{ payload: MergeField[] }>()
 );
 
-export const setMergeFieldLoadBusy = createAction(
+export const mergeFieldLoadBusyAction = createAction(
   MergeFieldActionTypes.LOAD_BUSY,
   props<{ payload: boolean }>()
 );
 
-export const setMergeFieldLoadError = createAction(
+export const mergeFieldLoadErrorAction = createAction(
   MergeFieldActionTypes.LOAD_ERROR,
   props<{ payload: Error }>()
 );
 
-export const createMergeField = createAction(
+export const createMergeFieldAction = createAction(
   MergeFieldActionTypes.CREATE,
   props<{ payload: MergeField }>()
 );
 
-export const createMergeFieldLoadBusy = createAction(
+export const createMergeFieldBusyAction = createAction(
   MergeFieldActionTypes.CREATE_BUSY,
   props<{ payload: boolean }>()
 );
 
-export const createMergeFieldLoadError = createAction(
+export const createMergeFieldErrorAction = createAction(
   MergeFieldActionTypes.CREATE_ERROR,
   props<{ payload: Error }>()
 );
 
-export const updateMergeFieldLoadBusy = createAction(
+export const updateMergeFieldBusyAction = createAction(
   MergeFieldActionTypes.UPDATING_BUSY,
   props<{ payload: boolean }>()
 );
 
-export const updateMergeFieldLoadError = createAction(
+export const updateMergeFieldErrorAction = createAction(
   MergeFieldActionTypes.UPDATING_ERROR,
   props<{ payload: Error }>()
 );
 
-export const deleteMergeFieldLoadBusy = createAction(
+export const deleteMergeFieldBusyAction = createAction(
   MergeFieldActionTypes.DELETING_BUSY,
   props<{ payload: boolean }>()
 );
 
-export const deleteMergeFieldLoadError = createAction(
+export const deleteMergeFieldErrorAction = createAction(
   MergeFieldActionTypes.DELETING_ERROR,
   props<{ payload: Error }>()
 );
