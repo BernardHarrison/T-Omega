@@ -23,6 +23,10 @@ export enum MergeFieldActionTypes {
   DELETING_ERROR = "[Merge Field] Deleting Merge Field Error"
 }
 
+export const loadMergeFieldsAction = createAction(
+  MergeFieldActionTypes.LOAD
+);
+
 export const setMergeField = createAction(
   MergeFieldActionTypes.SET_MERGEFIELD,
   props<{ payload: MergeField }>()

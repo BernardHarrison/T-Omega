@@ -1,8 +1,8 @@
 <ul *ngFor="let item of list$ | async">
-    <li>{{ item.name }}</li>
+        <li>{{ item.name }}</li>
 </ul>
 
-<h1 *ngIf="loading$ | async">BUSY</h1>
+<h1 *ngIf="loading$ | async">Loading Merge Fields......</h1>
 
 <button mat-button
         color="success"

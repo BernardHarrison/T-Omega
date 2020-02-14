@@ -19,6 +19,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MAILING_ACTIVITY_API } from './stores/merge-field-store';
+import { MergeFieldApiService } from './apis/merge-field-api.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { MatListModule } from "@angular/material/list";
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAILING_ACTIVITY_API, useClass: MergeFieldApiService }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 import * as fromModels from "src/app/stores/merge-field-store";
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
+import { MergeFieldAppState } from 'src/app/stores/merge-field-store';
+import { loadMergeFieldsAction } from 'src/app/stores/merge-field-store/merge-field.actions';
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -18,23 +20,26 @@ export class ManageMergeFieldsComponent implements OnInit {
     type: fromModels.MergeFieldTypes.String
   };
 
-  constructor(private store: Store<fromModels.MergeFieldAppState>) {}
+  constructor(
+    private store: Store<MergeFieldAppState>) {
+
+  }
 
   ngOnInit() {
     this.loading$ = this.store.select(
       state => state.mergeField.loadApiState.busy
     );
+    this.list$ = this.store.select(state => state.mergeField.list);
     this.loadMergeFields();
+
   }
 
   loadMergeFields() {
     this.store.dispatch(
       fromActions.setMergeField({ payload: this.mergeField })
     );
-    this.store.dispatch(
-      fromActions.setMergeFields({ payload: [this.mergeField] })
-    );
-    this.list$ = this.store.select(state => state.mergeField.list);
+    this.store.dispatch(loadMergeFieldsAction())
+
   }
 
   createMergeFields() {
