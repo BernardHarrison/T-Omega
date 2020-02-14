@@ -4,38 +4,37 @@ import * as fromActions from "./merge-field.actions";
 
 export const mergeFieldFeatureKey = "mergeField";
 
-const initialMerchFieldStates: fromIndex.MergeFieldStates = {
-  list: undefined
-};
-
 const apiInitialState: fromIndex.ApiState = {
   busy: false,
   error: undefined
 };
 
-const createdMergeFieldsState: fromIndex.CreatedMergeFieldState = {
-  mergeField: undefined
-};
-
-export const createdMergeFieldsReducer = createReducer(
-  createdMergeFieldsState,
-  on(fromActions.createMergeField, (state, action) => {
-    return {
-      ...state,
-      mergeField: action.payload
-    };
+export const listReducer = createReducer(
+  [],
+  on(fromActions.setMergeFields, (state, action) => {
+    return action.payload;
   })
 );
 
-export const apiReducer = createReducer(
+export const selectedReducer = createReducer(
+  null,
+  on(fromActions.setMergeField, (state, action) => {
+    return action.payload;
+  }),
+  on(fromActions.createMergeField, (state, action) => {
+    return action.payload;
+  })
+);
+
+export const loadingApiReducer = createReducer(
   apiInitialState,
-  on(fromActions.loadingMergeFields, (state, action) => {
+  on(fromActions.setMergeFieldLoadBusy, (state, action) => {
     return {
       ...state,
       busy: action.payload
     };
   }),
-  on(fromActions.loadingMergeFieldsError, (state, action) => {
+  on(fromActions.setMergeFieldLoadError, (state, action) => {
     return {
       ...state,
       error: action.payload
@@ -43,12 +42,50 @@ export const apiReducer = createReducer(
   })
 );
 
-export const mergeFieldsReducer = createReducer(
-  initialMerchFieldStates,
-  on(fromActions.SetMergeFields, (state, action) => {
+export const createApiReducer = createReducer(
+  apiInitialState,
+  on(fromActions.createMergeFieldLoadBusy, (state, action) => {
     return {
       ...state,
-      list: action.payload
+      busy: action.payload
+    };
+  }),
+  on(fromActions.createMergeFieldLoadError, (state, action) => {
+    return {
+      ...state,
+      error: action.payload
+    };
+  })
+);
+
+export const updateApiReducer = createReducer(
+  apiInitialState,
+  on(fromActions.updateMergeFieldLoadBusy, (state, action) => {
+    return {
+      ...state,
+      busy: action.payload
+    };
+  }),
+  on(fromActions.updateMergeFieldLoadError, (state, action) => {
+    return {
+      ...state,
+      error: action.payload
+    };
+  })
+);
+
+export const deleteApiReducer = createReducer(
+  apiInitialState,
+  on(fromActions.deleteMergeFieldLoadBusy, (state, action) => {
+    return {
+      ...state,
+      busy: action.payload
+    };
+  }),
+  on(fromActions.deleteMergeFieldLoadError, (state, action) => {
+    return {
+      ...state,
+      error: action.payload
     };
   })
 );

@@ -13,35 +13,66 @@ import * as fromActions from "src/app/stores/merge-field-store/merge-field.actio
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<fromModels.MergeField[]>;
   loading$: Observable<boolean>;
+  mergeField: fromModels.MergeField = {
+    name: "MergeField",
+    type: fromModels.MergeFieldTypes.String
+  };
 
   constructor(private store: Store<fromModels.MergeFieldAppState>) {}
 
   ngOnInit() {
-    this.startLoading();
-    this.loading$ = this.store.pipe(
-      select(state => state.mergeField.apiState.busy)
+    this.loading$ = this.store.select(
+      state => state.mergeField.loadApiState.busy
     );
     this.loadMergeFields();
   }
 
-  startLoading() {
-    this.store.dispatch(fromActions.loadingMergeFields({ payload: true }));
-  }
-
-  stopLoading() {
-    this.store.dispatch(fromActions.loadingMergeFields({ payload: false }));
-  }
-
   loadMergeFields() {
-    const mergeField = <fromModels.MergeField>{
-      name: "name",
-      type: fromModels.MergeFieldTypes.String
-    };
-    this.store.dispatch(fromActions.createMergeField({ payload: mergeField }));
-    this.store.dispatch(fromActions.SetMergeFields({ payload: [mergeField] }));
-    this.list$ = this.store.pipe(
-      select(state => state.mergeField.mergeFields.list)
+    this.store.dispatch(
+      fromActions.setMergeField({ payload: this.mergeField })
     );
-    this.stopLoading();
+    this.store.dispatch(
+      fromActions.setMergeFields({ payload: [this.mergeField] })
+    );
+    this.list$ = this.store.select(state => state.mergeField.list);
+  }
+
+  createMergeFields() {
+    this.store.dispatch(
+      fromActions.createMergeFieldLoadBusy({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.createMergeField({ payload: this.mergeField })
+    );
+    this.store.dispatch(
+      fromActions.createMergeFieldLoadError({ payload: new Error() })
+    );
+    this.store.dispatch(
+      fromActions.createMergeFieldLoadBusy({ payload: false })
+    );
+  }
+
+  updateMergeFields() {
+    this.store.dispatch(
+      fromActions.updateMergeFieldLoadBusy({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.updateMergeFieldLoadError({ payload: new Error() })
+    );
+    this.store.dispatch(
+      fromActions.updateMergeFieldLoadBusy({ payload: false })
+    );
+  }
+
+  deleteMergeFields() {
+    this.store.dispatch(
+      fromActions.deleteMergeFieldLoadBusy({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.deleteMergeFieldLoadError({ payload: new Error() })
+    );
+    this.store.dispatch(
+      fromActions.deleteMergeFieldLoadBusy({ payload: false })
+    );
   }
 }
