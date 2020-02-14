@@ -1,3 +1,4 @@
 **/node_modules/*
 node_modules
 /Site/dist
+/Site/dist/**
