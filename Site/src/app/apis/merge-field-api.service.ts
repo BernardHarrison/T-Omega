@@ -1,9 +1,9 @@
 import { Injectable, Inject } from "@angular/core";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 
-import { Observable, of } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { MergeField, MergeFieldApiInterface } from "../stores/merge-field-store";
-import { delay } from 'rxjs/operators';
+import { delay, mergeMap } from 'rxjs/operators';
 
 const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 
@@ -17,7 +17,10 @@ export class MergeFieldApiService implements MergeFieldApiInterface {
 
   get(): Observable<MergeField[]> {
     let mergeFields = <Array<MergeField>>this.storage.get(MERGE_FIELD_KEY);
-    return of(mergeFields).pipe(delay(2000));
+    return of(mergeFields).pipe(
+      delay(2000)
+      ,mergeMap(x=> throwError(new Error("Api Error")))
+      );
   }
 
   create(mergeField: MergeField): Observable<MergeField[]> {

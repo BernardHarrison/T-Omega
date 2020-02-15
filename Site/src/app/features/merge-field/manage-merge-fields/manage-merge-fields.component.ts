@@ -13,6 +13,7 @@ import * as fromActions from "src/app/stores/merge-field-store/merge-field.actio
 import { MergeFieldAppState } from "src/app/stores/merge-field-store";
 import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
+import { map, pluck } from 'rxjs/operators';
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -22,6 +23,8 @@ import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<fromModels.MergeField[]>;
   loading$: Observable<boolean>;
+  loadingError$: Observable<string>;
+
   mergeField: fromModels.MergeField = {
     name: "MergeField",
     type: fromModels.MergeFieldTypes.String
@@ -37,6 +40,10 @@ export class ManageMergeFieldsComponent implements OnInit {
       state => state.mergeField.loadApiState.busy
     );
     this.list$ = this.store.select(state => state.mergeField.list);
+    this.loadingError$ = this.store.select(state => state.mergeField.loadApiState.error)
+    .pipe(
+      map(err => err && err.message)
+    );
     this.loadMergeFields();
   }
 
