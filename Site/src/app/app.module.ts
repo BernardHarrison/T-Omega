@@ -11,16 +11,11 @@ import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.com
 import { HomeComponent } from "./pages/home/home.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "./shared/material/material.module";
+
 import { NavComponent } from "./shared/components/nav/nav.component";
-import { LayoutModule } from "@angular/cdk/layout";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatButtonModule } from "@angular/material/button";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
-import { MAILING_ACTIVITY_API } from './stores/merge-field-store';
-import { MergeFieldApiService } from './apis/merge-field-api.service';
+
+import { MAILING_ACTIVITY_API } from "./stores/merge-field-store";
+import { MergeFieldApiService } from "./apis/merge-field-api.service";
 
 @NgModule({
   declarations: [
@@ -37,12 +32,11 @@ import { MergeFieldApiService } from './apis/merge-field-api.service';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: MAILING_ACTIVITY_API, useClass: MergeFieldApiService }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
