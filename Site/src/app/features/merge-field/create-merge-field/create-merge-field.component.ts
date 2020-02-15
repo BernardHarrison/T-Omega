@@ -1,10 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import {
   MergeFieldTypes,
   MergeFieldAppState
 } from "src/app/stores/merge-field-store";
+import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 
 @Component({
   selector: "app-create-merge-field",
@@ -22,11 +29,5 @@ export class CreateMergeFieldComponent implements OnInit {
 
   ngOnInit() {
     //this.loading$ = this.store.select(state => state.create.busy);
-  }
-
-  submit() {
-    // this.store.dispatch(
-    //   new CreateMergeField({ name: this.name, type: this.type })
-    // );
   }
 }

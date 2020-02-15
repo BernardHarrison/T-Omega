@@ -1,13 +1,65 @@
-<ul *ngFor="let item of list$ | async">
-        <li>{{ item.name }}</li>
-</ul>
-
 <h1 *ngIf="loading$ | async">Loading Merge Fields......</h1>
 
-<button mat-button
-        color="success"
-        (click)="createMergeFields()">Create Test</button>
-<button mat-button
-        (click)="updateMergeFields()">Update Test</button>
-<button mat-button
-        (click)="deleteMergeFields()">Delete Test</button>
+<div class="text-right mb-4 mt-4">
+        <button class="btn btn-success"
+                (click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Merge Field</button>
+
+</div>
+
+
+
+<div>
+        <table class="table">
+                <thead>
+                        <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th></th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let item of list$ | async">
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.type }}</td>
+                                <td class="text-right merge-button-container">
+                                        <button class="btn btn-warning mr-1"
+                                                (click)="openModal(updateTemplate)"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                        </tr>
+
+                </tbody>
+        </table>
+</div>
+
+
+
+<ng-template #createTemplate>
+        <div class="modal-header">
+                <h4 class="modal-title pull-left">Create Merge Field</h4>
+                <button type="button"
+                        class="close pull-right"
+                        aria-label="Close"
+                        (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                Create Form
+        </div>
+</ng-template>
+
+<ng-template #updateTemplate>
+        <div class="modal-header">
+                <h4 class="modal-title pull-left">Update Merge Field</h4>
+                <button type="button"
+                        class="close pull-right"
+                        aria-label="Close"
+                        (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                Update Form
+        </div>
+</ng-template>

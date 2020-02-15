@@ -1,1 +1,30 @@
-nav working
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand"
+       [routerLink]="['']"><i class="fas fa-file-alt"></i> Form Builder</a>
+
+    <div class="btn-group"
+         dropdown>
+        <button id="button-basic"
+                dropdownToggle
+                type="button"
+                class="btn btn-primary"
+                aria-controls="dropdown-basic">
+            Features <span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu dropdown-menu-right">
+            <li role="menuitem"><a class="dropdown-item"
+                   [routerLink]="['manage-merge-fields']"
+                   routerLinkActive="router-link-active">Manage Merge Fields</a></li>
+            <li role="menuitem"><a class="dropdown-item"
+                   href="#">Another action</a></li>
+            <li role="menuitem"><a class="dropdown-item"
+                   href="#">Something else here</a></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem"><a class="dropdown-item"
+                   href="#">Separated link</a>
+            </li>
+        </ul>
+    </div>
+</nav>

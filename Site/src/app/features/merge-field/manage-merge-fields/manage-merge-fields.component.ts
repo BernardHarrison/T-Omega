@@ -1,11 +1,18 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Inject,
+  TemplateRef,
+  ViewChild
+} from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 import * as fromModels from "src/app/stores/merge-field-store";
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
-import { MergeFieldAppState } from 'src/app/stores/merge-field-store';
-import { loadMergeFieldsAction } from 'src/app/stores/merge-field-store/merge-field.actions';
+import { MergeFieldAppState } from "src/app/stores/merge-field-store";
+import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
+import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -21,9 +28,9 @@ export class ManageMergeFieldsComponent implements OnInit {
   };
 
   constructor(
-    private store: Store<MergeFieldAppState>) {
-
-  }
+    private store: Store<MergeFieldAppState>,
+    private modalService: BsModalService
+  ) {}
 
   ngOnInit() {
     this.loading$ = this.store.select(
@@ -31,15 +38,19 @@ export class ManageMergeFieldsComponent implements OnInit {
     );
     this.list$ = this.store.select(state => state.mergeField.list);
     this.loadMergeFields();
+  }
 
+  modalRef: BsModalRef;
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   loadMergeFields() {
     this.store.dispatch(
       fromActions.setMergeFieldAction({ payload: this.mergeField })
     );
-    this.store.dispatch(loadMergeFieldsAction())
-
+    this.store.dispatch(loadMergeFieldsAction());
   }
 
   createMergeFields() {
