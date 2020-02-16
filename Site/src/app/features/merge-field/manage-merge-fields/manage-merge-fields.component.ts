@@ -14,6 +14,7 @@ import { MergeFieldAppState } from "src/app/stores/merge-field-store";
 import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 import { NgForm } from "@angular/forms";
+import { map, pluck } from 'rxjs/operators';
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -24,6 +25,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<fromModels.MergeField[]>;
   loading$: Observable<boolean>;
   selected: fromModels.MergeField;
+  loadingError$: Observable<string>;
 
   modalRef: BsModalRef;
 
@@ -49,6 +51,10 @@ export class ManageMergeFieldsComponent implements OnInit {
       state => state.mergeField.loadApiState.busy
     );
     this.list$ = this.store.select(state => state.mergeField.list);
+    this.loadingError$ = this.store.select(state => state.mergeField.loadApiState.error)
+    .pipe(
+      map(err => err && err.message)
+    );
     this.loadMergeFields();
 
     console.log(this.mergeFieldTypes);

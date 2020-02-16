@@ -20,16 +20,14 @@ export class MergeFieldEffects {
         this.action$.pipe(
             ofType(loadMergeFieldsAction),
             tap(action => this.store.dispatch(mergeFieldLoadBusyAction({ payload: true }))),
-            tap(actions => this.store.dispatch(mergeFieldLoadErrorAction({ payload: null }))),
-            switchMap(action => this.api.get().pipe(
-                catchError(err => {
-                    this.store.dispatch(mergeFieldLoadBusyAction({ payload: false }));
-                    this.store.dispatch(mergeFieldLoadErrorAction({ payload: err }))
-                    return of(null);
-                })
-            )),
+            tap(action => this.store.dispatch(mergeFieldLoadErrorAction({ payload: null }))),
+            switchMap(action => this.api.get()),
             switchMap(result => [
                 setMergeFieldsAction({ payload: result }),
+                mergeFieldLoadBusyAction({ payload: false })
+            ]),
+            catchError(err => [
+                mergeFieldLoadErrorAction({ payload: err }),
                 mergeFieldLoadBusyAction({ payload: false })
             ])
         );
