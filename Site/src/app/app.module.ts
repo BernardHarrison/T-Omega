@@ -17,6 +17,7 @@ import { NavComponent } from "./shared/components/nav/nav.component";
 import { MAILING_ACTIVITY_API } from "./stores/merge-field-store";
 import { MergeFieldApiService } from "./apis/merge-field-api.service";
 import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
+import { ModelBuilderStoreModule } from './stores/model-builder-store/model-builder-store.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
+    ModelBuilderStoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
