@@ -23,7 +23,8 @@
                                 <td>{{ item.type }}</td>
                                 <td class="text-right merge-button-container">
                                         <button class="btn btn-warning mr-1"
-                                                (click)="openModal(updateTemplate)"><i class="fas fa-edit"></i></button>
+                                                (click)="openModal(updateTemplateModel, item)"><i
+                                                   class="fas fa-edit"></i></button>
                                         <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
                                 </td>
                         </tr>
@@ -45,11 +46,48 @@
                 </button>
         </div>
         <div class="modal-body">
-                Create Form
+                <form #fCreate="ngForm"
+                      (ngSubmit)="onCreate(fCreate)"
+                      novalidate>
+
+                        <div class="form-group">
+                                <label for="createName">Merge Field Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="createName"
+                                       ngModel
+                                       name="name"
+                                       required
+                                       #name="ngModel">
+                        </div>
+
+                        <div class="form-group">
+                                <label for="createType">Merge Field Type</label>
+                                <select class="form-control"
+                                        id="createType"
+                                        required
+                                        ngModel
+                                        name="type"
+                                        #type="ngModel">
+                                        <!-- <option *ngFor="let pow of powers"
+                                                [value]="pow">{{pow}}</option> -->
+                                        <option value="">--Please choose an option--</option>
+                                        <option value="String">String</option>
+                                        <option value="Number">Number</option>
+                                        <option value="Boolean">Boolean</option>
+                                        <option value="Date">Date</option>
+
+                                </select>
+                        </div>
+
+
+                        <button class="btn btn-success"
+                                [disabled]="fCreate.invalid">Create</button>
+                </form>
         </div>
 </ng-template>
 
-<ng-template #updateTemplate>
+<ng-template #updateTemplateModel>
         <div class="modal-header">
                 <h4 class="modal-title pull-left">Update Merge Field</h4>
                 <button type="button"
@@ -60,6 +98,42 @@
                 </button>
         </div>
         <div class="modal-body">
-                Update Form
+                <form #fUpdate="ngForm"
+                      (ngSubmit)="onUpdate(fUpdate)"
+                      novalidate>
+                        <div class="form-group">
+                                <label for="updateName">Merge Field Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="updateName"
+                                       [(ngModel)]="selected.name"
+                                       name="name"
+                                       required
+                                       #name="ngModel">
+                        </div>
+
+                        <div class="form-group">
+                                <label for="updateType">Merge Field Type</label>
+                                <select class="form-control"
+                                        id="updateType"
+                                        required
+                                        [(ngModel)]="selected.type"
+                                        name="type"
+                                        #type="ngModel">
+                                        <option *ngFor="let option of mergeFieldTypes"
+                                                [value]="option.id">{{option.type}}</option>
+                                        <!-- <option [(ngModel)]="selected.type">--Please choose an option--</option>
+                                        <option value="String">String</option>
+                                        <option value="Number">Number</option>
+                                        <option value="Boolean">Boolean</option>
+                                        <option value="Date">Date</option> -->
+
+                                </select>
+                        </div>
+
+
+                        <button class="btn btn-success"
+                                [disabled]="fUpdate.invalid">Update</button>
+                </form>
         </div>
 </ng-template>

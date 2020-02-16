@@ -2,9 +2,11 @@ import { Observable } from "rxjs";
 import { ActionReducerMap } from "@ngrx/store";
 import * as fromReducers from "./merge-field.reducer";
 import { MergeFieldActionTypes } from "./merge-field.actions";
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
-export const MAILING_ACTIVITY_API = new InjectionToken<MergeFieldApiInterface>('MERGEFIELD_API_TOKEN');
+export const MAILING_ACTIVITY_API = new InjectionToken<MergeFieldApiInterface>(
+  "MERGEFIELD_API_TOKEN"
+);
 
 export enum MergeFieldTypes {
   String,
@@ -13,7 +15,7 @@ export enum MergeFieldTypes {
   Date
 }
 
-export interface MergeField {
+export class MergeField {
   name: string;
   type: MergeFieldTypes;
 }

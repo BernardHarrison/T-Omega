@@ -6,13 +6,14 @@ import {
   ViewChild
 } from "@angular/core";
 import { Store, select } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { Observable, from } from "rxjs";
 
 import * as fromModels from "src/app/stores/merge-field-store";
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
 import { MergeFieldAppState } from "src/app/stores/merge-field-store";
 import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -22,6 +23,17 @@ import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<fromModels.MergeField[]>;
   loading$: Observable<boolean>;
+  selected: fromModels.MergeField;
+
+  modalRef: BsModalRef;
+
+  mergeFieldTypes: Array<Object> = [
+    { id: "1", type: "String" },
+    { id: "2", type: "Number" },
+    { id: "3", type: "Boolean" },
+    { id: "4", type: "Date" }
+  ];
+
   mergeField: fromModels.MergeField = {
     name: "MergeField",
     type: fromModels.MergeFieldTypes.String
@@ -38,12 +50,22 @@ export class ManageMergeFieldsComponent implements OnInit {
     );
     this.list$ = this.store.select(state => state.mergeField.list);
     this.loadMergeFields();
+
+    console.log(this.mergeFieldTypes);
   }
 
-  modalRef: BsModalRef;
+  openModal(template: TemplateRef<any>, mergeField: fromModels.MergeField) {
+    this.store.dispatch(
+      fromActions.setMergeFieldAction({ payload: mergeField })
+    );
 
-  openModal(template: TemplateRef<any>) {
+    this.store
+      .select(state => state.mergeField.selected)
+      .subscribe(mergField => {
+        this.selected = Object.assign(new fromModels.MergeField(), mergField);
+      });
     this.modalRef = this.modalService.show(template);
+    console.log(this.selected);
   }
 
   loadMergeFields() {
@@ -53,31 +75,46 @@ export class ManageMergeFieldsComponent implements OnInit {
     this.store.dispatch(loadMergeFieldsAction());
   }
 
-  createMergeFields() {
+  onCreate(f: NgForm) {
     this.store.dispatch(
       fromActions.createMergeFieldBusyAction({ payload: true })
     );
+    console.log(f.value);
+
     this.store.dispatch(
-      fromActions.createMergeFieldAction({ payload: this.mergeField })
+      fromActions.createMergeFieldAction({ payload: f.value })
     );
+
+    // Create effect for this
     this.store.dispatch(
       fromActions.createMergeFieldErrorAction({ payload: new Error() })
     );
     this.store.dispatch(
       fromActions.createMergeFieldBusyAction({ payload: false })
     );
+
+    this.modalRef.hide();
   }
 
-  updateMergeFields() {
+  onUpdate(f: NgForm) {
+    console.log(f.value);
+
     this.store.dispatch(
       fromActions.updateMergeFieldBusyAction({ payload: true })
     );
+
+    this.store.dispatch(
+      fromActions.updateMergeFieldAction({ payload: f.value })
+    );
+
     this.store.dispatch(
       fromActions.updateMergeFieldErrorAction({ payload: new Error() })
     );
+
     this.store.dispatch(
       fromActions.updateMergeFieldBusyAction({ payload: false })
     );
+    this.modalRef.hide();
   }
 
   deleteMergeFields() {

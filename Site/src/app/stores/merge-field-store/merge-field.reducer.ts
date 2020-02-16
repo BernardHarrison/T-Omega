@@ -23,6 +23,9 @@ export const selectedReducer = createReducer(
   }),
   on(fromActions.createMergeFieldAction, (state, action) => {
     return action.payload;
+  }),
+  on(fromActions.updateMergeFieldAction, (state, action) => {
+    return action.payload;
   })
 );
 
