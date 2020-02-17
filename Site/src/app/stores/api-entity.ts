@@ -176,18 +176,42 @@ export class CrudStateApiEffects<T>{
     );
 
     create$: Observable<Action> = this.actions$.pipe(
-        ofType(this.actions.createAction),
-        map(action => this.actions.createBusy(false))
+        ofType<{ type: string, payload: T }>(this.actions.createAction),
+        switchMap(action => this.api.create(action.payload)),
+        switchMap(result =>[
+            this.actions.createBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.createBusy(false),
+            this.actions.createError(err)
+        ])
     );
 
     update$: Observable<Action> = this.actions$.pipe(
-        ofType(this.actions.updateAction),
-        map(action => this.actions.updateBusy(false))
+        ofType<{ type: string, payload: T }>(this.actions.updateAction),
+        switchMap(action => this.api.update(action.payload)),
+        switchMap(result =>[
+            this.actions.updateBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.updateBusy(false),
+            this.actions.updateError(err)
+        ])    
     );
 
     delete$: Observable<Action> = this.actions$.pipe(
-        ofType(this.actions.deleteAction),
-        map(action => this.actions.deleteBusy(false))
+        ofType<{ type: string, payload: T }>(this.actions.deleteAction),
+        switchMap(action => this.api.delete(action.payload)),
+        switchMap(result =>[
+            this.actions.deleteBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.deleteBusy(false),
+            this.actions.deleteError(err)
+        ])  
     );
 }
 
