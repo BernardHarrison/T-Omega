@@ -1,0 +1,16 @@
+<h1 *ngIf="loadBusy$ | async">LOADING DATA</h1>
+<div class="alert alert-error" *ngIf="errorMessage$ | async">
+    {{errorMessage$ | async}}
+</div>
+<ul>
+    <li *ngFor="let item of list$ | async">
+        {{item.id}}
+    </li>
+    <li *ngIf="creating" class="creating">
+        <div *ngIf="createBusy$ | async">working....</div>
+        <input placeholder="name">
+        <button (click)="create()">Create</button>
+        <button (click)="createCancel()">Done</button>
+    </li>
+</ul>
+<button (click)="createStart()" *ngIf="!creating">ADD</button>

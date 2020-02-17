@@ -121,8 +121,8 @@ export class ApiEntityAdapterInstance<T> implements ApiEntityAdapter<T> {
 
   private collectionReducer = (state: T[] = [], action): T[] => {
     switch (action.type) {
-      case this.actions.setCollection:
-        console.log(action.payload);
+            case this.actions.setCollectionAction:
+                return [...action.payload]
         return action.payload;
       default:
         return state;

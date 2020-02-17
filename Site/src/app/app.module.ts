@@ -23,13 +23,15 @@ import {
 } from "./stores/model-builder-store/model-builder-store.module";
 import { ModelBuilderLocalApi } from "./apis/model-builder-local-api";
 import { MERGE_FIELD_STORE_API_TOKEN } from "./stores/merge-field-api-store/merge-field-api-store.module";
+import { ManageModelsComponent } from "./features/manage-models/manage-models.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    ManageModelsComponent
   ],
   imports: [
     BrowserModule,
