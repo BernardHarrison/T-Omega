@@ -121,9 +121,8 @@ export class ApiEntityAdapterInstance<T> implements ApiEntityAdapter<T> {
 
   private collectionReducer = (state: T[] = [], action): T[] => {
     switch (action.type) {
-            case this.actions.setCollectionAction:
-                return [...action.payload]
-        return action.payload;
+      case this.actions.setCollectionAction:
+          return [...action.payload];
       default:
         return state;
     }
@@ -230,12 +229,12 @@ export class CrudStateApiEffects<T> {
     ofType(this.actions.loadAction),
     switchMap(action => this.api.get()),
     switchMap(result => [
-      this.actions.loadBusy(false),
-      this.actions.setCollection(result)
+      this.actions.setCollection(result),
+      this.actions.loadBusy(false)
     ]),
     catchError(err => [
-      this.actions.loadBusy(false),
-      this.actions.loadError(err)
+      this.actions.loadError(err),
+      this.actions.loadBusy(false)
     ])
   );
 
@@ -243,12 +242,12 @@ export class CrudStateApiEffects<T> {
     ofType<{ type: string; payload: T }>(this.actions.createAction),
     switchMap(action => this.api.create(action.payload)),
     switchMap(result => [
+      this.actions.setCollection(result),
       this.actions.createBusy(false),
-      this.actions.setCollection(result)
     ]),
     catchError(err => [
-      this.actions.createBusy(false),
-      this.actions.createError(err)
+      this.actions.createError(err),
+      this.actions.createBusy(false)
     ])
   );
 
@@ -256,12 +255,12 @@ export class CrudStateApiEffects<T> {
     ofType<{ type: string; payload: T }>(this.actions.updateAction),
     switchMap(action => this.api.update(action.payload)),
     switchMap(result => [
-      this.actions.updateBusy(false),
-      this.actions.setCollection(result)
+      this.actions.setCollection(result),
+      this.actions.updateBusy(false)
     ]),
     catchError(err => [
-      this.actions.updateBusy(false),
-      this.actions.updateError(err)
+      this.actions.updateError(err),
+      this.actions.updateBusy(false)
     ])
   );
 
@@ -269,12 +268,12 @@ export class CrudStateApiEffects<T> {
     ofType<{ type: string; payload: T }>(this.actions.deleteAction),
     switchMap(action => this.api.delete(action.payload)),
     switchMap(result => [
-      this.actions.deleteBusy(false),
-      this.actions.setCollection(result)
+      this.actions.setCollection(result),
+      this.actions.deleteBusy(false)
     ]),
     catchError(err => [
-      this.actions.deleteBusy(false),
-      this.actions.deleteError(err)
+      this.actions.deleteError(err),
+      this.actions.deleteBusy(false)      
     ])
   );
 }
