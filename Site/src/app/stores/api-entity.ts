@@ -1,5 +1,7 @@
 import { ActionReducerMap, Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Actions, ofType } from '@ngrx/effects';
+import { switchMap, catchError, map } from 'rxjs/operators';
 
 const apiInitialState: CrudApiState = { busy: false, error: undefined }
 
@@ -38,7 +40,7 @@ export class CrudApiStateActions<T>{
     get deleteBusyAction() { return `[${this.stateKeyName}] Set deleting busy`;}
     get deleteErrorAction() { return `[${this.stateKeyName}] Set deleting error`;}
 
-    setCollection(payload: T[]) { return { type: this.setCollection, payload: payload } };
+    setCollection(payload: T[]) { return { type: this.setCollectionAction, payload: payload } };
     
     load() { return { type: this.loadAction, payload: null } };
     loadBusy(payload: boolean) { return { type: this.loadBusyAction, payload: payload } };
@@ -76,18 +78,53 @@ export class ApiEntityAdapterInstance<T> implements ApiEntityAdapter<T>{
         }
     }
     
-    private apiReducer = (state: CrudApiState = apiInitialState, action: any)=>{
+    private loadApiReducer = (state: CrudApiState = apiInitialState, action: any)=>{
         switch(action.type){
             case this.actions.loadBusyAction:
-            case this.actions.createBusyAction:
-            case this.actions.updateBusyAction:
-            case this.actions.deleteBusyAction:
                 return {...state, busy: action.payload };
             case this.actions.loadErrorAction:
+                return {...state, error: action.payload };
+            case this.actions.loadAction:
+                return {...state, busy: true, error:null };
+            default:
+                return state;
+        }
+    }    
+    
+    private createApiReducer = (state: CrudApiState = apiInitialState, action: any)=>{
+        switch(action.type){
+            case this.actions.createBusyAction:
+                return {...state, busy: action.payload };
             case this.actions.createErrorAction:
+                return {...state, error: action.payload };
+            case this.actions.createAction:
+                return {...state, busy: true, error:null };
+            default:
+                return state;
+        }
+    }
+
+    private updateApiReducer = (state: CrudApiState = apiInitialState, action: any)=>{
+        switch(action.type){
+            case this.actions.updateBusyAction:
+                return {...state, busy: action.payload };
             case this.actions.updateErrorAction:
+                return {...state, error: action.payload };
+            case this.actions.updateAction:
+                return {...state, busy: true, error:null };
+            default:
+                return state;
+        }
+    }
+    
+    private deleteApiReducer = (state: CrudApiState = apiInitialState, action: any)=>{
+        switch(action.type){
+            case this.actions.deleteBusyAction:
+                return {...state, busy: action.payload };
             case this.actions.deleteErrorAction:
                 return {...state, error: action.payload };
+            case this.actions.deleteAction:
+                return {...state, busy: true, error:null };
             default:
                 return state;
         }
@@ -98,10 +135,10 @@ export class ApiEntityAdapterInstance<T> implements ApiEntityAdapter<T>{
 
         this.reducers = {
             list: this.collectionReducer,
-            loadApiState: this.apiReducer,
-            createApiState: this.apiReducer,
-            updateApiState: this.apiReducer,
-            deleteApiState: this.apiReducer,
+            loadApiState: this.loadApiReducer,
+            createApiState: this.createApiReducer,
+            updateApiState: this.updateApiReducer,
+            deleteApiState: this.deleteApiReducer,
         }
     }
 }
@@ -116,3 +153,65 @@ export interface CrudStateApiInterface<T> {
     update(entity: T): Observable<T[]>;
     delete(entity: T): Observable<T[]>;
 }
+
+export class CrudStateApiEffects<T>{
+    constructor(
+        private api: CrudStateApiInterface<T>,
+        private actions$: Actions,
+        private actions: CrudApiStateActions<T>
+    ){}
+
+    load$: Observable<Action> = 
+    this.actions$.pipe(
+        ofType(this.actions.loadAction),
+        switchMap(action => this.api.get()),
+        switchMap(result =>[
+            this.actions.loadBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.loadBusy(false),
+            this.actions.loadError(err)
+        ])
+    );
+
+    create$: Observable<Action> = this.actions$.pipe(
+        ofType<{ type: string, payload: T }>(this.actions.createAction),
+        switchMap(action => this.api.create(action.payload)),
+        switchMap(result =>[
+            this.actions.createBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.createBusy(false),
+            this.actions.createError(err)
+        ])
+    );
+
+    update$: Observable<Action> = this.actions$.pipe(
+        ofType<{ type: string, payload: T }>(this.actions.updateAction),
+        switchMap(action => this.api.update(action.payload)),
+        switchMap(result =>[
+            this.actions.updateBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.updateBusy(false),
+            this.actions.updateError(err)
+        ])    
+    );
+
+    delete$: Observable<Action> = this.actions$.pipe(
+        ofType<{ type: string, payload: T }>(this.actions.deleteAction),
+        switchMap(action => this.api.delete(action.payload)),
+        switchMap(result =>[
+            this.actions.deleteBusy(false),
+            this.actions.setCollection(result)
+        ]),
+        catchError(err => [
+            this.actions.deleteBusy(false),
+            this.actions.deleteError(err)
+        ])  
+    );
+}
+

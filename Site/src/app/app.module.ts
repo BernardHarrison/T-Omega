@@ -17,7 +17,8 @@ import { NavComponent } from "./shared/components/nav/nav.component";
 import { MAILING_ACTIVITY_API } from "./stores/merge-field-store";
 import { MergeFieldApiService } from "./apis/merge-field-api.service";
 import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
-import { ModelBuilderStoreModule } from './stores/model-builder-store/model-builder-store.module';
+import { ModelBuilderStoreModule, MODEL_BUILDER_STORE_API } from './stores/model-builder-store/model-builder-store.module';
+import { ModelBuilderLocalApi } from './apis/model-builder-local-api';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModelBuilderStoreModule } from './stores/model-builder-store/model-buil
     ModalModule.forRoot()
   ],
   providers: [
-    { provide: MAILING_ACTIVITY_API, useClass: MergeFieldApiService }
+    { provide: MAILING_ACTIVITY_API, useClass: MergeFieldApiService },
+    { provide: MODEL_BUILDER_STORE_API, useClass: ModelBuilderLocalApi }
   ],
   bootstrap: [AppComponent]
 })
