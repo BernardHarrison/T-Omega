@@ -1,10 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { ModelBuilderAppState } from 'src/app/stores/model-builder-store';
-import { ModelBuilderActions } from 'src/app/stores/model-builder-store/model-builder-store.module';
-import { ModelBuilderAppState } from "src/app/stores/model-builder-store";
-import { ModelBuilderActions } from "src/app/stores/model-builder-store/model-builder-store.module";
-import { ModelBuilderActions, ModelBuilderAppState } from 'src/app/stores/model-builder-store/model-builder-store.module';
 
 @Component({
   selector: "app-home",
@@ -12,13 +7,7 @@ import { ModelBuilderActions, ModelBuilderAppState } from 'src/app/stores/model-
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  constructor(
-    private store: Store<ModelBuilderAppState>,
-    private modelBuilderActions: ModelBuilderActions
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.store.dispatch(this.modelBuilderActions.load());
-    this.store.dispatch(this.modelBuilderActions.createError(new Error()));
-  }
+  ngOnInit() {}
 }
