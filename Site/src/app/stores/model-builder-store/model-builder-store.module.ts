@@ -6,6 +6,7 @@ import { EffectsModule, Actions, Effect, ofType } from '@ngrx/effects';
 import { MergeField } from '../merge-field-store';
 import { Observable } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
+import { SUPER_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //1) Define a key for this store
 const MODEL_BUILDER_STORE = "modelBuilderState";
@@ -45,27 +46,16 @@ export const MODEL_BUILDER_STORE_API = new InjectionToken<CrudStateApiInterface<
 
 //6) Create the effects class that extends the base effect class
 @Injectable()
-export class ModelBuilderEffects{
+export class ModelBuilderEffects extends CrudStateApiEffects<ModelDefinition>  {
   constructor(
-    @Inject(MODEL_BUILDER_STORE_API) private api: CrudStateApiInterface<ModelDefinition>,
-    private actions$: Actions
+    @Inject(MODEL_BUILDER_STORE_API) api: CrudStateApiInterface<ModelDefinition>,
+    actions$: Actions
   ){
-    
-    
+      super(api, actions$, modelBuilderStoreAdaptor.actions);
   }
-  @Effect() load$: Observable<Action> = 
-  this.actions$.pipe(
-      ofType(modelBuilderStoreAdaptor.actions.loadAction),
-      switchMap(action => this.api.get()),
-      switchMap(result =>[
-        modelBuilderStoreAdaptor.actions.loadBusy(false),
-        modelBuilderStoreAdaptor.actions.setCollection(result)
-      ]),
-      catchError(err => [
-        modelBuilderStoreAdaptor.actions.loadBusy(false),
-        modelBuilderStoreAdaptor.actions.loadError(err)
-      ])
-  );
+
+  @Effect() load$: Observable<Action>;
+
 }
 
 //7) Create a service that can be injected to give access to actions.
@@ -80,7 +70,7 @@ export class ModelBuilderActions extends  CrudApiStateActions<ModelDefinition>{ 
       MODEL_BUILDER_STORE,
       modelBuilderStoreAdaptor.reducers
     ),
-    //EffectsModule.forFeature([ModelBuilderEffects])
+    EffectsModule.forFeature([ModelBuilderEffects])
   ]
 })
 export class ModelBuilderStoreModule {}

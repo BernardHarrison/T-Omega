@@ -1,8 +1,7 @@
 import { ActionReducerMap, Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError, tap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { switchMap, catchError } from 'rxjs/operators';
 
 const apiInitialState: CrudApiState = { busy: false, error: undefined }
 
@@ -155,15 +154,14 @@ export interface CrudStateApiInterface<T> {
     delete(entity: T): Observable<T[]>;
 }
 
-@Injectable()
-export abstract class CrudStateApiEffects<T>{
+export class CrudStateApiEffects<T>{
     constructor(
         private api: CrudStateApiInterface<T>,
         private actions$: Actions,
         private actions: CrudApiStateActions<T>
     ){}
 
-    @Effect() load$: Observable<Action> = 
+    load$: Observable<Action> = 
     this.actions$.pipe(
         ofType(this.actions.loadAction),
         switchMap(action => this.api.get()),

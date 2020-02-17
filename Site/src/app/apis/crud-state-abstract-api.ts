@@ -19,7 +19,7 @@ export abstract class  AbstractCrudApi<T> implements CrudStateApiInterface<T> {
     }
     return of(items).pipe(
       delay(2000)
-      ,mergeMap(x=> throwError(new Error("Api Error")))
+      //,mergeMap(x=> throwError(new Error("Api Error")))
       );
   }
 

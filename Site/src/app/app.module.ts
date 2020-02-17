@@ -31,7 +31,7 @@ import { ModelBuilderLocalApi } from './apis/model-builder-local-api';
     BrowserModule,
     StorageServiceModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ModelBuilderEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
     ModelBuilderStoreModule,
