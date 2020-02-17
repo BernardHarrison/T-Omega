@@ -19,13 +19,15 @@ import { MergeFieldApiService } from "./apis/merge-field-api.service";
 import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
 import { ModelBuilderStoreModule, MODEL_BUILDER_STORE_API } from './stores/model-builder-store/model-builder-store.module';
 import { ModelBuilderLocalApi } from './apis/model-builder-local-api';
+import { ManageModelsComponent } from './features/manage-models/manage-models.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    ManageModelsComponent
   ],
   imports: [
     BrowserModule,

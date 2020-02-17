@@ -8,11 +8,15 @@ import { CrudStateApiInterface } from '../stores/api-entity';
 export abstract class  AbstractCrudApi<T> implements CrudStateApiInterface<T> {
 
   abstract storageKeyName: string;
+  abstract createNew(entity: T):T;
   
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {  }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { 
+    
+   }
 
   get(): Observable<T[]> {
     let items = <T[]>this.storage.get(this.storageKeyName);
+    //this.storage.set(this.storageKeyName, []);
     if(!items){
       this.storage.set(this.storageKeyName, []);
       return this.get();
@@ -24,8 +28,9 @@ export abstract class  AbstractCrudApi<T> implements CrudStateApiInterface<T> {
   }
 
   create(entity: T): Observable<T[]> {
+    let newEnity = this.createNew(entity);
     let items = <T[]>this.storage.get(this.storageKeyName);
-    this.storage.set(this.storageKeyName, [...items, entity]);
+    this.storage.set(this.storageKeyName, [...items, newEnity]);
     return this.get();
   }
 
