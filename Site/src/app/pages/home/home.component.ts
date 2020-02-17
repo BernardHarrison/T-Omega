@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ModelBuilderAppState } from 'src/app/stores/model-builder-store';
-import { ModelBuilderActions } from 'src/app/stores/model-builder-store/model-builder-store.module';
+import { ModelBuilderActions, ModelBuilderAppState } from 'src/app/stores/model-builder-store/model-builder-store.module';
 
 @Component({
   selector: 'app-home',
