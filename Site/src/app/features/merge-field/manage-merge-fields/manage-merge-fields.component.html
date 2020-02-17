@@ -9,7 +9,8 @@
 
 
 <div>
-        <div class="alert alert-danger" *ngIf="loadingError$ | async">
+        <div class="alert alert-danger"
+             *ngIf="loadingError$ | async">
                 {{ loadingError$ | async }}
         </div>
         <table class="table">
@@ -123,13 +124,8 @@
                                         [(ngModel)]="selected.type"
                                         name="type"
                                         #type="ngModel">
-                                        <option *ngFor="let option of mergeFieldTypes"
-                                                [value]="option.id">{{option.type}}</option>
-                                        <!-- <option [(ngModel)]="selected.type">--Please choose an option--</option>
-                                        <option value="String">String</option>
-                                        <option value="Number">Number</option>
-                                        <option value="Boolean">Boolean</option>
-                                        <option value="Date">Date</option> -->
+                                        <option *ngFor="let type of types"
+                                                [value]="type">{{type}}</option>
 
                                 </select>
                         </div>

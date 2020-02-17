@@ -14,7 +14,7 @@ import { MergeFieldAppState } from "src/app/stores/merge-field-store";
 import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 import { NgForm } from "@angular/forms";
-import { map, pluck } from 'rxjs/operators';
+import { map, pluck } from "rxjs/operators";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -28,13 +28,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   loadingError$: Observable<string>;
 
   modalRef: BsModalRef;
-
-  mergeFieldTypes: Array<Object> = [
-    { id: "1", type: "String" },
-    { id: "2", type: "Number" },
-    { id: "3", type: "Boolean" },
-    { id: "4", type: "Date" }
-  ];
+  types: any;
 
   mergeField: fromModels.MergeField = {
     name: "MergeField",
@@ -44,20 +38,21 @@ export class ManageMergeFieldsComponent implements OnInit {
   constructor(
     private store: Store<MergeFieldAppState>,
     private modalService: BsModalService
-  ) {}
+  ) {
+    this.types = Object.keys(fromModels.MergeFieldTypes).filter(k =>
+      isNaN(Number(k))
+    );
+  }
 
   ngOnInit() {
     this.loading$ = this.store.select(
       state => state.mergeField.loadApiState.busy
     );
     this.list$ = this.store.select(state => state.mergeField.list);
-    this.loadingError$ = this.store.select(state => state.mergeField.loadApiState.error)
-    .pipe(
-      map(err => err && err.message)
-    );
+    this.loadingError$ = this.store
+      .select(state => state.mergeField.loadApiState.error)
+      .pipe(map(err => err && err.message));
     this.loadMergeFields();
-
-    console.log(this.mergeFieldTypes);
   }
 
   openModal(template: TemplateRef<any>, mergeField: fromModels.MergeField) {
@@ -71,7 +66,6 @@ export class ManageMergeFieldsComponent implements OnInit {
         this.selected = Object.assign(new fromModels.MergeField(), mergField);
       });
     this.modalRef = this.modalService.show(template);
-    console.log(this.selected);
   }
 
   loadMergeFields() {
