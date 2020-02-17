@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, merge, concat, asyncScheduler } from 'rxjs';
 import { ModelDefinition, ModelBuilderAppState, ModelBuilderActions } from 'src/app/stores/model-builder-store/model-builder-store.module';
 import { Store } from '@ngrx/store';
-import { map, tap, observeOn } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-models',
