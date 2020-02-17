@@ -53,6 +53,9 @@ export class ModelBuilderEffects extends CrudStateApiEffects<ModelDefinition>  {
   }
 
   @Effect() load$: Observable<Action>;
+  @Effect() create$: Observable<Action>;
+  @Effect() update$: Observable<Action>;
+  @Effect() delete$: Observable<Action>;
 
 }
 
