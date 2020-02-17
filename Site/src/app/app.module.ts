@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { NavComponent } from "./shared/components/nav/nav.component";
 
-import { MAILING_ACTIVITY_API } from "./stores/merge-field-store";
 import { MergeFieldApiService } from "./apis/merge-field-api.service";
 import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
 import {
@@ -23,15 +22,14 @@ import {
 } from "./stores/model-builder-store/model-builder-store.module";
 import { ModelBuilderLocalApi } from "./apis/model-builder-local-api";
 import { MERGE_FIELD_STORE_API_TOKEN } from "./stores/merge-field-api-store/merge-field-api-store.module";
-import { ManageModelsComponent } from "./features/manage-models/manage-models.component";
+import { ModelBuilderModule } from './features/model-builder/model-builder.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    NavComponent,
-    ManageModelsComponent
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +39,7 @@ import { ManageModelsComponent } from "./features/manage-models/manage-models.co
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
     ModelBuilderStoreModule,
+    ModelBuilderModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
