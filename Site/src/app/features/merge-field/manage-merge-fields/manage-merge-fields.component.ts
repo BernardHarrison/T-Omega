@@ -8,13 +8,15 @@ import {
 import { Store, select } from "@ngrx/store";
 import { Observable, from } from "rxjs";
 
-import * as fromModels from "src/app/stores/merge-field-store";
-import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
-import { MergeFieldAppState } from "src/app/stores/merge-field-store";
-import { loadMergeFieldsAction } from "src/app/stores/merge-field-store/merge-field.actions";
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 import { NgForm } from "@angular/forms";
 import { map, pluck } from "rxjs/operators";
+import {
+  MergeFieldAppState,
+  MergeFieldTypes,
+  MergeFieldActions,
+  MergeField
+} from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -22,110 +24,77 @@ import { map, pluck } from "rxjs/operators";
   styleUrls: ["./manage-merge-fields.component.scss"]
 })
 export class ManageMergeFieldsComponent implements OnInit {
-  list$: Observable<fromModels.MergeField[]>;
+  list$: Observable<MergeField[]>;
   loading$: Observable<boolean>;
-  selected: fromModels.MergeField;
   loadingError$: Observable<string>;
 
   modalRef: BsModalRef;
   types: any;
 
-  mergeField: fromModels.MergeField = {
-    name: "MergeField",
-    type: fromModels.MergeFieldTypes.String
-  };
+  mergeField: MergeField = new MergeField();
 
   constructor(
     private store: Store<MergeFieldAppState>,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private actions: MergeFieldActions
   ) {
-    this.types = Object.keys(fromModels.MergeFieldTypes).filter(k =>
-      isNaN(Number(k))
-    );
+    this.types = Object.keys(MergeFieldTypes).filter(k => isNaN(Number(k)));
   }
 
   ngOnInit() {
     this.loading$ = this.store.select(
-      state => state.mergeField.loadApiState.busy
+      state => state.mergeFieldState.loadApiState.busy
     );
-    this.list$ = this.store.select(state => state.mergeField.list);
+    this.list$ = this.store.select(state => state.mergeFieldState.list);
     this.loadingError$ = this.store
-      .select(state => state.mergeField.loadApiState.error)
+      .select(state => state.mergeFieldState.loadApiState.error)
       .pipe(map(err => err && err.message));
     this.loadMergeFields();
+    console.log(this.types);
   }
 
-  openModal(template: TemplateRef<any>, mergeField: fromModels.MergeField) {
-    this.store.dispatch(
-      fromActions.setMergeFieldAction({ payload: mergeField })
-    );
+  openModal(template: TemplateRef<any>, mergeField: MergeField) {
+    // this.store.dispatch(
+    //   fromActions.setMergeFieldAction({ payload: mergeField })
+    // );
 
-    this.store
-      .select(state => state.mergeField.selected)
-      .subscribe(mergField => {
-        this.selected = Object.assign(new fromModels.MergeField(), mergField);
-      });
+    // this.store
+    //   .select(state => state.mergeFieldState.selected)
+    //   .subscribe(mergField => {
+    //     this.selected = Object.assign(new fromModels.MergeField(), mergField);
+    //   });
     this.modalRef = this.modalService.show(template);
   }
 
   loadMergeFields() {
-    this.store.dispatch(
-      fromActions.setMergeFieldAction({ payload: this.mergeField })
-    );
-    this.store.dispatch(loadMergeFieldsAction());
+    this.mergeField = {
+      name: "test",
+      type: MergeFieldTypes.String
+    };
+    this.store.dispatch(this.actions.load());
+    this.store.dispatch(this.actions.delete(this.mergeField));
+    this.store.dispatch(this.actions.update(this.mergeField));
+
+    // this.mergeField = {
+    //   name: "test",
+    //   type: MergeFieldTypes.String
+    // };
+    // this.store.dispatch(this.actions.setCollection([this.mergeField]));
   }
 
   onCreate(f: NgForm) {
-    this.store.dispatch(
-      fromActions.createMergeFieldBusyAction({ payload: true })
-    );
-    console.log(f.value);
-
-    this.store.dispatch(
-      fromActions.createMergeFieldAction({ payload: f.value })
-    );
-
-    // Create effect for this
-    this.store.dispatch(
-      fromActions.createMergeFieldErrorAction({ payload: new Error() })
-    );
-    this.store.dispatch(
-      fromActions.createMergeFieldBusyAction({ payload: false })
-    );
+    this.store.dispatch(this.actions.create(f.value));
 
     this.modalRef.hide();
   }
 
   onUpdate(f: NgForm) {
-    console.log(f.value);
+    this.store.dispatch(this.actions.update(f.value));
 
-    this.store.dispatch(
-      fromActions.updateMergeFieldBusyAction({ payload: true })
-    );
-
-    this.store.dispatch(
-      fromActions.updateMergeFieldAction({ payload: f.value })
-    );
-
-    this.store.dispatch(
-      fromActions.updateMergeFieldErrorAction({ payload: new Error() })
-    );
-
-    this.store.dispatch(
-      fromActions.updateMergeFieldBusyAction({ payload: false })
-    );
     this.modalRef.hide();
   }
 
   deleteMergeFields() {
-    this.store.dispatch(
-      fromActions.deleteMergeFieldBusyAction({ payload: true })
-    );
-    this.store.dispatch(
-      fromActions.deleteMergeFieldErrorAction({ payload: new Error() })
-    );
-    this.store.dispatch(
-      fromActions.deleteMergeFieldBusyAction({ payload: false })
-    );
+    this.store.dispatch(this.actions.delete(this.mergeField));
   }
 }

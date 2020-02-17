@@ -15,14 +15,17 @@ const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 })
 export class MergeFieldApiService implements MergeFieldApiInterface {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    storage.set(MERGE_FIELD_KEY, [{ name: "blahssss", type: "Number" }]);
+    storage.set(MERGE_FIELD_KEY, [
+      { name: "blahssss", type: "Number" },
+      { name: "name2", type: "String" }
+    ]);
   }
 
   get(): Observable<MergeField[]> {
     let mergeFields = <Array<MergeField>>this.storage.get(MERGE_FIELD_KEY);
     return of(mergeFields).pipe(
       delay(2000)
-      //,mergeMap(x=> throwError(new Error("Api Error")))
+      //mergeMap(x => throwError(new Error("Api Error")))
     );
   }
 

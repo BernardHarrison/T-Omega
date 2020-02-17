@@ -9,6 +9,7 @@ import { MergeFieldRoutingModule } from "./merge-field-routing.module";
 
 import { MAILING_ACTIVITY_API } from "src/app/stores/merge-field-store";
 import { MergeFieldApiService } from "src/app/apis/merge-field-api.service";
+import { MergeFieldApiStoreModule } from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
 
 @NgModule({
   declarations: [ManageMergeFieldsComponent, CreateMergeFieldComponent],
@@ -18,7 +19,7 @@ import { MergeFieldApiService } from "src/app/apis/merge-field-api.service";
   imports: [
     CommonModule,
     FormsModule,
-    MergeFieldStoreModule,
+    MergeFieldApiStoreModule,
     MergeFieldRoutingModule
   ],
   exports: [ManageMergeFieldsComponent]
