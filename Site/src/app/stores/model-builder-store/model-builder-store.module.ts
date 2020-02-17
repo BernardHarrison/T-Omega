@@ -2,11 +2,9 @@ import { NgModule, Injectable, InjectionToken, Inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { StoreModule, Action } from "@ngrx/store";
 import { createApiEntityAdapter, CrudApiStateActions, CrudStateApiEffects, ApiEntityState, CrudStateApiInterface } from '../api-entity';
-import { EffectsModule, Actions, Effect, ofType } from '@ngrx/effects';
+import { EffectsModule, Actions, Effect } from '@ngrx/effects';
 import { MergeField } from '../merge-field-store';
 import { Observable } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
-import { SUPER_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //1) Define a key for this store
 const MODEL_BUILDER_STORE = "modelBuilderState";

@@ -18,7 +18,7 @@ export abstract class  AbstractCrudApi<T> implements CrudStateApiInterface<T> {
       return this.get();
     }
     return of(items).pipe(
-      delay(2000)
+      delay(1000)
       //,mergeMap(x=> throwError(new Error("Api Error")))
       );
   }
