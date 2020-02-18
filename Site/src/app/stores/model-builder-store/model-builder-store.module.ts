@@ -18,12 +18,13 @@ const STORE_KEY = "modelBuilderState";
 //2) Define the model for this store
 export interface MergeObject {
   name: string;
-  field: Array<MergeField>;
+  fields: Array<MergeField>;
 }
 
 export interface ModelDefinition {
   id: number | null;
-  field: Array<MergeField | MergeObject>;
+  name: string;
+  fields: Array<MergeField | MergeObject>;
 }
 
 //3) Wrap the model with an app state. NOTE: The property name must
