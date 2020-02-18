@@ -17,6 +17,7 @@ import {
   MergeFieldActions,
   MergeField
 } from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
+import { async } from "@angular/core/testing";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -25,13 +26,19 @@ import {
 })
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<MergeField[]>;
+
   loading$: Observable<boolean>;
+  creating$: Observable<boolean>;
+  updating$: Observable<boolean>;
+
   loadingError$: Observable<string>;
+  creatingError$: Observable<Error>;
 
   modalRef: BsModalRef;
   types: any;
 
-  mergeField: MergeField = new MergeField();
+  //mergeField: MergeField = new MergeField();
+  mergeField: MergeField;
 
   constructor(
     private store: Store<MergeFieldAppState>,
@@ -42,59 +49,40 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading$ = this.store.select(
-      state => state.mergeFieldState.loadApiState.busy
-    );
+    this.store.dispatch(this.actions.load());
     this.list$ = this.store.select(state => state.mergeFieldState.list);
-    this.loadingError$ = this.store
-      .select(state => state.mergeFieldState.loadApiState.error)
-      .pipe(map(err => err && err.message));
-    this.loadMergeFields();
-    console.log(this.types);
+    this.creating$ = this.store.select(
+      state => state.mergeFieldState.createApiState.busy
+    );
+  }
+
+  onCreate(f) {
+    this.mergeField = new MergeField(
+      Math.floor(Math.random() * 10),
+      f.value.name,
+      f.value.type
+    );
+
+    this.store.dispatch(this.actions.create(this.mergeField));
+    this.creatingError$ = this.store.select(
+      state => state.mergeFieldState.createApiState.error
+    );
+    //TODO: figure out how to handle errors
+    this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>, mergeField: MergeField) {
-    // this.store.dispatch(
-    //   fromActions.setMergeFieldAction({ payload: mergeField })
-    // );
-
-    // this.store
-    //   .select(state => state.mergeFieldState.selected)
-    //   .subscribe(mergField => {
-    //     this.selected = Object.assign(new fromModels.MergeField(), mergField);
-    //   });
+    this.mergeField = mergeField;
     this.modalRef = this.modalService.show(template);
   }
 
-  loadMergeFields() {
-    this.mergeField = {
-      name: "test",
-      type: MergeFieldTypes.String
-    };
-    this.store.dispatch(this.actions.load());
-    this.store.dispatch(this.actions.delete(this.mergeField));
+  onUpdate() {
     this.store.dispatch(this.actions.update(this.mergeField));
-
-    // this.mergeField = {
-    //   name: "test",
-    //   type: MergeFieldTypes.String
-    // };
-    // this.store.dispatch(this.actions.setCollection([this.mergeField]));
-  }
-
-  onCreate(f: NgForm) {
-    this.store.dispatch(this.actions.create(f.value));
-
+    //TODO: figure out how to handle errors
     this.modalRef.hide();
   }
 
-  onUpdate(f: NgForm) {
-    this.store.dispatch(this.actions.update(f.value));
-
-    this.modalRef.hide();
-  }
-
-  deleteMergeFields() {
-    this.store.dispatch(this.actions.delete(this.mergeField));
+  onDelete(m: MergeField) {
+    this.store.dispatch(this.actions.delete(m));
   }
 }

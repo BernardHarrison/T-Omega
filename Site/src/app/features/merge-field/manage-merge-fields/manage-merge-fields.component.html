@@ -3,11 +3,7 @@
 <div class="text-right mb-4 mt-4">
         <button class="btn btn-success"
                 (click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Merge Field</button>
-
 </div>
-
-
-
 <div>
         <div class="alert alert-danger"
              *ngIf="loadingError$ | async">
@@ -29,7 +25,8 @@
                                         <button class="btn btn-warning mr-1"
                                                 (click)="openModal(updateTemplateModel, item)"><i
                                                    class="fas fa-edit"></i></button>
-                                        <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger"
+                                                (click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                         </tr>
 
@@ -53,7 +50,6 @@
                 <form #fCreate="ngForm"
                       (ngSubmit)="onCreate(fCreate)"
                       novalidate>
-
                         <div class="form-group">
                                 <label for="createName">Merge Field Name</label>
                                 <input type="text"
@@ -64,7 +60,6 @@
                                        required
                                        #name="ngModel">
                         </div>
-
                         <div class="form-group">
                                 <label for="createType">Merge Field Type</label>
                                 <select class="form-control"
@@ -73,20 +68,20 @@
                                         ngModel
                                         name="type"
                                         #type="ngModel">
-                                        <!-- <option *ngFor="let pow of powers"
-                                                [value]="pow">{{pow}}</option> -->
-                                        <option value="">--Please choose an option--</option>
-                                        <option value="String">String</option>
-                                        <option value="Number">Number</option>
-                                        <option value="Boolean">Boolean</option>
-                                        <option value="Date">Date</option>
-
+                                        <option *ngFor="let type of types"
+                                                [value]="type">{{type}}</option>
                                 </select>
                         </div>
-
-
                         <button class="btn btn-success"
                                 [disabled]="fCreate.invalid">Create</button>
+                        <div class="spinner-custom-container"
+                             *ngIf="creating$ | async">
+                                <div class="spinner-border text-danger"
+                                     role="status">
+                                        <span class="sr-only">Loading...</span>
+                                </div>
+                        </div>
+
                 </form>
         </div>
 </ng-template>
@@ -103,14 +98,14 @@
         </div>
         <div class="modal-body">
                 <form #fUpdate="ngForm"
-                      (ngSubmit)="onUpdate(fUpdate)"
+                      (ngSubmit)="onUpdate()"
                       novalidate>
                         <div class="form-group">
                                 <label for="updateName">Merge Field Name</label>
                                 <input type="text"
                                        class="form-control"
                                        id="updateName"
-                                       [(ngModel)]="selected.name"
+                                       [(ngModel)]="mergeField.name"
                                        name="name"
                                        required
                                        #name="ngModel">
@@ -121,7 +116,7 @@
                                 <select class="form-control"
                                         id="updateType"
                                         required
-                                        [(ngModel)]="selected.type"
+                                        [(ngModel)]="mergeField.type"
                                         name="type"
                                         #type="ngModel">
                                         <option *ngFor="let type of types"
@@ -133,6 +128,14 @@
 
                         <button class="btn btn-success"
                                 [disabled]="fUpdate.invalid">Update</button>
+
+                        <div class="spinner-custom-container"
+                             *ngIf="updating$ | async">
+                                <div class="spinner-border text-danger"
+                                     role="status">
+                                        <span class="sr-only">Loading...</span>
+                                </div>
+                        </div>
                 </form>
         </div>
 </ng-template>

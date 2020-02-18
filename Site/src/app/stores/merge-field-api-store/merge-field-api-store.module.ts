@@ -22,9 +22,21 @@ export enum MergeFieldTypes {
   Date
 }
 
+// export class MergeField {
+//   id: number | null;
+//   name: string;
+//   type: MergeFieldTypes;
+// }
+
 export class MergeField {
+  id: number | null;
   name: string;
-  type: MergeFieldTypes;
+  type: string;
+  constructor(id?: number, name?: string, type?: string) {
+    this.id = id;
+    this.name = name;
+    this.type = type;
+  }
 }
 
 //3) Wrap the model with an app state. NOTE: The property name must

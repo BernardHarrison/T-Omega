@@ -28,7 +28,7 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
   }
   create(entity: MergeField): import("rxjs").Observable<MergeField[]> {
     let items = <MergeField[]>this.storage.get(MERGE_FIELD_KEY);
-
+    this.storage.set(MERGE_FIELD_KEY, [...items, entity]);
     return this.get();
   }
   update(entity: MergeField): import("rxjs").Observable<MergeField[]> {
@@ -38,7 +38,10 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
   }
   delete(entity: MergeField): import("rxjs").Observable<MergeField[]> {
     let items = <MergeField[]>this.storage.get(MERGE_FIELD_KEY);
-
+    items.forEach((item, index) => {
+      if (item.name == entity.name) items.splice(index, 1);
+    });
+    this.storage.set(MERGE_FIELD_KEY, items);
     return this.get();
   }
 }
