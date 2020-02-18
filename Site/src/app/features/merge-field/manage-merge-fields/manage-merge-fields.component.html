@@ -1,14 +1,46 @@
-<h1 *ngIf="loading$ | async">Loading Merge Fields......</h1>
-
 <div class="text-right mb-4 mt-4">
         <button class="btn btn-success"
                 (click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Merge Field</button>
 </div>
-<div>
+<div class="outer-table-container">
         <div class="alert alert-danger"
-             *ngIf="loadingError$ | async">
-                {{ loadingError$ | async }}
+             *ngIf="errorLoading">
+                <p>{{errorLoading.message}}</p>
         </div>
+        <div class="alert alert-danger"
+             *ngIf="errorCreating">
+                <p>{{errorCreating.message}}</p>
+        </div>
+        <div class="alert alert-danger"
+             *ngIf="errorUpdating">
+                <p>{{errorUpdating.message}}</p>
+        </div>
+        <div class="alert alert-danger"
+             *ngIf="errorDeleting">
+                <p>{{errorDeleting.message}}</p>
+        </div>
+        <div class="spinner-custom-container"
+             *ngIf="creating$ | async ">
+                <div class="spinner-border text-danger"
+                     role="status">
+                        <span class="sr-only">Loading...</span>
+                </div>
+        </div>
+        <div class="spinner-custom-container"
+             *ngIf="updating$ | async ">
+                <div class="spinner-border text-danger"
+                     role="status">
+                        <span class="sr-only">Loading...</span>
+                </div>
+        </div>
+        <div class="spinner-custom-container"
+             *ngIf="deleting$ | async ">
+                <div class="spinner-border text-danger"
+                     role="status">
+                        <span class="sr-only">Loading...</span>
+                </div>
+        </div>
+
         <table class="table">
                 <thead>
                         <tr>
@@ -55,7 +87,7 @@
                                 <input type="text"
                                        class="form-control"
                                        id="createName"
-                                       ngModel
+                                       [(ngModel)]="createMergeField.name"
                                        name="name"
                                        required
                                        #name="ngModel">
@@ -65,7 +97,7 @@
                                 <select class="form-control"
                                         id="createType"
                                         required
-                                        ngModel
+                                        [(ngModel)]="createMergeField.type"
                                         name="type"
                                         #type="ngModel">
                                         <option *ngFor="let type of types"
@@ -74,13 +106,7 @@
                         </div>
                         <button class="btn btn-success"
                                 [disabled]="fCreate.invalid">Create</button>
-                        <div class="spinner-custom-container"
-                             *ngIf="creating$ | async">
-                                <div class="spinner-border text-danger"
-                                     role="status">
-                                        <span class="sr-only">Loading...</span>
-                                </div>
-                        </div>
+
 
                 </form>
         </div>
@@ -105,7 +131,7 @@
                                 <input type="text"
                                        class="form-control"
                                        id="updateName"
-                                       [(ngModel)]="mergeField.name"
+                                       [(ngModel)]="updateMergeField.name"
                                        name="name"
                                        required
                                        #name="ngModel">
@@ -116,7 +142,7 @@
                                 <select class="form-control"
                                         id="updateType"
                                         required
-                                        [(ngModel)]="mergeField.type"
+                                        [(ngModel)]="updateMergeField.type"
                                         name="type"
                                         #type="ngModel">
                                         <option *ngFor="let type of types"

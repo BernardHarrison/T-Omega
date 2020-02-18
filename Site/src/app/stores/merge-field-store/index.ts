@@ -3,6 +3,7 @@ import { ActionReducerMap } from "@ngrx/store";
 import * as fromReducers from "./merge-field.reducer";
 import { MergeFieldActionTypes } from "./merge-field.actions";
 import { InjectionToken } from "@angular/core";
+import { Identifiers } from "@angular/compiler";
 
 export const MAILING_ACTIVITY_API = new InjectionToken<MergeFieldApiInterface>(
   "MERGEFIELD_API_TOKEN"
@@ -16,6 +17,7 @@ export enum MergeFieldTypes {
 }
 
 export class MergeField {
+  id: number | null;
   name: string;
   type: MergeFieldTypes;
 }

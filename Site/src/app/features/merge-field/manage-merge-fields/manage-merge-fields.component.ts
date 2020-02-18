@@ -6,7 +6,7 @@ import {
   ViewChild
 } from "@angular/core";
 import { Store, select } from "@ngrx/store";
-import { Observable, from } from "rxjs";
+import { Observable, from, merge } from "rxjs";
 
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 import { NgForm } from "@angular/forms";
@@ -26,19 +26,22 @@ import { async } from "@angular/core/testing";
 })
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<MergeField[]>;
-
   loading$: Observable<boolean>;
+
+  updateMergeField: MergeField = new MergeField();
+  createMergeField: MergeField = new MergeField();
+
   creating$: Observable<boolean>;
   updating$: Observable<boolean>;
+  deleting$: Observable<boolean>;
 
-  loadingError$: Observable<string>;
-  creatingError$: Observable<Error>;
+  errorLoading: Error;
+  errorCreating: Error;
+  errorUpdating: Error;
+  errorDeleting: Error;
 
   modalRef: BsModalRef;
   types: any;
-
-  //mergeField: MergeField = new MergeField();
-  mergeField: MergeField;
 
   constructor(
     private store: Store<MergeFieldAppState>,
@@ -51,34 +54,46 @@ export class ManageMergeFieldsComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(this.actions.load());
     this.list$ = this.store.select(state => state.mergeFieldState.list);
+
     this.creating$ = this.store.select(
       state => state.mergeFieldState.createApiState.busy
     );
+
+    this.updating$ = this.store.select(
+      state => state.mergeFieldState.updateApiState.busy
+    );
+
+    this.deleting$ = this.store.select(
+      state => state.mergeFieldState.deleteApiState.busy
+    );
+
+    this.store
+      .select(state => state.mergeFieldState.loadApiState.error)
+      .subscribe(error => (this.errorLoading = error));
+    this.store
+      .select(state => state.mergeFieldState.createApiState.error)
+      .subscribe(error => (this.errorCreating = error));
+    this.store
+      .select(state => state.mergeFieldState.updateApiState.error)
+      .subscribe(error => (this.errorUpdating = error));
+    this.store
+      .select(state => state.mergeFieldState.deleteApiState.error)
+      .subscribe(error => (this.errorDeleting = error));
   }
 
-  onCreate(f) {
-    this.mergeField = new MergeField(
-      Math.floor(Math.random() * 10),
-      f.value.name,
-      f.value.type
-    );
-
-    this.store.dispatch(this.actions.create(this.mergeField));
-    this.creatingError$ = this.store.select(
-      state => state.mergeFieldState.createApiState.error
-    );
-    //TODO: figure out how to handle errors
+  onCreate() {
+    this.store.dispatch(this.actions.create(this.createMergeField));
+    this.createMergeField = new MergeField();
     this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>, mergeField: MergeField) {
-    this.mergeField = mergeField;
+    this.updateMergeField = mergeField;
     this.modalRef = this.modalService.show(template);
   }
 
   onUpdate() {
-    this.store.dispatch(this.actions.update(this.mergeField));
-    //TODO: figure out how to handle errors
+    this.store.dispatch(this.actions.update(this.updateMergeField));
     this.modalRef.hide();
   }
 
