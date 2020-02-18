@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef } from "@angular/core";
 import { Observable, merge, concat, asyncScheduler } from "rxjs";
 import {
   ModelDefinition,
@@ -7,6 +7,7 @@ import {
 } from "src/app/stores/model-builder-store/model-builder-store.module";
 import { Store } from "@ngrx/store";
 import { map } from "rxjs/operators";
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "app-manage-models",
@@ -24,45 +25,33 @@ export class ManageModelsComponent implements OnInit {
   creating: ModelDefinition; //The item being created
   updating: ModelDefinition; //The item being updated
 
+  modalRef: BsModalRef;
+
   constructor(
     private store: Store<ModelBuilderAppState>,
-    private actions: ModelBuilderActions
+    private actions: ModelBuilderActions,
+    private modalService: BsModalService
   ) {}
 
-  ngOnInit() {
-    this.list$ = this.store.select(state => state.modelBuilderState.list);
+  ngOnInit() {}
 
-    this.loadBusy$ = this.store.select(
-      state => state.modelBuilderState.loadApiState.busy
-    );
-    this.createBusy$ = this.store.select(
-      state => state.modelBuilderState.createApiState.busy
-    );
-
-    this.errorMessage$ = merge(
-      this.store.select(state => state.modelBuilderState.loadApiState.error),
-      this.store.select(state => state.modelBuilderState.createApiState.error),
-      this.store.select(state => state.modelBuilderState.updateApiState.error),
-      this.store.select(state => state.modelBuilderState.deleteApiState.error)
-    ).pipe(map(err => err && err.message));
-
-    this.store.dispatch(this.actions.load());
+  openModal(template: TemplateRef<any>, modelDefinition: ModelDefinition) {
+    this.updating = modelDefinition;
+    this.modalRef = this.modalService.show(template);
   }
 
-  createStart() {
-    this.creating = {
-      id: null,
-      name: null,
-      fields: []
-    };
-  }
-
-  createCancel() {
-    this.creating = null;
-  }
-
-  create() {
+  onCreate() {
     this.store.dispatch(this.actions.create(this.creating));
-    //TODO Now What? how do I know when its done creating
+    this.creating = new ModelDefinition();
+    this.modalRef.hide();
+  }
+
+  onUpdate() {
+    this.store.dispatch(this.actions.update(this.updating));
+    this.modalRef.hide();
+  }
+
+  onDelete(m: ModelDefinition) {
+    this.store.dispatch(this.actions.delete(m));
   }
 }

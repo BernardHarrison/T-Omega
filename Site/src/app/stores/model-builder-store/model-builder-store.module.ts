@@ -21,7 +21,7 @@ export interface MergeObject {
   fields: Array<MergeField>;
 }
 
-export interface ModelDefinition {
+export class ModelDefinition {
   id: number | null;
   name: string;
   fields: Array<MergeField | MergeObject>;
@@ -61,7 +61,6 @@ class StoreEffects extends CrudStateApiEffects<ModelDefinition> {
 
 //7) Create a service that can be injected to give access to actions.
 export class ModelBuilderActions extends CrudApiStateActions<ModelDefinition> {}
-
 
 @NgModule({
   declarations: [],

@@ -1,17 +1,75 @@
-<h1 *ngIf="loadBusy$ | async">LOADING DATA</h1>
-<div class="alert alert-error" *ngIf="errorMessage$ | async">
-    {{errorMessage$ | async}}
+<div class="text-center">
+    <p>Manage Models</p>
 </div>
-<ul class="list-group">
-    <li *ngFor="let item of list$ | async" class="list-group-item">
-        {{item.name}}
-    </li>
-    <li *ngIf="creating" class="creating list-group-item active">
-        <div *ngIf="createBusy$ | async">working....</div>
-        <input placeholder="name" [(ngModel)]="creating.name">
-        <button (click)="create()">Create</button>
-        <button (click)="createCancel()">Done</button>
-    </li>
-  </ul>
-<button (click)="createStart()" *ngIf="!creating">ADD</button>
+<div class="text-right mb-4 mt-4">
+    <button class="btn btn-success"
+            (click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Model Field</button>
+</div>
+<div class="outer-table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Some Model</td>
+                <td class="text-right models-container">
+                    <button title="Manage Merge Models"
+                            class="btn btn-warning mr-1"><i class="fas fa-search"></i></button>
+                    <button title="Manage Merge Objects"
+                            class="btn btn-info mr-1"><i class="fas fa-plus-square"></i></button>
+                    <button title="Add Merge Models"
+                            class="btn btn-success mr-1"><i class="fas fa-plus"></i></button>
+                    <button title="Delete Model"
+                            class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            <tr *ngFor="let item of list$ | async">
+                <td>{{ item.name }}</td>
+                <td class="text-right models-container">
+                    <button class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger"
+                            (click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
 
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<ng-template #createTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Create New Model</h4>
+        <button type="button"
+                class="close pull-right"
+                aria-label="Close"
+                (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fCreate="ngForm"
+              (ngSubmit)="onCreate(fCreate)"
+              novalidate>
+            <div class="form-group">
+                <label for="createName">Model Title</label>
+                <input type="text"
+                       class="form-control"
+                       id="createName"
+                       [(ngModel)]="creating.name"
+                       name="name"
+                       required
+                       #name="ngModel">
+            </div>
+
+            <button class="btn btn-success"
+                    [disabled]="fCreate.invalid">Create</button>
+
+
+        </form>
+    </div>
+</ng-template>

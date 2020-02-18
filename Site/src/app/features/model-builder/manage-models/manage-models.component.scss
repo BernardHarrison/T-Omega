@@ -1,12 +1,15 @@
-.creating{
-    position: relative;
+.models-container button {
+  padding: 4px 8px;
+  font-size: 12px;
 }
-
-.creating div{
-    position: absolute;
-    top:0;
-    bottom:0;
-    right: 0;
-    left: 0;
-    background-color: rgba($color: #000000, $alpha: .8);
+.creating {
+  position: relative;
+}
+.creating div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba($color: #000000, $alpha: 0.8);
 }
