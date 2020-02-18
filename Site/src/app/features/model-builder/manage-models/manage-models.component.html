@@ -2,15 +2,16 @@
 <div class="alert alert-error" *ngIf="errorMessage$ | async">
     {{errorMessage$ | async}}
 </div>
-<ul>
-    <li *ngFor="let item of list$ | async">
-        {{item.id}}
+<ul class="list-group">
+    <li *ngFor="let item of list$ | async" class="list-group-item">
+        {{item.name}}
     </li>
-    <li *ngIf="creating" class="creating">
+    <li *ngIf="creating" class="creating list-group-item active">
         <div *ngIf="createBusy$ | async">working....</div>
-        <input placeholder="name">
+        <input placeholder="name" [(ngModel)]="creating.name">
         <button (click)="create()">Create</button>
         <button (click)="createCancel()">Done</button>
     </li>
-</ul>
+  </ul>
 <button (click)="createStart()" *ngIf="!creating">ADD</button>
+

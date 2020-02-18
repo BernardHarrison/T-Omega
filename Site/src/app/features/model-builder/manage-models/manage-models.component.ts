@@ -52,7 +52,8 @@ export class ManageModelsComponent implements OnInit {
   createStart() {
     this.creating = {
       id: null,
-      field: []
+      name: null,
+      fields: []
     };
   }
 
