@@ -9,8 +9,9 @@ import {
   CrudStateApiInterface
 } from "../api-entity";
 import { EffectsModule, Actions, Effect } from "@ngrx/effects";
-import { MergeField } from "../merge-field-store";
+
 import { Observable } from "rxjs";
+import { MergeField } from "../merge-field-api-store/merge-field-api-store.module";
 
 //1) Define a key for this store
 const STORE_KEY = "modelBuilderState";
@@ -24,7 +25,7 @@ export interface MergeObject {
 export class ModelDefinition {
   id: number | null;
   name: string;
-  fields: Array<MergeField | MergeObject>;
+  fields: Array<MergeField>;
 }
 
 //3) Wrap the model with an app state. NOTE: The property name must

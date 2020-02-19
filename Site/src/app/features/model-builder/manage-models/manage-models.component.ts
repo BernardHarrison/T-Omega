@@ -8,6 +8,10 @@ import {
 import { Store } from "@ngrx/store";
 import { map } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import {
+  MergeFieldAppState,
+  MergeField
+} from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
 
 @Component({
   selector: "app-manage-models",
@@ -22,18 +26,32 @@ export class ManageModelsComponent implements OnInit {
 
   errorMessage$: Observable<string>;
 
-  creating: ModelDefinition; //The item being created
-  updating: ModelDefinition; //The item being updated
-
+  creating: ModelDefinition = new ModelDefinition();
+  updating: ModelDefinition = new ModelDefinition();
   modalRef: BsModalRef;
+
+  mergeFields$: Observable<MergeField[]>;
 
   constructor(
     private store: Store<ModelBuilderAppState>,
+    private mergeFieldStore: Store<MergeFieldAppState>,
     private actions: ModelBuilderActions,
     private modalService: BsModalService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(this.actions.load());
+    this.list$ = this.store.select(state => state.modelBuilderState.list);
+
+    this.mergeFieldStore.dispatch(this.actions.load());
+    this.mergeFields$ = this.mergeFieldStore.select(
+      state => state.mergeFieldState.list
+    );
+  }
+  /////////////
+  selectMergeField(item: MergeField, model: ModelDefinition) {
+    model.fields.push(item);
+  }
 
   openModal(template: TemplateRef<any>, modelDefinition: ModelDefinition) {
     this.updating = modelDefinition;
