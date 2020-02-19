@@ -23,7 +23,7 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
     }
     return of(items).pipe(
       delay(1000)
-      , mergeMap(x => throwError(new Error("Api Error")))
+      //, mergeMap(x => throwError(new Error("Api Error")))
     );
   }
   create(entity: MergeField): Observable<MergeField[]> {

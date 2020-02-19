@@ -34,7 +34,7 @@ export class ModelBuilderLocalApi
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
     entity.id = Math.floor(Math.random() * 10000);
-    items.push(entity);
+    items.unshift(entity);
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, items);
     return this.get();
   }

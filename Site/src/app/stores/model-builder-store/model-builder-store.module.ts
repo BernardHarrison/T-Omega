@@ -24,7 +24,7 @@ export interface MergeObject {
 export class ModelDefinition {
   id: number | null;
   name: string;
-  fields: Array<MergeField | MergeObject>;
+  fields: Array<MergeField>;
 }
 
 //3) Wrap the model with an app state. NOTE: The property name must

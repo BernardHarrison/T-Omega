@@ -2,6 +2,20 @@
   padding: 4px 8px;
   font-size: 12px;
 }
+.empty-email-model {
+  font-size: 18px;
+}
+.empty-email-model-icon {
+  font-size: 60px;
+  cursor: pointer;
+  transition: color 2s;
+}
+.empty-email-model-icon a {
+  display: block;
+}
+.empty-email-model-icon:hover {
+  color: #fff;
+}
 .creating {
   position: relative;
 }
