@@ -9,8 +9,8 @@ import {
   CrudStateApiInterface
 } from "../api-entity";
 import { EffectsModule, Actions, Effect } from "@ngrx/effects";
-import { MergeField } from "../merge-field-store";
 import { Observable } from "rxjs";
+import { MergeField } from '../merge-field-api-store/merge-field-api-store.module';
 
 //1) Define a key for this store
 const STORE_KEY = "modelBuilderState";
@@ -60,7 +60,7 @@ class StoreEffects extends CrudStateApiEffects<ModelDefinition> {
 }
 
 //7) Create a service that can be injected to give access to actions.
-export class ModelBuilderActions extends CrudApiStateActions<ModelDefinition> {}
+export class ModelBuilderActions extends CrudApiStateActions<ModelDefinition> { }
 
 @NgModule({
   declarations: [],
@@ -71,4 +71,4 @@ export class ModelBuilderActions extends CrudApiStateActions<ModelDefinition> {}
     EffectsModule.forFeature([StoreEffects])
   ]
 })
-export class ModelBuilderStoreModule {}
+export class ModelBuilderStoreModule { }

@@ -10,7 +10,7 @@ import { Observable, from, merge } from "rxjs";
 
 import { BsModalRef, BsModalService, ModalDirective } from "ngx-bootstrap";
 import { NgForm } from "@angular/forms";
-import { map, pluck } from "rxjs/operators";
+import { map, pluck, tap } from "rxjs/operators";
 import {
   MergeFieldAppState,
   MergeFieldTypes,
@@ -26,19 +26,12 @@ import { async } from "@angular/core/testing";
 })
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<MergeField[]>;
-  loading$: Observable<boolean>;
+  busy$: Observable<boolean>;
+  error$: Observable<string>;
+  isError$: Observable<boolean>;
 
   updateMergeField: MergeField = new MergeField();
   createMergeField: MergeField = new MergeField();
-
-  creating$: Observable<boolean>;
-  updating$: Observable<boolean>;
-  deleting$: Observable<boolean>;
-
-  errorLoading: Error;
-  errorCreating: Error;
-  errorUpdating: Error;
-  errorDeleting: Error;
 
   modalRef: BsModalRef;
   types: any;
@@ -54,31 +47,27 @@ export class ManageMergeFieldsComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(this.actions.load());
     this.list$ = this.store.select(state => state.mergeFieldState.list);
-
-    this.creating$ = this.store.select(
-      state => state.mergeFieldState.createApiState.busy
+    this.busy$ = merge(
+      this.store.select(x => x.mergeFieldState.loadApiState.busy),
+      this.store.select(x => x.mergeFieldState.createApiState.busy),
+      this.store.select(x => x.mergeFieldState.updateApiState.busy),
+      this.store.select(x => x.mergeFieldState.deleteApiState.busy),
     );
 
-    this.updating$ = this.store.select(
-      state => state.mergeFieldState.updateApiState.busy
+    this.error$ = merge(
+      this.store.select(x => x.mergeFieldState.loadApiState.error),
+      // this.store.select(x => x.mergeFieldState.createApiState.error),
+      // this.store.select(x => x.mergeFieldState.updateApiState.error),
+      // this.store.select(x => x.mergeFieldState.deleteApiState.error),
+    ).pipe(
+      map(err => err && err.message),
+      tap(console.log)
     );
 
-    this.deleting$ = this.store.select(
-      state => state.mergeFieldState.deleteApiState.busy
-    );
-
-    this.store
-      .select(state => state.mergeFieldState.loadApiState.error)
-      .subscribe(error => (this.errorLoading = error));
-    this.store
-      .select(state => state.mergeFieldState.createApiState.error)
-      .subscribe(error => (this.errorCreating = error));
-    this.store
-      .select(state => state.mergeFieldState.updateApiState.error)
-      .subscribe(error => (this.errorUpdating = error));
-    this.store
-      .select(state => state.mergeFieldState.deleteApiState.error)
-      .subscribe(error => (this.errorDeleting = error));
+    this.isError$ = this.error$.pipe(
+      map(err => err != null),
+      //tap(console.log)
+    )
   }
 
   onCreate() {

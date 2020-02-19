@@ -1,9 +1,9 @@
 import { Injectable, Inject } from "@angular/core";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { CrudStateApiInterface } from "../stores/api-entity";
-import { MergeField } from "../stores/merge-field-store";
 import { of, Observable, throwError } from "rxjs";
 import { delay, mergeMap } from "rxjs/operators";
+import { MergeField } from '../stores/merge-field-api-store/merge-field-api-store.module';
 
 const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 
@@ -12,7 +12,7 @@ const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 })
 export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    storage.set(MERGE_FIELD_KEY, []);
+    //storage.set(MERGE_FIELD_KEY, []);
   }
 
   get(): Observable<MergeField[]> {
@@ -23,8 +23,7 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
     }
     return of(items).pipe(
       delay(1000)
-      // ,
-      // mergeMap(x => throwError(new Error("Api Error")))
+      , mergeMap(x => throwError(new Error("Api Error")))
     );
   }
   create(entity: MergeField): Observable<MergeField[]> {

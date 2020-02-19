@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "./app.state";
 import { Observable } from "rxjs";
-import { MergeField } from "./stores/merge-field-store";
+import { MergeField } from './stores/merge-field-api-store/merge-field-api-store.module';
 
 @Component({
   selector: "app-root",
@@ -12,7 +12,7 @@ import { MergeField } from "./stores/merge-field-store";
 export class AppComponent implements OnInit {
   list$: Observable<MergeField[]>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
