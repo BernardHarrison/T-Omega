@@ -51,6 +51,7 @@ export class ManageModelsComponent implements OnInit {
   /////////////
   selectMergeField(item: MergeField, model: ModelDefinition) {
     model.fields.push(item);
+    this.store.dispatch(this.actions.update(model));
   }
 
   openModal(template: TemplateRef<any>, modelDefinition: ModelDefinition) {

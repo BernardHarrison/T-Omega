@@ -4,6 +4,7 @@ import { CrudStateApiInterface } from "../stores/api-entity";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
+import { MergeField } from "../stores/merge-field-api-store/merge-field-api-store.module";
 
 const MODEL_BUILDER_LOCAL_STORAGE_KEY = "MODEL_BUILDER_LOCAL_STORAGE_KEY";
 
@@ -42,8 +43,8 @@ export class ModelBuilderLocalApi
     let items = <ModelDefinition[]>(
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
-    items.filter(item => {
-      item.id != entity.id;
+    items.forEach((item, index) => {
+      if (item.id == entity.id) items.splice(index, 1);
     });
     items.push(entity);
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, items);
