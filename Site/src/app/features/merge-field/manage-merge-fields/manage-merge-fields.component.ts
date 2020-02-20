@@ -51,11 +51,11 @@ export class ManageMergeFieldsComponent implements OnInit {
       this.store.select(x => x.mergeFieldState.loadApiState.busy),
       this.store.select(x => x.mergeFieldState.createApiState.busy),
       this.store.select(x => x.mergeFieldState.updateApiState.busy),
-      this.store.select(x => x.mergeFieldState.deleteApiState.busy),
+      this.store.select(x => x.mergeFieldState.deleteApiState.busy)
     );
 
     this.error$ = merge(
-      this.store.select(x => x.mergeFieldState.loadApiState.error),
+      this.store.select(x => x.mergeFieldState.loadApiState.error)
       // this.store.select(x => x.mergeFieldState.createApiState.error),
       // this.store.select(x => x.mergeFieldState.updateApiState.error),
       // this.store.select(x => x.mergeFieldState.deleteApiState.error),
@@ -65,9 +65,9 @@ export class ManageMergeFieldsComponent implements OnInit {
     );
 
     this.isError$ = this.error$.pipe(
-      map(err => err != null),
+      map(err => err != null)
       //tap(console.log)
-    )
+    );
   }
 
   onCreate() {
@@ -77,6 +77,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>, mergeField: MergeField) {
+    this.createMergeField.type = "String";
     this.updateMergeField = mergeField;
     this.modalRef = this.modalService.show(template);
   }

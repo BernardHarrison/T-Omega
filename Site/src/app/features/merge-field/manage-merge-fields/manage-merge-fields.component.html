@@ -1,16 +1,25 @@
-<div class="text-center">
-	<p>Manage Merge Fields</p>
-</div>
-<div class="text-right mb-4 mt-4">
-	<button class="btn btn-success" (click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Merge
-		Field</button>
+<div class="row">
+	<div class="col-6 mt-4">
+		<h3>Manage Merge Fields</h3>
+	</div>
+	<div class="text-right mt-4 col-3">
+		<button class="btn btn-info"
+				[routerLink]="['/model-builder']"><i class="fas fa-arrow-left"></i> Model Field Page</button>
+	</div>
+	<div class="text-right mt-4 col-3">
+		<button class="btn btn-success"
+				(click)="openModal(createTemplate)"><i class="fas fa-plus"></i> Create Merge Field</button>
+	</div>
 </div>
 <div class="outer-table-container">
-	<div class="alert alert-danger" *ngIf="isError$ | async">
+	<div class="alert alert-danger"
+		 *ngIf="isError$ | async">
 		<p>{{ error$ | async }}</p>
 	</div>
-	<div class="spinner-custom-container" *ngIf="busy$ | async ">
-		<div class="spinner-border text-danger" role="status">
+	<div class="spinner-custom-container"
+		 *ngIf="busy$ | async ">
+		<div class="spinner-border text-danger"
+			 role="status">
 			<span class="sr-only">Loading...</span>
 		</div>
 	</div>
@@ -28,9 +37,10 @@
 				<td>{{ item.name }}</td>
 				<td>{{ item.type }}</td>
 				<td class="text-right merge-button-container">
-					<button class="btn btn-warning mr-1" (click)="openModal(updateTemplateModel, item)"><i
-							class="fas fa-edit"></i></button>
-					<button class="btn btn-danger" (click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
+					<button class="btn btn-warning mr-1"
+							(click)="openModal(updateTemplateModel, item)"><i class="fas fa-edit"></i></button>
+					<button class="btn btn-danger"
+							(click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
 				</td>
 			</tr>
 		</tbody>
@@ -42,25 +52,42 @@
 <ng-template #createTemplate>
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">Create Merge Field</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<button type="button"
+				class="close pull-right"
+				aria-label="Close"
+				(click)="modalRef.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body">
-		<form #fCreate="ngForm" (ngSubmit)="onCreate(fCreate)" novalidate>
+		<form #fCreate="ngForm"
+			  (ngSubmit)="onCreate(fCreate)"
+			  novalidate>
 			<div class="form-group">
 				<label for="createName">Merge Field Name</label>
-				<input type="text" class="form-control" id="createName" [(ngModel)]="createMergeField.name" name="name"
-					required #name="ngModel">
+				<input type="text"
+					   class="form-control"
+					   id="createName"
+					   [(ngModel)]="createMergeField.name"
+					   name="name"
+					   required
+					   #name="ngModel"
+					   placeholder="Enter Field Name">
 			</div>
 			<div class="form-group">
 				<label for="createType">Merge Field Type</label>
-				<select class="form-control" id="createType" required [(ngModel)]="createMergeField.type" name="type"
-					#type="ngModel">
-					<option *ngFor="let type of types" [value]="type">{{type}}</option>
+				<select class="form-control"
+						id="createType"
+						required
+						[(ngModel)]="createMergeField.type"
+						name="type"
+						#type="ngModel">
+					<option *ngFor="let type of types"
+							[value]="type">{{type}}</option>
 				</select>
 			</div>
-			<button class="btn btn-success" [disabled]="fCreate.invalid">Create</button>
+			<button class="btn btn-success"
+					[disabled]="fCreate.invalid">Create</button>
 
 
 		</form>
@@ -70,29 +97,45 @@
 <ng-template #updateTemplateModel>
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">Update Merge Field</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<button type="button"
+				class="close pull-right"
+				aria-label="Close"
+				(click)="modalRef.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body">
-		<form #fUpdate="ngForm" (ngSubmit)="onUpdate()" novalidate>
+		<form #fUpdate="ngForm"
+			  (ngSubmit)="onUpdate()"
+			  novalidate>
 			<div class="form-group">
 				<label for="updateName">Merge Field Name</label>
-				<input type="text" class="form-control" id="updateName" [(ngModel)]="updateMergeField.name" name="name"
-					required #name="ngModel">
+				<input type="text"
+					   class="form-control"
+					   id="updateName"
+					   [(ngModel)]="updateMergeField.name"
+					   name="name"
+					   required
+					   #name="ngModel">
 			</div>
 
 			<div class="form-group">
 				<label for="updateType">Merge Field Type</label>
-				<select class="form-control" id="updateType" required [(ngModel)]="updateMergeField.type" name="type"
-					#type="ngModel">
-					<option *ngFor="let type of types" [value]="type">{{type}}</option>
+				<select class="form-control"
+						id="updateType"
+						required
+						[(ngModel)]="updateMergeField.type"
+						name="type"
+						#type="ngModel">
+					<option *ngFor="let type of types"
+							[value]="type">{{type}}</option>
 
 				</select>
 			</div>
 
 
-			<button class="btn btn-success" [disabled]="fUpdate.invalid">Update</button>
+			<button class="btn btn-success"
+					[disabled]="fUpdate.invalid">Update</button>
 		</form>
 	</div>
 </ng-template>
