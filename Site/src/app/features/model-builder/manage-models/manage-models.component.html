@@ -24,9 +24,8 @@
         </button>
         <ul id="dropdown-basic"
             *dropdownMenu
-            class="dropdown-menu"
-            role="menu"
-            aria-labelledby="button-basic">
+            class="dropdown-menu select-mergfield-dropdown"
+            role="menu">
 
             <li role="menuitem"><a class="dropdown-item"
                    [routerLink]="['/manage-merge-fields']"> <i class="fas fa-plus"></i> Create Merge Fields</a>
@@ -42,17 +41,39 @@
     <div class="text-right col-sm-4 col-md-3">
         <button title="Manage Merge Field"
                 class="btn btn-warning mr-1"
-                [routerLink]="['/manage-merge-fields']"><i class="fas fa-search"></i></button>
+                (click)="openModal(updateTemplate, model)"><i class="fas fa-edit"></i></button>
         <button title="Delete Model"
                 class="btn btn-danger"
                 (click)="onDelete(model)"><i class="fas fa-trash-alt"></i></button>
     </div>
     <div class="col-12 bg-secondary mt-2">
-        <h3>{{ "{" }}</h3>
-        <p *ngFor="let field of model.fields">{{field.name}}</p>
+        <div class="text-danger model-filler">{{ "{" }}</div>
+
+        <div class="mergefield-container row mt-1"
+             *ngFor="let field of model.fields">
+            <div class="text-warning col-1 offset-1 text-right">{{"{"}}</div>
+
+            <div class="border border-warning col-3 bg-dark"> Name: {{field.name}} </div>
+
+            <div class="border border-warning col-3 bg-dark"> Type:
+                {{field.type}}</div>
+
+            <div class="text-warning col-1">{{"}"}}</div>
+
+            <div class="col-3">
+                <button title="Move Up"
+                        class="btn btn-dark mergfield-button mr-1"><i class="fas fa-chevron-up"></i></button>
+                <button title="Move Down"
+                        class="btn btn-dark mergfield-button mr-1"><i class="fas fa-chevron-down"></i></button>
+                <button title="Remove MergeField"
+                        class="btn btn-danger mergfield-button"
+                        (click)="onDelete(model)"><i class="fas fa-trash-alt"></i></button>
+
+            </div>
+        </div>
 
 
-        <h3>{{"}"}}</h3>
+        <div class="text-danger model-filler">{{"}"}}</div>
     </div>
 </div>
 
@@ -68,50 +89,38 @@
 </div>
 
 
+<ng-template #updateTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Update "{{updating.name}}" Model</h4>
+        <button type="button"
+                class="close pull-right"
+                aria-label="Close"
+                (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fUpdate="ngForm"
+              (ngSubmit)="onUpdate(fUpdate)"
+              novalidate>
+            <div class="form-group">
+                <label for="updateName">Model Title</label>
+                <input type="text"
+                       class="form-control"
+                       id="updateName"
+                       [(ngModel)]="updating.name"
+                       name="name"
+                       required
+                       #name="ngModel">
+            </div>
+
+            <button class="btn btn-success"
+                    [disabled]="fUpdate.invalid">Update</button>
 
 
-
-<!-- <div class="outer-table-container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Some Model</td>
-                <td class="text-right models-container">
-                    <button title="Manage Merge Models"
-                            class="btn btn-warning mr-1"><i class="fas fa-search"></i></button>
-                    <button title="Manage Merge Objects"
-                            class="btn btn-info mr-1"><i class="fas fa-plus-square"></i></button>
-                    <button title="Add Merge Models"
-                            class="btn btn-success mr-1"><i class="fas fa-plus"></i></button>
-                    <button title="Delete Model"
-                            class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <tr *ngFor="let item of list$ | async">
-                <td>{{ item.name }}</td>
-                <td class="text-right models-container">
-                    <button class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger"
-                            (click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
-
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <ul class="list-group">
-        <li class="list-group-item"
-            *ngFor="let model of list$ | async">
-
-        </li>
-    </ul>
-</div> -->
+        </form>
+    </div>
+</ng-template>
 
 <ng-template #createTemplate>
     <div class="modal-header">
