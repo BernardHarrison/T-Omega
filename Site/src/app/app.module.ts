@@ -22,7 +22,8 @@ import {
 } from "./stores/model-builder-store/model-builder-store.module";
 import { ModelBuilderLocalApi } from "./apis/model-builder-local-api";
 import { MERGE_FIELD_STORE_API_TOKEN } from "./stores/merge-field-api-store/merge-field-api-store.module";
-import { ModelBuilderModule } from './features/model-builder/model-builder.module';
+import { ModelBuilderModule } from "./features/model-builder/model-builder.module";
+import { AlertModule } from "ngx-alerts";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ModelBuilderModule } from './features/model-builder/model-builder.modul
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, position: "right" })
   ],
   providers: [
     { provide: MERGE_FIELD_STORE_API_TOKEN, useClass: MergeFieldApiService },

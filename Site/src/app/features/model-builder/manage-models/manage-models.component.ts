@@ -6,12 +6,13 @@ import {
   ModelBuilderActions
 } from "src/app/stores/model-builder-store/model-builder-store.module";
 import { Store } from "@ngrx/store";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import {
   MergeFieldAppState,
   MergeField
 } from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
+import { AlertService } from "ngx-alerts";
 
 @Component({
   selector: "app-manage-models",
@@ -23,8 +24,10 @@ export class ManageModelsComponent implements OnInit {
 
   loadBusy$: Observable<boolean>;
   createBusy$: Observable<boolean>;
+  busy$: Observable<boolean>;
 
-  errorMessage$: Observable<string>;
+  error$: Observable<string>;
+  isError: boolean;
 
   creating: ModelDefinition = new ModelDefinition();
   updating: ModelDefinition = new ModelDefinition();
@@ -36,13 +39,23 @@ export class ManageModelsComponent implements OnInit {
     private store: Store<ModelBuilderAppState>,
     private mergeFieldStore: Store<MergeFieldAppState>,
     private actions: ModelBuilderActions,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
     this.store.dispatch(this.actions.load());
     this.list$ = this.store.select(state => state.modelBuilderState.list);
     this.reloadMergeField();
+
+    this.busy$ = merge(
+      this.store.select(x => x.modelBuilderState.loadApiState.busy),
+      this.store.select(x => x.modelBuilderState.createApiState.busy),
+      this.store.select(x => x.modelBuilderState.updateApiState.busy),
+      this.store.select(x => x.modelBuilderState.deleteApiState.busy)
+    );
+
+    this.handleErrors();
   }
 
   reloadMergeField() {
@@ -77,5 +90,23 @@ export class ManageModelsComponent implements OnInit {
 
   onDelete(m: ModelDefinition) {
     this.store.dispatch(this.actions.delete(m));
+  }
+
+  handleErrors() {
+    this.error$ = merge(
+      this.store.select(x => x.modelBuilderState.loadApiState.error),
+      this.store.select(x => x.modelBuilderState.createApiState.error),
+      this.store.select(x => x.modelBuilderState.updateApiState.error),
+      this.store.select(x => x.modelBuilderState.deleteApiState.error)
+    ).pipe(
+      map(err => err && err.message),
+      tap(console.log)
+    );
+
+    this.error$.subscribe(err => (this.isError = err != null));
+
+    if (this.isError) {
+      this.error$.subscribe(err => this.alertService.danger(err));
+    }
   }
 }

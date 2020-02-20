@@ -11,3 +11,17 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.app-alert.success {
+  background-color: $success !important;
+}
+.app-alert.info {
+  background-color: $info !important;
+}
+
+.app-alert.danger {
+  background-color: $danger !important;
+}
+
+.app-alert.warning {
+  background-color: $warning !important;
+}

@@ -2,8 +2,8 @@ import { Injectable, Inject } from "@angular/core";
 import { ModelDefinition } from "../stores/model-builder-store/model-builder-store.module";
 import { CrudStateApiInterface } from "../stores/api-entity";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
-import { Observable, of } from "rxjs";
-import { delay } from "rxjs/operators";
+import { Observable, of, throwError } from "rxjs";
+import { delay, mergeMap } from "rxjs/operators";
 import { MergeField } from "../stores/merge-field-api-store/merge-field-api-store.module";
 
 const MODEL_BUILDER_LOCAL_STORAGE_KEY = "MODEL_BUILDER_LOCAL_STORAGE_KEY";
@@ -27,7 +27,7 @@ export class ModelBuilderLocalApi
     );
     return of(items).pipe(
       delay(1000)
-      //,mergeMap(x=> throwError(new Error("Api Error")))
+      // mergeMap(x => throwError(new Error("Api Error")))
     );
   }
   create(entity: ModelDefinition): Observable<ModelDefinition[]> {
