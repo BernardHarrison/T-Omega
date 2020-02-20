@@ -3,7 +3,7 @@ import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { CrudStateApiInterface } from "../stores/api-entity";
 import { of, Observable, throwError } from "rxjs";
 import { delay, mergeMap } from "rxjs/operators";
-import { MergeField } from '../stores/merge-field-api-store/merge-field-api-store.module';
+import { MergeField } from "../stores/merge-field-api-store/merge-field-api-store.module";
 
 const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 

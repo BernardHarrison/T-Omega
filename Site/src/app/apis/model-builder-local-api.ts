@@ -18,7 +18,7 @@ export class ModelBuilderLocalApi
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, [
-      { id: 1, name: "isname", fields: [{}] }
+      //{ id: 1, name: "isname", fields: [{}] }
     ]);
   }
   get(): Observable<ModelDefinition[]> {
@@ -46,7 +46,7 @@ export class ModelBuilderLocalApi
     items.forEach((item, index) => {
       if (item.id == entity.id) items.splice(index, 1);
     });
-    items.push(entity);
+    items.unshift(entity);
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, items);
     return this.get();
   }
@@ -54,8 +54,8 @@ export class ModelBuilderLocalApi
     let items = <ModelDefinition[]>(
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
-    items.filter(item => {
-      item.id != entity.id;
+    items.forEach((item, index) => {
+      if (item.id == entity.id) items.splice(index, 1);
     });
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, items);
     return this.get();

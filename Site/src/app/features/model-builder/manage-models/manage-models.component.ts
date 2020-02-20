@@ -42,13 +42,16 @@ export class ManageModelsComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(this.actions.load());
     this.list$ = this.store.select(state => state.modelBuilderState.list);
+    this.reloadMergeField();
+  }
 
+  reloadMergeField() {
     this.mergeFieldStore.dispatch(this.actions.load());
     this.mergeFields$ = this.mergeFieldStore.select(
       state => state.mergeFieldState.list
     );
   }
-  /////////////
+
   selectMergeField(item: MergeField, model: ModelDefinition) {
     model.fields.push(item);
     this.store.dispatch(this.actions.update(model));
@@ -60,8 +63,10 @@ export class ManageModelsComponent implements OnInit {
   }
 
   onCreate() {
+    this.creating.fields = [];
     this.store.dispatch(this.actions.create(this.creating));
     this.creating = new ModelDefinition();
+    this.reloadMergeField();
     this.modalRef.hide();
   }
 

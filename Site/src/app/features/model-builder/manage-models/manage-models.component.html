@@ -20,7 +20,7 @@
                 dropdownToggle
                 type="button"
                 class="btn btn-primary dropdown-toggle">
-            Select Merge Field
+            Add Merge Field
         </button>
         <ul id="dropdown-basic"
             *dropdownMenu
@@ -36,7 +36,6 @@
                 *ngFor="let item of mergeFields$ | async">
                 <a class="dropdown-item"
                    (click)="selectMergeField(item, model)">{{item.name}}</a></li>
-
         </ul>
     </div>
 
@@ -45,12 +44,15 @@
                 class="btn btn-warning mr-1"
                 [routerLink]="['/manage-merge-fields']"><i class="fas fa-search"></i></button>
         <button title="Delete Model"
-                class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                class="btn btn-danger"
+                (click)="onDelete(model)"><i class="fas fa-trash-alt"></i></button>
     </div>
     <div class="col-12 bg-secondary mt-2">
-        <code><i class="fas fa-chevron-left"></i></code>
+        <h3>{{ "{" }}</h3>
+        <p *ngFor="let field of model.fields">{{field.name}}</p>
 
-        <code><i class="fas fa-chevron-right"></i></code>
+
+        <h3>{{"}"}}</h3>
     </div>
 </div>
 
