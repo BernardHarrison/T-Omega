@@ -12,7 +12,7 @@ const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 })
 export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    //storage.set(MERGE_FIELD_KEY, []);
+    storage.set(MERGE_FIELD_KEY, []);
   }
 
   get(): Observable<MergeField[]> {
@@ -27,6 +27,7 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
     );
   }
   create(entity: MergeField): Observable<MergeField[]> {
+    console.log(entity);
     let items = <MergeField[]>this.storage.get(MERGE_FIELD_KEY);
     entity.id = Math.floor(Math.random() * 10000);
     items.push(entity);
