@@ -46,7 +46,6 @@ export class MergeFieldEffects {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.createMergeFieldAction),
-      tap(() => this.alertService.info("Working on creating Merge Field")),
       mergeMap(action =>
         this.api.create(action.payload).pipe(
           mergeMap(list => [
@@ -67,7 +66,6 @@ export class MergeFieldEffects {
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.updateMergeFieldAction),
-      tap(() => this.alertService.info("Working on updating Merge Field")),
       mergeMap(action =>
         this.api.update(action.payload).pipe(
           mergeMap(list => [
@@ -88,7 +86,6 @@ export class MergeFieldEffects {
   delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.deleteMergeFieldAction),
-      tap(() => this.alertService.info("Working on deleting Merge Field")),
       mergeMap(action =>
         this.api.delete(action.payload).pipe(
           mergeMap(list => [

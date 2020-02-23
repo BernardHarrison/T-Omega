@@ -48,6 +48,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   onCreate() {
+    this.alertService.success("Creating Merge Field");
     this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(
       fromActions.createMergeFieldAction({
@@ -65,6 +66,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   onUpdate() {
+    this.alertService.warning("Updating Merge Field");
     this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(
       fromActions.updateMergeFieldAction({ payload: this.updateMergeField })
@@ -73,6 +75,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   onDelete(m: MergeField) {
+    this.alertService.danger("Deleting Merge Field");
     this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(fromActions.deleteMergeFieldAction({ payload: m }));
   }
