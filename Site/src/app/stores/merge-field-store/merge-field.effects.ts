@@ -7,24 +7,30 @@ import {
   catchError,
   mergeMap,
   map,
-  concatMap
+  concatMap,
+  tap
 } from "rxjs/operators";
 import { MergeFieldApiService } from "src/app/apis/merge-field-api.service";
 import * as fromActions from "./merge-field.actions";
+import { AlertService } from "ngx-alerts";
 
 @Injectable()
 export class MergeFieldEffects {
-  constructor(private actions$: Actions, private api: MergeFieldApiService) {}
+  constructor(
+    private actions$: Actions,
+    private api: MergeFieldApiService,
+    private alertService: AlertService
+  ) {}
 
   load$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.loadMergeFieldsAction),
       mergeMap(action =>
         this.api.get().pipe(
-          map(
-            list => fromActions.setMergeFieldsAction({ payload: list }),
+          mergeMap(list => [
+            fromActions.setMergeFieldsAction({ payload: list }),
             fromActions.mergeFieldApiBusyAction({ payload: false })
-          ),
+          ]),
           catchError(error =>
             of(
               fromActions.mergeFieldApiErrorAction({ payload: error }),
@@ -39,12 +45,13 @@ export class MergeFieldEffects {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.createMergeFieldAction),
+      tap(() => this.alertService.info("Working on creating Merge Field")),
       mergeMap(action =>
         this.api.create(action.payload).pipe(
-          map(
-            list => fromActions.setMergeFieldsAction({ payload: list }),
+          mergeMap(list => [
+            fromActions.setMergeFieldsAction({ payload: list }),
             fromActions.mergeFieldApiBusyAction({ payload: false })
-          ),
+          ]),
           catchError(error =>
             of(
               fromActions.mergeFieldApiErrorAction({ payload: error }),
@@ -59,12 +66,13 @@ export class MergeFieldEffects {
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.updateMergeFieldAction),
+      tap(() => this.alertService.info("Working on updating Merge Field")),
       mergeMap(action =>
         this.api.update(action.payload).pipe(
-          map(
-            list => fromActions.setMergeFieldsAction({ payload: list }),
+          mergeMap(list => [
+            fromActions.setMergeFieldsAction({ payload: list }),
             fromActions.mergeFieldApiBusyAction({ payload: false })
-          ),
+          ]),
           catchError(error =>
             of(
               fromActions.mergeFieldApiErrorAction({ payload: error }),
@@ -79,12 +87,13 @@ export class MergeFieldEffects {
   delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.deleteMergeFieldAction),
+      tap(() => this.alertService.info("Working on deleting Merge Field")),
       mergeMap(action =>
         this.api.delete(action.payload).pipe(
-          map(
-            list => fromActions.setMergeFieldsAction({ payload: list }),
+          mergeMap(list => [
+            fromActions.setMergeFieldsAction({ payload: list }),
             fromActions.mergeFieldApiBusyAction({ payload: false })
-          ),
+          ]),
           catchError(error =>
             of(
               fromActions.mergeFieldApiErrorAction({ payload: error }),

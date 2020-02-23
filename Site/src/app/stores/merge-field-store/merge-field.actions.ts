@@ -36,12 +36,12 @@ export const createMergeFieldAction = createAction(
 );
 
 export const updateMergeFieldAction = createAction(
-  MergeFieldActionTypes.CREATE,
+  MergeFieldActionTypes.UPDATE,
   props<{ payload: MergeField }>()
 );
 
 export const deleteMergeFieldAction = createAction(
-  MergeFieldActionTypes.CREATE,
+  MergeFieldActionTypes.DELETE,
   props<{ payload: MergeField }>()
 );
 
