@@ -45,7 +45,7 @@ import { AlertModule } from "ngx-alerts";
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, position: "right" })
+    AlertModule.forRoot({ maxMessages: 5, timeout: 2000, position: "right" })
   ],
   providers: [
     { provide: MERGE_FIELD_STORE_API_TOKEN, useClass: MergeFieldApiService },
