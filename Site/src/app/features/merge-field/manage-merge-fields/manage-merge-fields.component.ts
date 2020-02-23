@@ -9,16 +9,12 @@ import { map } from "rxjs/operators";
 import { async } from "@angular/core/testing";
 
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
-import {
-  selectMergeFields,
-  busyMergeField,
-  errorMergeField
-} from "src/app/stores/merge-field-store/merge-field.selector";
+
 import { AlertService } from "ngx-alerts";
 import {
   MergeField,
   MergeFieldTypes,
-  MergeFieldState
+  MergeFieldAppState
 } from "src/app/stores/merge-field-store";
 
 @Component({
@@ -29,9 +25,6 @@ import {
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<MergeField[]>;
   busy$: Observable<boolean>;
-  error$: Observable<Error>;
-  isError: boolean;
-  error: Error;
 
   updateMergeField: MergeField = new MergeField();
   createMergeField: MergeField = new MergeField();
@@ -40,7 +33,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   types: any;
 
   constructor(
-    private store: Store<MergeFieldState>,
+    private store: Store<MergeFieldAppState>,
     private modalService: BsModalService,
     private alertService: AlertService
   ) {
@@ -50,14 +43,8 @@ export class ManageMergeFieldsComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(fromActions.loadMergeFieldsAction());
-    this.list$ = this.store.pipe(select(selectMergeFields));
-    this.busy$ = this.store.pipe(select(busyMergeField));
-
-    this.error$ = this.store.pipe(select(errorMergeField));
-    // this.error$.subscribe(err => {
-    //   this.isError = err != null;
-    //   this.error = err;
-    // });
+    this.list$ = this.store.select(state => state.mergeField.list);
+    this.busy$ = this.store.select(state => state.mergeField.busy);
   }
 
   onCreate() {

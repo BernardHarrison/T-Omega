@@ -12,10 +12,6 @@
 	</div>
 </div>
 <div class="outer-table-container">
-	<div class="alert alert-danger"
-		 *ngIf="isError">
-		<p>{{ error$ | async }}</p>
-	</div>
 	<div class="spinner-custom-container"
 		 *ngIf="busy$ | async ">
 		<div class="spinner-border text-danger"

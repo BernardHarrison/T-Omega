@@ -11,7 +11,6 @@ export class AppEffects {
   errors$ = createEffect(
     () =>
       this.actions$.pipe(
-        tap(err => console.log("TEST")),
         ofType(mergeFieldApiErrorAction),
         tap(err => {
           var msg = err && err.payload && err.payload.message;
