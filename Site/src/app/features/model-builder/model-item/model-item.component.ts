@@ -1,18 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MergeObject } from 'src/app/stores/model-builder-store/model-builder-store.module';
-import { MergeField } from 'src/app/stores/merge-field-api-store/merge-field-api-store.module';
+import { Component, OnInit, Input } from "@angular/core";
+import { MergeObject } from "src/app/stores/model-builder-store/model-builder-store.module";
+import { MergeField } from "src/app/stores/merge-field-store";
 
 @Component({
-  selector: 'app-model-item',
-  templateUrl: './model-item.component.html',
-  styleUrls: ['./model-item.component.scss']
+  selector: "app-model-item",
+  templateUrl: "./model-item.component.html",
+  styleUrls: ["./model-item.component.scss"]
 })
 export class ModelItemComponent implements OnInit {
+  @Input() fieldItems: Array<MergeField | MergeObject>;
+  constructor() {}
 
-  @Input() fieldItems: Array<MergeField | MergeObject>
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

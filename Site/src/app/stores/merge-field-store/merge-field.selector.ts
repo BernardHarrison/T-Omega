@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { MergeFieldState, mergeFieldFeatureKey } from "./merge-field.reducer";
+import { MergeFieldState, mergeFieldFeatureKey } from ".";
 
 export const mergeFieldState = createFeatureSelector<MergeFieldState>(
   mergeFieldFeatureKey

@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { MergeField } from "../merge-field-api-store/merge-field-api-store.module";
+import { MergeField } from ".";
 
 export enum MergeFieldActionTypes {
   SET_MERGEFIELDS = "[Merge Field] Set the merge field collection",

@@ -8,11 +8,9 @@ import {
 import { Store } from "@ngrx/store";
 import { map, tap } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
-import {
-  MergeFieldAppState,
-  MergeField
-} from "src/app/stores/merge-field-api-store/merge-field-api-store.module";
+
 import { AlertService } from "ngx-alerts";
+import { MergeField, MergeFieldState } from "src/app/stores/merge-field-store";
 
 @Component({
   selector: "app-manage-models",
@@ -37,7 +35,7 @@ export class ManageModelsComponent implements OnInit {
 
   constructor(
     private store: Store<ModelBuilderAppState>,
-    private mergeFieldStore: Store<MergeFieldAppState>,
+    private mergeFieldStore: Store<MergeFieldState>,
     private actions: ModelBuilderActions,
     private modalService: BsModalService,
     private alertService: AlertService
@@ -60,9 +58,9 @@ export class ManageModelsComponent implements OnInit {
 
   reloadMergeField() {
     this.mergeFieldStore.dispatch(this.actions.load());
-    this.mergeFields$ = this.mergeFieldStore.select(
-      state => state.mergeFieldState.list
-    );
+    // this.mergeFields$ = this.mergeFieldStore.select(
+    //   state => state.mergeFieldState.list
+    // );
   }
 
   selectMergeField(item: MergeField, model: ModelDefinition) {

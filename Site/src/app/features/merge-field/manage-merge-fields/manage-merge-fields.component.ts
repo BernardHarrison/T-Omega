@@ -7,7 +7,7 @@ import { NgForm } from "@angular/forms";
 import { map } from "rxjs/operators";
 
 import { async } from "@angular/core/testing";
-import * as fromReducer from "src/app/stores/merge-field-store/merge-field.reducer";
+
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
 import {
   selectMergeFields,
@@ -15,6 +15,11 @@ import {
   errorMergeField
 } from "src/app/stores/merge-field-store/merge-field.selector";
 import { AlertService } from "ngx-alerts";
+import {
+  MergeField,
+  MergeFieldTypes,
+  MergeFieldState
+} from "src/app/stores/merge-field-store";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -22,26 +27,24 @@ import { AlertService } from "ngx-alerts";
   styleUrls: ["./manage-merge-fields.component.scss"]
 })
 export class ManageMergeFieldsComponent implements OnInit {
-  list$: Observable<fromReducer.MergeField[]>;
+  list$: Observable<MergeField[]>;
   busy$: Observable<boolean>;
   error$: Observable<Error>;
   isError: boolean;
   error: Error;
 
-  updateMergeField: fromReducer.MergeField = new fromReducer.MergeField();
-  createMergeField: fromReducer.MergeField = new fromReducer.MergeField();
+  updateMergeField: MergeField = new MergeField();
+  createMergeField: MergeField = new MergeField();
 
   modalRef: BsModalRef;
   types: any;
 
   constructor(
-    private store: Store<fromReducer.MergeFieldState>,
+    private store: Store<MergeFieldState>,
     private modalService: BsModalService,
     private alertService: AlertService
   ) {
-    this.types = Object.keys(fromReducer.MergeFieldTypes).filter(k =>
-      isNaN(Number(k))
-    );
+    this.types = Object.keys(MergeFieldTypes).filter(k => isNaN(Number(k)));
   }
 
   ngOnInit() {
@@ -64,11 +67,11 @@ export class ManageMergeFieldsComponent implements OnInit {
         payload: this.createMergeField
       })
     );
-    this.createMergeField = new fromReducer.MergeField();
+    this.createMergeField = new MergeField();
     this.modalRef.hide();
   }
 
-  openModal(template: TemplateRef<any>, mergeField: fromReducer.MergeField) {
+  openModal(template: TemplateRef<any>, mergeField: MergeField) {
     this.createMergeField.type = "String";
     this.updateMergeField = mergeField;
     this.modalRef = this.modalService.show(template);
@@ -82,7 +85,7 @@ export class ManageMergeFieldsComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  onDelete(m: fromReducer.MergeField) {
+  onDelete(m: MergeField) {
     this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(fromActions.deleteMergeFieldAction({ payload: m }));
   }

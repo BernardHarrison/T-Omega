@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Observable, of } from "rxjs";
 import { Action } from "@ngrx/store";
@@ -13,12 +13,13 @@ import {
 import { MergeFieldApiService } from "src/app/apis/merge-field-api.service";
 import * as fromActions from "./merge-field.actions";
 import { AlertService } from "ngx-alerts";
+import { MERGE_FIELD_STORE_API, IMergeFieldApi } from ".";
 
 @Injectable()
 export class MergeFieldEffects {
   constructor(
     private actions$: Actions,
-    private api: MergeFieldApiService,
+    @Inject(MERGE_FIELD_STORE_API) private api: IMergeFieldApi,
     private alertService: AlertService
   ) {}
 
