@@ -3,5 +3,9 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"html.format.wrapAttributes": "force",
+		"html.mirrorCursorOnMatchingTag": true
+	}
 }

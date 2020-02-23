@@ -34,7 +34,6 @@ import { AlertModule } from "ngx-alerts";
   ],
   imports: [
     BrowserModule,
-    StorageServiceModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
@@ -53,4 +52,4 @@ import { AlertModule } from "ngx-alerts";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

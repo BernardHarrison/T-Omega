@@ -1,0 +1,52 @@
+.designer-wrapper{
+	position: absolute;
+	overflow-y: auto;
+	top:0;
+	bottom:0;
+	right: 0;
+	left: 0;
+    background-position: 0px 0px, 10px 10px;
+    background-size: 20px 20px;
+    background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, #ddd 25%, #ddd 75%, #eee 75%, #eee 100%);
+}
+
+.designer-wrapper, .designer-wrapper *{
+	padding:0;
+	margin:0;
+}
+
+.designer-wrapper .sizing-wrapper{
+	position: absolute;
+	min-height: 100%;
+	width:600px;
+	left:50%;
+}
+
+.designer-wrapper [designer-template]{
+	margin-top: 60px;
+	background-color: #ffffff;
+	min-height: 600px;
+	width: 100%;
+}
+
+.sizing-bar{
+	position: absolute;
+	top:0;
+	bottom:0;
+	width:0;
+	border: 1px dashed rgba($color: #aaaaaa, $alpha: .4);
+	cursor: col-resize;
+}
+
+.sizing-bar:hover{
+	border: 4px solid rgba($color: #aaaaaa, $alpha: 1.0);
+}
+
+.sizing-bar-left{
+	left: 0;
+}
+
+.sizing-bar-right{
+	right: 0;
+}
+
