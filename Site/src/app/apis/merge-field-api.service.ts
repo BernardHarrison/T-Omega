@@ -27,7 +27,6 @@ export class MergeFieldApiService implements CrudStateApiInterface<MergeField> {
     );
   }
   create(entity: MergeField): Observable<MergeField[]> {
-    console.log(entity);
     let items = <MergeField[]>this.storage.get(MERGE_FIELD_KEY);
     entity.id = Math.floor(Math.random() * 10000);
     items.push(entity);

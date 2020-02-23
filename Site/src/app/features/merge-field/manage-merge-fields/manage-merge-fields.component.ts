@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 import { async } from "@angular/core/testing";
 import * as fromReducer from "src/app/stores/merge-field-store/merge-field.reducer";
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
+import { selectMergeFields } from "src/app/stores/merge-field-store/merge-field.selector";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -38,7 +39,7 @@ export class ManageMergeFieldsComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(fromActions.loadMergeFieldsAction());
-    this.list$ = this.store.pipe(select(state => state.list));
+    this.list$ = this.store.pipe(select(selectMergeFields));
     this.busy$ = this.store.select(state => state.busy);
 
     this.error$ = this.store
@@ -54,6 +55,7 @@ export class ManageMergeFieldsComponent implements OnInit {
       })
     );
     this.createMergeField = new fromReducer.MergeField();
+    this.list$.subscribe(list => console.log(list));
     this.modalRef.hide();
   }
 
