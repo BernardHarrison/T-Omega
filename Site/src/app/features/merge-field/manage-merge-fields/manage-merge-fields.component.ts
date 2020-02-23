@@ -9,7 +9,12 @@ import { map } from "rxjs/operators";
 import { async } from "@angular/core/testing";
 import * as fromReducer from "src/app/stores/merge-field-store/merge-field.reducer";
 import * as fromActions from "src/app/stores/merge-field-store/merge-field.actions";
-import { selectMergeFields } from "src/app/stores/merge-field-store/merge-field.selector";
+import {
+  selectMergeFields,
+  busyMergeField,
+  errorMergeField
+} from "src/app/stores/merge-field-store/merge-field.selector";
+import { AlertService } from "ngx-alerts";
 
 @Component({
   selector: "app-manage-merge-fields",
@@ -19,8 +24,9 @@ import { selectMergeFields } from "src/app/stores/merge-field-store/merge-field.
 export class ManageMergeFieldsComponent implements OnInit {
   list$: Observable<fromReducer.MergeField[]>;
   busy$: Observable<boolean>;
-  error$: Observable<string>;
+  error$: Observable<Error>;
   isError: boolean;
+  error: Error;
 
   updateMergeField: fromReducer.MergeField = new fromReducer.MergeField();
   createMergeField: fromReducer.MergeField = new fromReducer.MergeField();
@@ -30,7 +36,8 @@ export class ManageMergeFieldsComponent implements OnInit {
 
   constructor(
     private store: Store<fromReducer.MergeFieldState>,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private alertService: AlertService
   ) {
     this.types = Object.keys(fromReducer.MergeFieldTypes).filter(k =>
       isNaN(Number(k))
@@ -38,24 +45,26 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(fromActions.loadMergeFieldsAction());
     this.list$ = this.store.pipe(select(selectMergeFields));
-    this.busy$ = this.store.select(state => state.busy);
+    this.busy$ = this.store.pipe(select(busyMergeField));
 
-    this.error$ = this.store
-      .select(state => state.error)
-      .pipe(map(err => err && err.message));
-    this.error$.subscribe(err => (this.isError = err != null));
+    this.error$ = this.store.pipe(select(errorMergeField));
+    // this.error$.subscribe(err => {
+    //   this.isError = err != null;
+    //   this.error = err;
+    // });
   }
 
   onCreate() {
+    this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(
       fromActions.createMergeFieldAction({
         payload: this.createMergeField
       })
     );
     this.createMergeField = new fromReducer.MergeField();
-    this.list$.subscribe(list => console.log(list));
     this.modalRef.hide();
   }
 
@@ -66,6 +75,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   onUpdate() {
+    this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(
       fromActions.updateMergeFieldAction({ payload: this.updateMergeField })
     );
@@ -73,6 +83,7 @@ export class ManageMergeFieldsComponent implements OnInit {
   }
 
   onDelete(m: fromReducer.MergeField) {
+    this.store.dispatch(fromActions.mergeFieldApiBusyAction({ payload: true }));
     this.store.dispatch(fromActions.deleteMergeFieldAction({ payload: m }));
   }
 }

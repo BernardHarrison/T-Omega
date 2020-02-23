@@ -9,3 +9,11 @@ export const selectMergeFields = createSelector(
   mergeFieldState,
   (state: MergeFieldState) => state.list
 );
+export const busyMergeField = createSelector(
+  mergeFieldState,
+  (state: MergeFieldState) => state.busy
+);
+export const errorMergeField = createSelector(
+  mergeFieldState,
+  (state: MergeFieldState) => state.error
+);
