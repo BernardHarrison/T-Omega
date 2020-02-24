@@ -62,21 +62,21 @@
                  *ngFor="let field of model.fields">
                 <div class="text-warning col-1 offset-1 text-right">{{"{"}}</div>
 
-                <div class="border border-warning col-3 bg-dark"> Name: {{field.name}} </div>
+                <div class="border border-warning col-4 bg-dark"> Name: {{field.name}} </div>
 
-                <div class="border border-warning col-3 bg-dark"> Type:
+                <div class="border border-warning col-4 bg-dark"> Type:
                     {{field.type}}</div>
 
                 <div class="text-warning col-1">{{"}"}}</div>
 
-                <div class="col-3">
-                    <button title="Move Up"
+                <div class="col-1">
+                    <!-- <button title="Move Up"
                             class="btn btn-dark mergfield-button mr-1"><i class="fas fa-chevron-up"></i></button>
                     <button title="Move Down"
-                            class="btn btn-dark mergfield-button mr-1"><i class="fas fa-chevron-down"></i></button>
+                            class="btn btn-dark mergfield-button mr-1"><i class="fas fa-chevron-down"></i></button> -->
                     <button title="Remove MergeField"
                             class="btn btn-danger mergfield-button"
-                            (click)="onDelete(model)"><i class="fas fa-trash-alt"></i></button>
+                            (click)="removeMergeField(field, model)"><i class="fas fa-trash-alt"></i></button>
 
                 </div>
             </div>

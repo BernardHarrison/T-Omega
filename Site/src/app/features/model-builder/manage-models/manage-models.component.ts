@@ -12,7 +12,8 @@ import {
 } from "src/app/stores/merge-field-store";
 import {
   ModelDefinition,
-  ModelBuilderAppState
+  ModelBuilderAppState,
+  FieldsObject
 } from "src/app/stores/model-builder-store";
 
 import * as fromActions from "src/app/stores/model-builder-store/model-builder.actions";
@@ -30,6 +31,7 @@ export class ManageModelsComponent implements OnInit {
 
   creating: ModelDefinition = new ModelDefinition();
   updating: ModelDefinition = new ModelDefinition();
+  fieldsObject: FieldsObject = new FieldsObject();
   modalRef: BsModalRef;
 
   mergeFields$: Observable<MergeField[]>;
@@ -62,9 +64,18 @@ export class ManageModelsComponent implements OnInit {
   }
 
   selectMergeField(item: MergeField, model: ModelDefinition) {
-    model.fields.push(item);
+    this.fieldsObject.selecteMergeField = item;
+    this.fieldsObject.currentModelDefinition = model;
     this.store.dispatch(
-      fromMergeFieldActions.createMergeFieldAction({ payload: item })
+      fromActions.addMergeToFieldsAction({ payload: this.fieldsObject })
+    );
+  }
+
+  removeMergeField(item: MergeField, model: ModelDefinition) {
+    this.fieldsObject.selecteMergeField = item;
+    this.fieldsObject.currentModelDefinition = model;
+    this.store.dispatch(
+      fromActions.removeMergeFromFieldsAction({ payload: this.fieldsObject })
     );
   }
 

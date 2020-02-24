@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
-import { CrudStateApiInterface } from "../stores/api-entity";
+
 import { of, Observable, throwError } from "rxjs";
 import { delay, mergeMap } from "rxjs/operators";
 import { IMergeFieldApi, MergeField } from "../stores/merge-field-store";

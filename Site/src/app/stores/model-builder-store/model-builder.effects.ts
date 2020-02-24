@@ -91,4 +91,44 @@ export class ModelBuilderEffects {
       )
     )
   );
+
+  addField$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.addMergeToFieldsAction),
+      mergeMap(action =>
+        this.api.addField(action.payload).pipe(
+          mergeMap(list => [
+            fromActions.setModelBuildersAction({ payload: list }),
+            fromActions.modelBuilderApiBusyAction({ payload: false })
+          ]),
+          catchError(error =>
+            of(
+              fromActions.modelBuilderApiErrorAction({ payload: error }),
+              fromActions.modelBuilderApiBusyAction({ payload: false })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  removeField$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.removeMergeFromFieldsAction),
+      mergeMap(action =>
+        this.api.removeField(action.payload).pipe(
+          mergeMap(list => [
+            fromActions.setModelBuildersAction({ payload: list }),
+            fromActions.modelBuilderApiBusyAction({ payload: false })
+          ]),
+          catchError(error =>
+            of(
+              fromActions.modelBuilderApiErrorAction({ payload: error }),
+              fromActions.modelBuilderApiBusyAction({ payload: false })
+            )
+          )
+        )
+      )
+    )
+  );
 }

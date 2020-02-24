@@ -6,7 +6,7 @@ import {
   MetaReducer
 } from "@ngrx/store";
 import { environment } from "../../../environments/environment";
-import { MergeField } from "../merge-field-store";
+import { MergeField, MergeFieldState } from "../merge-field-store";
 import { Observable } from "rxjs";
 import { InjectionToken } from "@angular/core";
 
@@ -41,8 +41,15 @@ export interface IModelDefinitionApi {
   update(entity: ModelDefinition): Observable<ModelDefinition[]>;
   create(entity: ModelDefinition): Observable<ModelDefinition[]>;
   delete(entity: ModelDefinition): Observable<ModelDefinition[]>;
+  addField(entity: FieldsObject): Observable<ModelDefinition[]>;
+  removeField(entity: FieldsObject): Observable<ModelDefinition[]>;
 }
 
 export const MODEL_FIELD_STORE_API = new InjectionToken<IModelDefinitionApi>(
   "MODEL_FIELD_STORE_API"
 );
+
+export class FieldsObject {
+  currentModelDefinition: ModelDefinition;
+  selecteMergeField: MergeField;
+}
