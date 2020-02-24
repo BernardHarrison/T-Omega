@@ -19,8 +19,7 @@ import { MERGE_FIELD_STORE_API, IMergeFieldApi } from ".";
 export class MergeFieldEffects {
   constructor(
     private actions$: Actions,
-    @Inject(MERGE_FIELD_STORE_API) private api: IMergeFieldApi,
-    private alertService: AlertService
+    @Inject(MERGE_FIELD_STORE_API) private api: IMergeFieldApi
   ) {}
 
   load$ = createEffect(() =>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { MergeObject } from "src/app/stores/model-builder-store/model-builder-store.module";
+
 import { MergeField } from "src/app/stores/merge-field-store";
+import { MergeObject } from "src/app/stores/model-builder-store";
 
 @Component({
   selector: "app-model-item",

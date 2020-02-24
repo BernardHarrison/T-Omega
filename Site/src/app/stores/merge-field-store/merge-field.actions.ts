@@ -3,24 +3,15 @@ import { MergeField } from ".";
 
 export enum MergeFieldActionTypes {
   SET_MERGEFIELDS = "[Merge Field] Set the merge field collection",
-
   SET_MERGEFIELD = "[Merge Field] Set the selected merge field",
 
   LOAD = "[Merge Field] Load Merge Fields",
-  LOAD_BUSY = "[Merge Field] Merge fields are loading",
-  LOAD_ERROR = "[Merge Field] Merge fields loading error",
+  BUSY = "[Merge Field] Merge fields are loading",
+  ERROR = "[Merge Field] Merge fields loading error",
 
   CREATE = "[Merge Field] Create Merge Field",
-  CREATE_BUSY = "[Merge Field] Creating Merge Field",
-  CREATE_ERROR = "[Merge Field] Creating Merge Field Error",
-
   UPDATE = "[Merge Field] Update Merge Field",
-  UPDATING_BUSY = "[Merge Field] Updating Merge Field",
-  UPDATING_ERROR = "[Merge Field] Updating Merge Field Error",
-
-  DELETE = "[Merge Field] Delete Merge Fields",
-  DELETING_BUSY = "[Merge Field] Deleting Merge Field",
-  DELETING_ERROR = "[Merge Field] Deleting Merge Field Error"
+  DELETE = "[Merge Field] Delete Merge Fields"
 }
 
 export const loadMergeFieldsAction = createAction(MergeFieldActionTypes.LOAD);
@@ -51,11 +42,11 @@ export const setMergeFieldsAction = createAction(
 );
 
 export const mergeFieldApiBusyAction = createAction(
-  MergeFieldActionTypes.LOAD_BUSY,
+  MergeFieldActionTypes.BUSY,
   props<{ payload: boolean }>()
 );
 
 export const mergeFieldApiErrorAction = createAction(
-  MergeFieldActionTypes.LOAD_ERROR,
+  MergeFieldActionTypes.ERROR,
   props<{ payload: Error }>()
 );

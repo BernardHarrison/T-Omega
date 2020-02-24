@@ -1,16 +1,22 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
-import { Observable, merge, concat, asyncScheduler } from "rxjs";
-import {
-  ModelDefinition,
-  ModelBuilderAppState,
-  ModelBuilderActions
-} from "src/app/stores/model-builder-store/model-builder-store.module";
+import { Observable, merge } from "rxjs";
+
 import { Store } from "@ngrx/store";
 import { map, tap } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 import { AlertService } from "ngx-alerts";
-import { MergeField, MergeFieldState } from "src/app/stores/merge-field-store";
+import {
+  MergeField,
+  MergeFieldAppState
+} from "src/app/stores/merge-field-store";
+import {
+  ModelDefinition,
+  ModelBuilderAppState
+} from "src/app/stores/model-builder-store";
+
+import * as fromActions from "src/app/stores/model-builder-store/model-builder.actions";
+import * as fromMergeFieldActions from "src/app/stores/merge-field-store/merge-field.actions";
 
 @Component({
   selector: "app-manage-models",
@@ -20,12 +26,7 @@ import { MergeField, MergeFieldState } from "src/app/stores/merge-field-store";
 export class ManageModelsComponent implements OnInit {
   list$: Observable<ModelDefinition[]>;
 
-  loadBusy$: Observable<boolean>;
-  createBusy$: Observable<boolean>;
   busy$: Observable<boolean>;
-
-  error$: Observable<string>;
-  isError: boolean;
 
   creating: ModelDefinition = new ModelDefinition();
   updating: ModelDefinition = new ModelDefinition();
@@ -35,37 +36,36 @@ export class ManageModelsComponent implements OnInit {
 
   constructor(
     private store: Store<ModelBuilderAppState>,
-    private mergeFieldStore: Store<MergeFieldState>,
-    private actions: ModelBuilderActions,
+    private mergeFieldStore: Store<MergeFieldAppState>,
     private modalService: BsModalService,
     private alertService: AlertService
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(this.actions.load());
+    this.store.dispatch(
+      fromActions.modelBuilderApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(fromActions.loadModelFieldsAction());
     this.list$ = this.store.select(state => state.modelBuilderState.list);
     this.reloadMergeField();
 
-    this.busy$ = merge(
-      this.store.select(x => x.modelBuilderState.loadApiState.busy),
-      this.store.select(x => x.modelBuilderState.createApiState.busy),
-      this.store.select(x => x.modelBuilderState.updateApiState.busy),
-      this.store.select(x => x.modelBuilderState.deleteApiState.busy)
-    );
-
-    this.handleErrors();
+    this.busy$ = this.store.select(state => state.modelBuilderState.busy);
   }
 
   reloadMergeField() {
-    this.mergeFieldStore.dispatch(this.actions.load());
-    // this.mergeFields$ = this.mergeFieldStore.select(
-    //   state => state.mergeFieldState.list
-    // );
+    this.mergeFieldStore.dispatch(
+      fromMergeFieldActions.loadMergeFieldsAction()
+    );
+    this.mergeFields$ = this.mergeFieldStore.select(
+      state => state.mergeField.list
+    );
   }
 
   selectMergeField(item: MergeField, model: ModelDefinition) {
     model.fields.push(item);
-    this.store.dispatch(this.actions.update(model));
+    this.store.dispatch(
+      fromMergeFieldActions.createMergeFieldAction({ payload: item })
+    );
   }
 
   openModal(template: TemplateRef<any>, modelDefinition: ModelDefinition) {
@@ -74,37 +74,38 @@ export class ManageModelsComponent implements OnInit {
   }
 
   onCreate() {
+    this.alertService.success("Creating Model Field");
+    this.store.dispatch(
+      fromActions.modelBuilderApiBusyAction({ payload: true })
+    );
+
     this.creating.fields = [];
-    this.store.dispatch(this.actions.create(this.creating));
+    this.store.dispatch(
+      fromActions.createModelBuilderAction({ payload: this.creating })
+    );
     this.creating = new ModelDefinition();
     this.reloadMergeField();
     this.modalRef.hide();
   }
 
   onUpdate() {
-    this.store.dispatch(this.actions.update(this.updating));
+    this.alertService.warning("Updating Model Field");
+    this.store.dispatch(
+      fromActions.modelBuilderApiBusyAction({ payload: true })
+    );
+
+    this.store.dispatch(
+      fromActions.updateModelBuilderAction({ payload: this.updating })
+    );
     this.modalRef.hide();
   }
 
   onDelete(m: ModelDefinition) {
-    this.store.dispatch(this.actions.delete(m));
-  }
-
-  handleErrors() {
-    this.error$ = merge(
-      this.store.select(x => x.modelBuilderState.loadApiState.error),
-      this.store.select(x => x.modelBuilderState.createApiState.error),
-      this.store.select(x => x.modelBuilderState.updateApiState.error),
-      this.store.select(x => x.modelBuilderState.deleteApiState.error)
-    ).pipe(
-      map(err => err && err.message),
-      tap(console.log)
+    this.alertService.danger("Deleting Model Field");
+    this.store.dispatch(
+      fromActions.modelBuilderApiBusyAction({ payload: true })
     );
 
-    this.error$.subscribe(err => (this.isError = err != null));
-
-    if (this.isError) {
-      this.error$.subscribe(err => this.alertService.danger(err));
-    }
+    this.store.dispatch(fromActions.deleteModelBuilderAction({ payload: m }));
   }
 }

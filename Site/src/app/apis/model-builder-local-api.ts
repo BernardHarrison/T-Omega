@@ -1,17 +1,18 @@
 import { Injectable, Inject } from "@angular/core";
-import { ModelDefinition } from "../stores/model-builder-store/model-builder-store.module";
-import { CrudStateApiInterface } from "../stores/api-entity";
 import { LOCAL_STORAGE, StorageService } from "ngx-webstorage-service";
 import { Observable, of, throwError } from "rxjs";
 import { delay, mergeMap } from "rxjs/operators";
+import {
+  ModelDefinition,
+  IModelDefinitionApi
+} from "../stores/model-builder-store";
 
 const MODEL_BUILDER_LOCAL_STORAGE_KEY = "MODEL_BUILDER_LOCAL_STORAGE_KEY";
 
 @Injectable({
   providedIn: "root"
 })
-export class ModelBuilderLocalApi
-  implements CrudStateApiInterface<ModelDefinition> {
+export class ModelBuilderLocalApi implements IModelDefinitionApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     let items = <ModelDefinition[]>(
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
