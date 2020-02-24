@@ -4,9 +4,9 @@ import { Observable, of, throwError } from "rxjs";
 import { delay, mergeMap } from "rxjs/operators";
 import {
   ModelDefinition,
-  IModelDefinitionApi,
-  FieldsObject
+  IModelDefinitionApi
 } from "../stores/model-builder-store";
+import { MergeField } from "../stores/merge-field-store";
 
 const MODEL_BUILDER_LOCAL_STORAGE_KEY = "MODEL_BUILDER_LOCAL_STORAGE_KEY";
 
@@ -62,27 +62,32 @@ export class ModelBuilderLocalApi implements IModelDefinitionApi {
     return this.get();
   }
 
-  addField(entity: FieldsObject): Observable<ModelDefinition[]> {
+  addField(
+    field: MergeField,
+    model: ModelDefinition
+  ): Observable<ModelDefinition[]> {
     let items = <ModelDefinition[]>(
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
     items.forEach((item, index) => {
-      if (item.id == entity.currentModelDefinition.id) {
-        item.fields.push(entity.selecteMergeField);
+      if (item.id == model.id) {
+        item.object.fields.push(field);
       }
     });
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, items);
     return this.get();
   }
-  removeField(entity: FieldsObject): Observable<ModelDefinition[]> {
+  removeField(
+    field: MergeField,
+    model: ModelDefinition
+  ): Observable<ModelDefinition[]> {
     let items = <ModelDefinition[]>(
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
     items.forEach((item, index) => {
-      if (item.id == entity.currentModelDefinition.id) {
-        item.fields.forEach((field, index) => {
-          if (field.id == entity.selecteMergeField.id)
-            item.fields.splice(index, 1);
+      if (item.id == model.id) {
+        item.object.fields.forEach((field, index) => {
+          if (field.id == field.id) item.object.fields.splice(index, 1);
         });
       }
     });

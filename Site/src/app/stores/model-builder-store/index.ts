@@ -14,16 +14,28 @@ import { InjectionToken } from "@angular/core";
 export const MODEL_BUILDER_KEY = "modelBuilderState";
 
 //2) Define the model for this store
-export interface MergeObject {
-  name: string;
+export class MergeObject {
+  fieldName: string; //Example Address
   fields: Array<MergeField>;
+  objects: Array<MergeObject>;
 }
 
 export class ModelDefinition {
   id: number | null;
   name: string;
-  fields: Array<MergeField>;
+  object: MergeObject;
 }
+
+/*
+  {
+    firstname: stirng,
+    address: {
+    
+    }
+  }
+*/
+
+//    FirstName: string
 
 export interface ModelBuilderState {
   list: ModelDefinition[];
@@ -41,15 +53,16 @@ export interface IModelDefinitionApi {
   update(entity: ModelDefinition): Observable<ModelDefinition[]>;
   create(entity: ModelDefinition): Observable<ModelDefinition[]>;
   delete(entity: ModelDefinition): Observable<ModelDefinition[]>;
-  addField(entity: FieldsObject): Observable<ModelDefinition[]>;
-  removeField(entity: FieldsObject): Observable<ModelDefinition[]>;
+  addField(
+    field: MergeField,
+    model: ModelDefinition
+  ): Observable<ModelDefinition[]>;
+  removeField(
+    field: MergeField,
+    model: ModelDefinition
+  ): Observable<ModelDefinition[]>;
 }
 
 export const MODEL_FIELD_STORE_API = new InjectionToken<IModelDefinitionApi>(
   "MODEL_FIELD_STORE_API"
 );
-
-export class FieldsObject {
-  currentModelDefinition: ModelDefinition;
-  selecteMergeField: MergeField;
-}

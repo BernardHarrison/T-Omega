@@ -59,7 +59,7 @@
             <div class="text-danger model-filler">{{ "{" }}</div>
 
             <div class="mergefield-container row mt-1"
-                 *ngFor="let field of model.fields">
+                 *ngFor="let field of model.object.fields">
                 <div class="text-warning col-1 offset-1 text-right">{{"{"}}</div>
 
                 <div class="border border-warning col-4 bg-dark"> Name: {{field.name}} </div>

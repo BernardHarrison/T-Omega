@@ -17,18 +17,18 @@ export class ModelBuilderEffects {
       ofType(fromActions.loadModelFieldsAction),
       mergeMap(action =>
         this.api.get().pipe(
-          mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
-          ]),
+          mergeMap(list =>
+            of(fromActions.setModelBuildersAction({ payload: list }))
+          ),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 
@@ -38,17 +38,17 @@ export class ModelBuilderEffects {
       mergeMap(action =>
         this.api.create(action.payload).pipe(
           mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
+            fromActions.setModelBuildersAction({ payload: list })
           ]),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 
@@ -58,17 +58,17 @@ export class ModelBuilderEffects {
       mergeMap(action =>
         this.api.update(action.payload).pipe(
           mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
+            fromActions.setModelBuildersAction({ payload: list })
           ]),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 
@@ -78,17 +78,17 @@ export class ModelBuilderEffects {
       mergeMap(action =>
         this.api.delete(action.payload).pipe(
           mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
+            fromActions.setModelBuildersAction({ payload: list })
           ]),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 
@@ -96,19 +96,19 @@ export class ModelBuilderEffects {
     this.actions$.pipe(
       ofType(fromActions.addMergeToFieldsAction),
       mergeMap(action =>
-        this.api.addField(action.payload).pipe(
+        this.api.addField(action.field, action.model).pipe(
           mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
+            fromActions.setModelBuildersAction({ payload: list })
           ]),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 
@@ -116,19 +116,19 @@ export class ModelBuilderEffects {
     this.actions$.pipe(
       ofType(fromActions.removeMergeFromFieldsAction),
       mergeMap(action =>
-        this.api.removeField(action.payload).pipe(
+        this.api.removeField(action.field, action.model).pipe(
           mergeMap(list => [
-            fromActions.setModelBuildersAction({ payload: list }),
-            fromActions.modelBuilderApiBusyAction({ payload: false })
+            fromActions.setModelBuildersAction({ payload: list })
           ]),
           catchError(error =>
-            of(
-              fromActions.modelBuilderApiErrorAction({ payload: error }),
-              fromActions.modelBuilderApiBusyAction({ payload: false })
-            )
+            of(fromActions.modelBuilderApiErrorAction({ payload: error }))
           )
         )
-      )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.modelBuilderApiBusyAction({ payload: false })
+      ])
     )
   );
 }

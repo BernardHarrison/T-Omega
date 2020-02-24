@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { ModelDefinition, FieldsObject } from ".";
+import { ModelDefinition } from ".";
 import { MergeField } from "../merge-field-store";
 export enum ModelBuilderActionTypes {
   SET_MODELBUILDERS = "[Model Builder] Set the Model Builder collection",
@@ -24,12 +24,12 @@ export const selectModelBuilderAction = createAction(
 
 export const addMergeToFieldsAction = createAction(
   ModelBuilderActionTypes.ADD_MERGE_TO_FIELDS,
-  props<{ payload: FieldsObject }>()
+  props<{ field: MergeField; model: ModelDefinition }>()
 );
 
 export const removeMergeFromFieldsAction = createAction(
   ModelBuilderActionTypes.REMOVE_MERGE_FROM_FIELDS,
-  props<{ payload: FieldsObject }>()
+  props<{ field: MergeField; model: ModelDefinition }>()
 );
 
 export const createModelBuilderAction = createAction(

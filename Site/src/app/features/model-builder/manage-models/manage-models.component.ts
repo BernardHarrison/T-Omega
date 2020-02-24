@@ -13,7 +13,7 @@ import {
 import {
   ModelDefinition,
   ModelBuilderAppState,
-  FieldsObject
+  MergeObject
 } from "src/app/stores/model-builder-store";
 
 import * as fromActions from "src/app/stores/model-builder-store/model-builder.actions";
@@ -31,7 +31,7 @@ export class ManageModelsComponent implements OnInit {
 
   creating: ModelDefinition = new ModelDefinition();
   updating: ModelDefinition = new ModelDefinition();
-  fieldsObject: FieldsObject = new FieldsObject();
+
   modalRef: BsModalRef;
 
   mergeFields$: Observable<MergeField[]>;
@@ -64,18 +64,26 @@ export class ManageModelsComponent implements OnInit {
   }
 
   selectMergeField(item: MergeField, model: ModelDefinition) {
-    this.fieldsObject.selecteMergeField = item;
-    this.fieldsObject.currentModelDefinition = model;
     this.store.dispatch(
-      fromActions.addMergeToFieldsAction({ payload: this.fieldsObject })
+      fromActions.modelBuilderApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.addMergeToFieldsAction({
+        field: item,
+        model: model
+      })
     );
   }
 
   removeMergeField(item: MergeField, model: ModelDefinition) {
-    this.fieldsObject.selecteMergeField = item;
-    this.fieldsObject.currentModelDefinition = model;
     this.store.dispatch(
-      fromActions.removeMergeFromFieldsAction({ payload: this.fieldsObject })
+      fromActions.modelBuilderApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.removeMergeFromFieldsAction({
+        field: item,
+        model: model
+      })
     );
   }
 
@@ -90,7 +98,9 @@ export class ManageModelsComponent implements OnInit {
       fromActions.modelBuilderApiBusyAction({ payload: true })
     );
 
-    this.creating.fields = [];
+    this.creating.object = new MergeObject();
+    this.creating.object.fields = [];
+
     this.store.dispatch(
       fromActions.createModelBuilderAction({ payload: this.creating })
     );
