@@ -1,26 +1,45 @@
 <div class="container">
     <div class="row">
+        <h3 class="mt-2">Site Features</h3>
+    </div>
+    <div class="row">
         <div class="col-md-6 col-lg-4">
-            <div class="card text-white mb-3 border-success text-center"
+            <div class="card text-white mb-3 border-danger text-center"
                  style="max-width: 18rem;">
-                <div class="card-header">Model Builder</div>
+                <div class="card-header">List of Merge Fields</div>
                 <div class="card-body">
-                    <h5 class="card-title">Model Builder</h5>
-                    <p class="card-text">Click on link below to view all models</p>
-                    <a [routerLink]="['model-builder']"
-                       class="btn btn-success">Model Builder List</a>
+                    <h5 class="card-title">Merge Fields</h5>
+
+                    <span class="home-icon"><i class="fas fa-sitemap"></i></span>
+                    <a [routerLink]="['merge-fields']"
+                       class="btn btn-danger">Merge Fields</a>
                 </div>
             </div>
         </div>
+
         <div class="col-md-6 col-lg-4">
-            <div class="card text-white mb-3 border-warning text-center"
+            <div class="card text-white mb-3 border-info text-center"
                  style="max-width: 18rem;">
-                <div class="card-header">Manage Merge Fields</div>
+                <div class="card-header">List of Merge Objects</div>
                 <div class="card-body">
-                    <h5 class="card-title">Manage Merge Fields</h5>
-                    <p class="card-text">Click on link below to view all merge Fields</p>
-                    <a [routerLink]="['manage-merge-fields']"
-                       class="btn btn-warning">Merge Field List</a>
+                    <h5 class="card-title">Merge Objects</h5>
+                    <span class="home-icon"><i class="fas fa-sitemap"></i></span>
+                    <a [routerLink]="['merge-objects']"
+                       class="btn btn-info">Merge Objects</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white mb-3 border-secondary text-center"
+                 style="max-width: 18rem;">
+                <div class="card-header">List of Model Objects</div>
+                <div class="card-body">
+                    <h5 class="card-title">Model Builder List</h5>
+                    <span class="home-icon"><i class="fas fa-sitemap"></i></span>
+                    <a [routerLink]="['model-builder-list']"
+                       class="btn btn-secondary">Model Builder List</a>
                 </div>
             </div>
 

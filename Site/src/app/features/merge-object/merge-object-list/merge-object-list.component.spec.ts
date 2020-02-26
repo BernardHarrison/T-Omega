@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModelItemComponent } from './model-item.component';
+import { MergeObjectListComponent } from './merge-object-list.component';
 
-describe('ModelItemComponent', () => {
-  let component: ModelItemComponent;
-  let fixture: ComponentFixture<ModelItemComponent>;
+describe('MergeObjectListComponent', () => {
+  let component: MergeObjectListComponent;
+  let fixture: ComponentFixture<MergeObjectListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModelItemComponent ]
+      declarations: [ MergeObjectListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModelItemComponent);
+    fixture = TestBed.createComponent(MergeObjectListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

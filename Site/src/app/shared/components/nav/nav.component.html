@@ -22,10 +22,18 @@
                                [routerLink]="['model-builder']"
                                routerLinkActive="router-link-active">Model Builder</a></li>
                      <li role="menuitem"><a class="dropdown-item"
-                               href="#">Something else here</a></li>
+                               [routerLink]="['merge-fields']"
+                               routerLinkActive="router-link-active"><i class="fas fa-sitemap"></i> Merge Fields</a>
+                     </li>
                      <li class="divider dropdown-divider"></li>
                      <li role="menuitem"><a class="dropdown-item"
-                               href="#">Separated link</a>
+                               [routerLink]="['merge-objects']"
+                               routerLinkActive="router-link-active"> <i class="fas fa-sitemap"></i> Merge Objects</a>
+                     </li>
+                     <li role="menuitem"><a class="dropdown-item"
+                               [routerLink]="['model-builder-list']"
+                               routerLinkActive="router-link-active"> <i class="fas fa-sitemap"></i> Model Builder
+                                   List</a>
                      </li>
               </ul>
        </div>

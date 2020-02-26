@@ -6,7 +6,6 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { BsDropdownModule, ModalModule } from "ngx-bootstrap";
 import { AlertModule } from "ngx-alerts";
-//import { StorageServiceModule } from "ngx-webstorage-service";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 import { MergeFieldModule } from "./features/merge-field/merge-field.module";
@@ -26,6 +25,10 @@ import { MODEL_FIELD_STORE_API } from "./stores/model-builder-store";
 
 import { ModelBuilderModule } from "./features/model-builder/model-builder.module";
 import { ModelBuilderStoreModule } from "./stores/model-builder-store/model-builder-store.module";
+import { MergeObjectModule } from "./features/merge-object/merge-object.module";
+import { MERGE_OBJECT_STORE_API } from "./stores/merge-object-store";
+import { MergeObjectApiService } from "./apis/merge-object-api.service";
+import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object-store.module";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { ModelBuilderStoreModule } from "./stores/model-builder-store/model-buil
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
     ModelBuilderStoreModule,
+    MergeObjectStoreModule,
     ModelBuilderModule,
+    MergeObjectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
@@ -50,7 +55,8 @@ import { ModelBuilderStoreModule } from "./stores/model-builder-store/model-buil
   ],
   providers: [
     { provide: MERGE_FIELD_STORE_API, useClass: MergeFieldApiService },
-    { provide: MODEL_FIELD_STORE_API, useClass: ModelBuilderLocalApi }
+    { provide: MODEL_FIELD_STORE_API, useClass: ModelBuilderLocalApi },
+    { provide: MERGE_OBJECT_STORE_API, useClass: MergeObjectApiService }
   ],
   bootstrap: [AppComponent]
 })

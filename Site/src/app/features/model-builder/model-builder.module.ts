@@ -3,12 +3,12 @@ import { CommonModule } from "@angular/common";
 import { ManageModelsComponent } from "./manage-models/manage-models.component";
 import { FormsModule } from "@angular/forms";
 import { ModelBuilderRoutingModule } from "./model-builder-routing.module";
-import { ModelItemComponent } from "./model-item/model-item.component";
-import { FieldItemComponent } from "./field-item/field-item.component";
 import { BsDropdownModule } from "ngx-bootstrap";
+import { ModelBuilderListComponent } from "./model-builder-list/model-builder-list.component";
+import { ModelBuilderEditComponent } from './model-builder-edit/model-builder-edit.component';
 
 @NgModule({
-  declarations: [ManageModelsComponent, ModelItemComponent, FieldItemComponent],
+  declarations: [ManageModelsComponent, ModelBuilderListComponent, ModelBuilderEditComponent],
   imports: [
     CommonModule,
     FormsModule,

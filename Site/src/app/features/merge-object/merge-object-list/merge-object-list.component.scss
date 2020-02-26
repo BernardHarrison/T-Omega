@@ -1,0 +1,29 @@
+.table-header h3 {
+  font-size: 24px;
+}
+.table-header button {
+  font-size: 14px;
+}
+.merge-button-container button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.outer-table-container {
+  position: relative;
+}
+.spinner-custom-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: #000;
+  opacity: 0.5;
+  text-align: center;
+  padding: 50px;
+}
+
+.spinner-custom-container div {
+  width: 100px;
+  height: 100px;
+}

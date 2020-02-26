@@ -1,0 +1,95 @@
+import { Injectable, Inject } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+
+import * as fromActions from "./merge-object.actions";
+import { mergeMap, catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { IMergeObjectApi, MERGE_OBJECT_STORE_API } from ".";
+
+@Injectable()
+export class MergeObjectEffects {
+  constructor(
+    private actions$: Actions,
+    @Inject(MERGE_OBJECT_STORE_API) private api: IMergeObjectApi
+  ) {}
+
+  load$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.loadMergeObjectsAction),
+      mergeMap(action =>
+        this.api.get().pipe(
+          mergeMap(list =>
+            of(fromActions.setMergeObjectsAction({ payload: list }))
+          ),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
+
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createMergeObjectAction),
+      mergeMap(action =>
+        this.api.create(action.payload).pipe(
+          mergeMap(list => [
+            fromActions.setMergeObjectsAction({ payload: list })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateMergeObjectAction),
+      mergeMap(action =>
+        this.api.update(action.payload).pipe(
+          mergeMap(list => [
+            fromActions.setMergeObjectsAction({ payload: list })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiBusyAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteMergeObjectAction),
+      mergeMap(action =>
+        this.api.delete(action.payload).pipe(
+          mergeMap(list => [
+            fromActions.setMergeObjectsAction({ payload: list })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
+}
