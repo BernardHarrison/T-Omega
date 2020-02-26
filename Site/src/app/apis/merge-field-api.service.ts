@@ -12,7 +12,11 @@ const MERGE_FIELD_KEY = "MERGE_FIELD_KEY";
 })
 export class MergeFieldApiService implements IMergeFieldApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    storage.set(MERGE_FIELD_KEY, []);
+    storage.set(MERGE_FIELD_KEY, [
+      { id: 1, name: "state", type: String },
+      { id: 2, name: "street", type: String },
+      { id: 3, name: "zipCode", type: Number }
+    ]);
   }
 
   get(): Observable<MergeField[]> {

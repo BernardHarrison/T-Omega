@@ -1,7 +1,8 @@
-<div class="row">
+<div class="row"
+     *ngIf="selectedItem$ | async; let selectedItem">
     <div class="col-sm-8">
         <header class="text-secondary border border-secondary text-center pt-2 mt-4">
-            <h6><i class="fas fa-code"></i> address Model</h6>
+            <h6><i class="fas fa-code"></i> {{selectedItem.fieldName}} Model</h6>
         </header>
         <div class="mt-3 merge-fields-builder bg-secondary">
             <div class="text-info model-filler">{{ "{" }}</div>
@@ -43,27 +44,9 @@
             </header>
             <div class="mt-3 merge-fields">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item pt-1 pb-1 text-info">Cras justo odio</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Dapibus ac facilisis in</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Morbi leo risus</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Porta ac consectetur ac</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Vestibulum at eros</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Cras justo odio</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Dapibus ac facilisis in</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Morbi leo risus</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Porta ac consectetur ac</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Vestibulum at eros</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Cras justo odio</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Dapibus ac facilisis in</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Morbi leo risus</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Porta ac consectetur ac</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Vestibulum at eros</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Cras justo odio</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Dapibus ac facilisis in</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Morbi leo risus</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Porta ac consectetur ac</li>
-                    <li class="list-group-item pt-1 pb-1 text-info">Vestibulum at eros</li>
-
+                    <li class="list-group-item pt-1 pb-1 text-info mergeFieldItem"
+                        *ngFor="let item of mergeFieldList$ | async"><a (click)="addMergeField(item)">{{item.name}}</a>
+                    </li>
                 </ul>
             </div>
 

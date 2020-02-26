@@ -30,7 +30,7 @@
                     <button class="btn btn-warning mr-1"
                             (click)="openModal(updateTemplateModel, item)"><i class="fas fa-edit"></i></button>
                     <button class="btn btn-info mr-1"
-                            [routerLink]="['/merge-object-edit']"><i class="fas fa-sitemap"></i> Builder</button>
+                            (click)="onSelectItem(item)"><i class="fas fa-sitemap"></i> Builder</button>
                     <button class="btn btn-danger"
                             (click)="onDelete(item)"><i class="fas fa-trash-alt"></i></button>
                 </td>

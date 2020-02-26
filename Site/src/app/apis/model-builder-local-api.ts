@@ -19,7 +19,7 @@ export class ModelBuilderLocalApi implements IModelDefinitionApi {
       this.storage.get(MODEL_BUILDER_LOCAL_STORAGE_KEY)
     );
     this.storage.set(MODEL_BUILDER_LOCAL_STORAGE_KEY, [
-      //{ id: 1, name: "isname", fields: [{}] }
+      { id: 1, name: "HolidayModel", objects: [] }
     ]);
   }
   get(): Observable<ModelDefinition[]> {

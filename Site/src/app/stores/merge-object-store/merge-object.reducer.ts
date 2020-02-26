@@ -5,6 +5,7 @@ import { MergeObjectState } from ".";
 
 export const mergeObjectInitialState: MergeObjectState = {
   list: [],
+  item: null,
   error: null,
   busy: false
 };
@@ -15,6 +16,12 @@ const mergeObjectReducer = createReducer(
     return {
       ...state,
       list: action.payload
+    };
+  }),
+  on(fromActions.setMergeObjectAction, (state, action) => {
+    return {
+      ...state,
+      item: action.payload
     };
   }),
   on(fromActions.mergeObjectApiBusyAction, (state, action) => {

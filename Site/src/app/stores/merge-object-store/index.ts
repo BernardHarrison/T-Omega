@@ -22,6 +22,7 @@ export class MergeObject {
 
 export interface MergeObjectState {
   list: MergeObject[];
+  item: MergeObject;
   error: Error;
   busy: boolean;
 }

@@ -12,7 +12,9 @@ const MERGE_OBJECT_KEY = "MERGE_OBJECT_KEY";
 })
 export class MergeObjectApiService implements IMergeObjectApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    storage.set(MERGE_OBJECT_KEY, []);
+    storage.set(MERGE_OBJECT_KEY, [
+      { id: 1, fieldName: "address", objects: [] }
+    ]);
   }
 
   get(): Observable<MergeObject[]> {

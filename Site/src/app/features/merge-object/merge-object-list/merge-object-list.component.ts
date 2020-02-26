@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { Store } from "@ngrx/store";
 import { AlertService } from "ngx-alerts";
 import * as fromActions from "src/app/stores/merge-object-store/merge-object.actions";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-merge-object-list",
@@ -27,7 +28,8 @@ export class MergeObjectListComponent implements OnInit {
   constructor(
     private store: Store<MergeObjectAppState>,
     private modalService: BsModalService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,6 +39,11 @@ export class MergeObjectListComponent implements OnInit {
     this.store.dispatch(fromActions.loadMergeObjectsAction());
     this.list$ = this.store.select(state => state.mergeObjectState.list);
     this.busy$ = this.store.select(state => state.mergeObjectState.busy);
+  }
+
+  onSelectItem(item: MergeObject) {
+    this.store.dispatch(fromActions.setMergeObjectAction({ payload: item }));
+    this.router.navigate(["/merge-object-edit"]);
   }
 
   onCreate() {

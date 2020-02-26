@@ -5,6 +5,7 @@ import { MergeObject } from ".";
 
 export enum MergeObjectTypes {
   SET_MERGEOBJECTS = "[Merge Object] Set the Merge Object collection",
+  SET_MERGEOBJECT = "[Merge Object] Set the Merge Object item",
 
   LOAD = "[Merge Object] Load Merge Objects",
   BUSY = "[Merge Object] Merge Object are loading",
@@ -19,6 +20,11 @@ export const loadMergeObjectsAction = createAction(MergeObjectTypes.LOAD);
 export const setMergeObjectsAction = createAction(
   MergeObjectTypes.SET_MERGEOBJECTS,
   props<{ payload: MergeObject[] }>()
+);
+
+export const setMergeObjectAction = createAction(
+  MergeObjectTypes.SET_MERGEOBJECT,
+  props<{ payload: MergeObject }>()
 );
 
 export const createMergeObjectAction = createAction(
