@@ -9,15 +9,15 @@ import { StoreModule } from "@ngrx/store";
 import * as fromMergeObjectFeature from "./store/merge-object-feature.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { MergeObjectFeatureEffects } from "./store/merge-object-feature.effects";
-import { MergeObjectComponentComponent } from "../merge-object-component/merge-object-component.component";
-import { MergeFieldComponentComponent } from "../merge-field-component/merge-field-component.component";
+import { MergeObjectDummyComponent } from "./components/merge-object-dummy/merge-object-dummy.component";
+import { MergeFieldDummyComponent } from "./components/merge-field-dummy/merge-field-dummy-component";
 
 @NgModule({
   declarations: [
     MergeObjectListComponent,
     MergeObjectEditComponent,
-    MergeObjectComponentComponent,
-    MergeFieldComponentComponent
+    MergeObjectDummyComponent,
+    MergeFieldDummyComponent
   ],
   imports: [
     CommonModule,
