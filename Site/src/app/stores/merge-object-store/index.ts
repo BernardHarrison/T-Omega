@@ -17,8 +17,22 @@ export const MERGE_OBJECT_KEY = "mergeObjectState";
 export class MergeObject {
   id: number | null;
   fieldName: string;
-  objects: Array<MergeField>;
+  objects: Array<MergeObject>;
+  fields: Array<MergeField>;
 }
+
+/*
+{
+  firstName:string,
+  address:{
+    street: {
+      houseNumber:number,
+      streetName: string
+    },
+    zip: number
+  }
+}
+*/
 
 export interface MergeObjectState {
   list: MergeObject[];
@@ -37,6 +51,8 @@ export interface IMergeObjectApi {
   update(entity: MergeObject): Observable<MergeObject[]>;
   create(entity: MergeObject): Observable<MergeObject[]>;
   delete(entity: MergeObject): Observable<MergeObject[]>;
+  addField(field: MergeField, model: MergeObject): Observable<MergeObject>;
+  removeField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
 }
 
 export const MERGE_OBJECT_STORE_API = new InjectionToken<IMergeObjectApi>(

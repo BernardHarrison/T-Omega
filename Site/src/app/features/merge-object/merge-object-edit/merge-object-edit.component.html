@@ -1,41 +1,7 @@
 <div class="row"
-     *ngIf="selectedItem$ | async; let selectedItem">
+     *ngIf="selectedMergeObject$ | async; let selectedItem">
     <div class="col-sm-8">
-        <header class="text-secondary border border-secondary text-center pt-2 mt-4">
-            <h6><i class="fas fa-code"></i> {{selectedItem.fieldName}} Model</h6>
-        </header>
-        <div class="mt-3 merge-fields-builder bg-secondary">
-            <div class="text-info model-filler">{{ "{" }}</div>
-
-            <div class="mergefield-container mt-1 row">
-                <div class="border border-info bg-dark offset-2 col-sm-8 text-info mergefield">street: String </div>
-                <div>
-                    <button title="Remove MergeField"
-                            class="btn btn-danger mergfield-button"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-
-            <div class="mergefield-container mt-1 row">
-                <div class="border border-info bg-dark offset-2 col-sm-8 text-info mergefield">state: String </div>
-                <div>
-                    <button title="Remove MergeField"
-                            class="btn btn-danger mergfield-button"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-
-            <div class="mergefield-container mt-1 row">
-                <div class="border border-info bg-dark offset-2 col-sm-8 text-info mergefield">zipCode: Number </div>
-                <div>
-                    <button title="Remove MergeField"
-                            class="btn btn-danger mergfield-button"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-
-
-            <div class="text-info model-filler">{{"}"}}</div>
-
-        </div>
-
+        <app-merge-object-component [selectedMergeObject]="selectedMergeObject$ | async"></app-merge-object-component>
     </div>
     <div class="col-sm-4">
         <aside class="mergfield-items-container">
@@ -43,11 +9,13 @@
                 <h6>Merge field Items</h6>
             </header>
             <div class="mt-3 merge-fields">
-                <ul class="list-group list-group-flush">
+
+                <!-- <ul class="list-group list-group-flush">
                     <li class="list-group-item pt-1 pb-1 text-info mergeFieldItem"
-                        *ngFor="let item of mergeFieldList$ | async"><a (click)="addMergeField(item)">{{item.name}}</a>
+                        *ngFor="let item of allMergeField"><a
+                           (click)="addMergeField(item, selectedItem)">{{item.name}}</a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
 
         </aside>

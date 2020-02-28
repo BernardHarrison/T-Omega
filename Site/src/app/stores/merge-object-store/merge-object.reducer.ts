@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 
 import * as fromActions from "./merge-object.actions";
-import { MergeObjectState } from ".";
+import { MergeObjectState, MergeObject } from ".";
 
 export const mergeObjectInitialState: MergeObjectState = {
   list: [],

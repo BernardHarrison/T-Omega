@@ -92,4 +92,44 @@ export class MergeObjectEffects {
       ])
     )
   );
+
+  addField$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.addMergeToFieldsAction),
+      mergeMap(action =>
+        this.api.addField(action.field, action.model).pipe(
+          mergeMap(item => [
+            fromActions.setMergeObjectAction({ payload: item })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
+
+  removeField$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.removeMergeFromFieldsAction),
+      mergeMap(action =>
+        this.api.removeField(action.field, action.model).pipe(
+          mergeMap(list => [
+            fromActions.setMergeObjectsAction({ payload: list })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
 }

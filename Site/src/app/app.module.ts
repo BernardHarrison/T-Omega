@@ -29,6 +29,7 @@ import { MergeObjectModule } from "./features/merge-object/merge-object.module";
 import { MERGE_OBJECT_STORE_API } from "./stores/merge-object-store";
 import { MergeObjectApiService } from "./apis/merge-object-api.service";
 import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object-store.module";
+import { MergeObjectComponentComponent } from "./features/merge-object-component/merge-object-component.component";
 
 @NgModule({
   declarations: [

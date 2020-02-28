@@ -1,0 +1,14 @@
+<div class="text-info model-filler">{{selectedMergeObject.fieldName}} {{ ": {"}}</div>
+<app-merge-object-component [selectedMergeObject]="mergeObject"
+                            *ngFor="let mergeObject of selectedMergeObject.objects"></app-merge-object-component>
+<app-merge-field-component [mergeField]="mergeField"
+                           *ngFor="let mergeField of selectedMergeObject.fields"></app-merge-field-component>
+<div class="text-info model-filler">{{"}"}}</div>
+<div>
+    <button (click)="addMergeObject()">AddObject</button>
+
+    <select (change)="addMergeField($event)">
+        <option value="{{mergeField.id}}"
+                *ngFor="let mergeField of mergeFields$ | async">{{ mergeField.name }}</option>
+    </select>
+</div>

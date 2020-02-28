@@ -12,7 +12,11 @@ export enum MergeObjectTypes {
   ERROR = "[Merge Object] Merge Object loading error",
   CREATE = "[Merge Object] Create Merge Object",
   UPDATE = "[Merge Object] Update Merge Object",
-  DELETE = "[Merge Object] Delete Merge Objects"
+  DELETE = "[Merge Object] Delete Merge Objects",
+
+  ADD_MERGE_TO_OBJECTS = "[Merge Object] Add Merge Field To Objects",
+  REMOVE_MERGE_FROM_OBJECTS = "[Merge Object] Remove Merge Field From Objects",
+  RESET_SELECTED_MERGEFIELD = "[Merge Object] Reseting Selected Merge Field"
 }
 
 export const loadMergeObjectsAction = createAction(MergeObjectTypes.LOAD);
@@ -21,6 +25,21 @@ export const setMergeObjectsAction = createAction(
   MergeObjectTypes.SET_MERGEOBJECTS,
   props<{ payload: MergeObject[] }>()
 );
+
+export const addMergeToFieldsAction = createAction(
+  MergeObjectTypes.ADD_MERGE_TO_OBJECTS,
+  props<{ field: MergeField; model: MergeObject }>()
+);
+
+export const removeMergeFromFieldsAction = createAction(
+  MergeObjectTypes.REMOVE_MERGE_FROM_OBJECTS,
+  props<{ field: MergeField; model: MergeObject }>()
+);
+
+// export const resetSelectedMergeFieldAction = createAction(
+//   MergeObjectTypes.RESET_SELECTED_MERGEFIELD,
+//   props<{ payload: MergeObject }>()
+// );
 
 export const setMergeObjectAction = createAction(
   MergeObjectTypes.SET_MERGEOBJECT,

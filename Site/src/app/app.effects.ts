@@ -4,7 +4,7 @@ import {
   mergeFieldApiErrorAction,
   mergeFieldApiBusyAction
 } from "./stores/merge-field-store/merge-field.actions";
-import { map, tap } from "rxjs/operators";
+import { map, tap, mergeMap } from "rxjs/operators";
 import { AlertService } from "ngx-alerts";
 import { modelBuilderApiErrorAction } from "./stores/model-builder-store/model-builder.actions";
 
@@ -35,4 +35,14 @@ export class AppEffects {
       ),
     { dispatch: false }
   );
+
+  // appLoadAll$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(modelBuilderApiErrorAction),
+  //       tap(err => {}),
+  //       mergeMap(action => [])
+  //     ),
+  //   { dispatch: false }
+  // );
 }
