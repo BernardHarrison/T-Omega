@@ -3,6 +3,7 @@ import { Store } from "@ngrx/store";
 import { AppState } from "./app.state";
 import { Observable } from "rxjs";
 import { MergeField } from "./stores/merge-field-store/index";
+import { loadMergeFieldsAction } from "./stores/merge-field-store/merge-field.actions";
 
 @Component({
   selector: "app-root",
@@ -10,9 +11,9 @@ import { MergeField } from "./stores/merge-field-store/index";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  list$: Observable<MergeField[]>;
-
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(loadMergeFieldsAction());
+  }
 }
