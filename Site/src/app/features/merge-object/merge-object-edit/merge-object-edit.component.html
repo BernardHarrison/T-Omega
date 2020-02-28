@@ -1,7 +1,8 @@
 <div class="row"
-     *ngIf="selectedMergeObject$ | async; let selectedItem">
+    *ngIf="selectedMergeObject$ | async; let selectedItem">
     <div class="col-sm-8">
-        <app-merge-object-component [selectedMergeObject]="selectedMergeObject$ | async"></app-merge-object-component>
+        <app-merge-object-component [selectedMergeObject]="selectedMergeObject$ | async"
+            [mergeFields]="mergeFields$ | async"></app-merge-object-component>
     </div>
     <div class="col-sm-4">
         <aside class="mergfield-items-container">

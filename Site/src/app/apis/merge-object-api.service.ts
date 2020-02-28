@@ -59,22 +59,30 @@ export class MergeObjectApiService implements IMergeObjectApi {
   }
 
   addField(field: MergeField, model: MergeObject): Observable<MergeObject> {
+    debugger;
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    let selectedItem: MergeObject;
-    items.forEach((item, index) => {
-      if (item.id == model.id) {
-        if (!item.fields) {
-          item.fields = [];
-          item.fields.push(field);
-          selectedItem = item;
-        } else {
-          item.fields.push(field);
-          selectedItem = item;
-        }
-      }
-    });
+    let mergeObj = items.filter(x => x.id === model.id)[0] || { ...model };
+    mergeObj.fields = mergeObj.fields instanceof Array ? mergeObj.fields : [];
+    mergeObj.fields.push({ ...field });
+    items.push(mergeObj);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(selectedItem);
+    return of(mergeObj);
+
+    // let selectedItem: MergeObject;
+    // items.forEach((item, index) => {
+    //   if (item.id == model.id) {
+    //     if (!item.fields) {
+    //       item.fields = [];
+    //       item.fields.push(field);
+    //       selectedItem = item;
+    //     } else {
+    //       item.fields.push(field);
+    //       selectedItem = item;
+    //     }
+    //   }
+    // });
+    // this.storage.set(MERGE_OBJECT_KEY, items);
+    // return of(selectedItem);
   }
   removeField(
     field: MergeField,

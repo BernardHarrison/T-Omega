@@ -3,12 +3,12 @@ import { ConditionDefinition } from '../condition-builder-store';
 export interface TemplateDefinition {
 	id: number;
 	name: string;
-	defaultCondition: DesignerTemplate;
+	default: DesignerTemplate;
 	conditionStates: ConditionTemplateMap[];
 }
 
 export interface ConditionTemplateMap {
-	condition: ConditionDefinition;
+
 	tempate: DesignerTemplate;
 }
 
@@ -33,4 +33,11 @@ export enum WidthBehavior {
 export interface WidthDefinition {
 	pixel: number;
 	percentage: number;
+}
+
+export interface DesignerState {
+	starterTemplates: DesignerTemplate[];
+	starterSections: DesignerSection[];
+	templateDefinitionId: number;
+
 }

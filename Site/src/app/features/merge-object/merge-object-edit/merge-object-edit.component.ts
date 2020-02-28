@@ -16,16 +16,19 @@ import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-
   styleUrls: ["./merge-object-edit.component.scss"]
 })
 export class MergeObjectEditComponent implements OnInit {
+
   selectedMergeObject$: Observable<MergeObject>;
   selectedMergeFields$: Observable<MergeField>;
+  mergeFields$: Observable<MergeField[]>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     //
     this.selectedMergeObject$ = this.store.select(
       state => state.mergeObjectState.item
     );
+    this.mergeFields$ = this.store.select(x => x.mergeField.list);
   }
 
   addMergeField(item: MergeField, model: MergeObject) {

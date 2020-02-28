@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { MergeObject } from "src/app/stores/merge-object-store";
-import { Observable } from "rxjs";
 import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import { MergeField } from "src/app/stores/merge-field-store";
-import { take } from "rxjs/operators";
 import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-object.actions";
 
 @Component({
@@ -13,41 +11,24 @@ import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-
   styleUrls: ["./merge-object-component.component.scss"]
 })
 export class MergeObjectComponentComponent implements OnInit {
+
   @Input()
   selectedMergeObject: MergeObject;
 
-  mergeFields$: Observable<MergeField[]>;
+  @Input()
+  mergeFields: MergeField[];
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
+
+  get availableMergeFields(): MergeField[] {
+    return this.mergeFields.filter(x => !this.selectedMergeObject.fields.includes(x));
+  }
 
   getMergeField(id: number): MergeField {
-    let foundField: MergeField;
-    var mergeFields = this.mergeFields$.pipe(take(1)).subscribe(arr => {
-      let result = arr.filter(field => {
-        return field.id == id;
-      });
-      foundField = result[0];
-    });
-    return foundField;
+    return this.mergeFields.find(x => x.id == id);
   }
 
-  updateView() {
-    // this.allMergeField.forEach(mergeField => {
-    //   // check with bern
-    //   if (this.selectedItemObject) {
-    //     this.selectedItemObject.forEach(selectedMergeField => {
-    //       if (mergeField.id == selectedMergeField.id) {
-    //         let index = this.allMergeField.indexOf(mergeField);
-    //         this.allMergeField.splice(index, 1);
-    //       }
-    //     });
-    //   }
-    // });
-  }
-
-  ngOnInit() {
-    this.mergeFields$ = this.store.select(x => x.mergeField.list);
-  }
+  ngOnInit() { }
 
   addMergeObject() {
     //this.store.dispatch(addNewObject({ fieldName: string, selectedMergeObject }));

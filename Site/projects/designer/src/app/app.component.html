@@ -1,14 +1,13 @@
-<div class="designer-wrapper">
-	<div class="sizing-wrapper"
-		[style.width]="(width$ | async) + 'px'"
-		[style.marginLeft]="((-1)*(width$ | async)/2) + 'px'">
-		<designer-ruler></designer-ruler>
-		<div class="sizing-bar sizing-bar-left"
-			(designerSizingHandle)="handleLeftSizeHandle($event)"></div>
-		<div class="sizing-bar sizing-bar-right"
-			(designerSizingHandle)="handleRightSizeHandle($event)"></div>
-		<div class="designer-template"
-			designer-template>
+<div class="designer-wrapper"
+	[style.backgroundColor]="template.backgroundColor">
+	<div class="designer-section"
+		*ngFor="let section of template.sections"
+		[style.backgroundColor]="section.outerBackgroundColor">
+		<div class="designer-section-inner"
+			[style.backgroundColor]="section.innerBackgroundColor">
+			<div class="designer-cell designer-cell-100">
+
+			</div>
 		</div>
 	</div>
 </div>

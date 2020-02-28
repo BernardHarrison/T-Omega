@@ -5,48 +5,37 @@
 	bottom:0;
 	right: 0;
 	left: 0;
-    background-position: 0px 0px, 10px 10px;
-    background-size: 20px 20px;
-    background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, #ddd 25%, #ddd 75%, #eee 75%, #eee 100%);
+	padding:80px;
 }
 
-.designer-wrapper, .designer-wrapper *{
-	padding:0;
-	margin:0;
+.designer-section{
+	width: 600px;
+	padding: 20px;
+	margin:auto;
+	display: table;
 }
 
-.designer-wrapper .sizing-wrapper{
-	position: absolute;
-	min-height: 100%;
-	width:600px;
-	left:50%;
+.designer-section-inner{
+	display: table-row;
 }
 
-.designer-wrapper [designer-template]{
-	margin-top: 60px;
-	background-color: #ffffff;
-	min-height: 600px;
+.designer-cell-100{
 	width: 100%;
 }
-
-.sizing-bar{
-	position: absolute;
-	top:0;
-	bottom:0;
-	width:0;
-	border: 1px dashed rgba($color: #aaaaaa, $alpha: .4);
-	cursor: col-resize;
+.designer-cell-count-50{
+	width: 50%;
 }
 
-.sizing-bar:hover{
-	border: 4px solid rgba($color: #aaaaaa, $alpha: 1.0);
+.designer-cell-count-33{
+	width: 33.33%;
 }
 
-.sizing-bar-left{
-	left: 0;
+.designer-cell-count-25{
+	width: 25%;
 }
 
-.sizing-bar-right{
-	right: 0;
+.designer-cell{
+	background-color: aliceblue;
+	padding: 20px;
+	display: table-cell;
 }
-

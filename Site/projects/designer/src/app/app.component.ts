@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DesignerVmAppState } from './store/designer-vm.module';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { changeWidth } from './store/designer-vm.actions';
+import { DesignerTemplate } from 'src/app/stores/designer-store';
 
 @Component({
   selector: 'designer-root',
@@ -12,23 +11,25 @@ import { changeWidth } from './store/designer-vm.actions';
 
 export class AppComponent implements OnInit {
 
-  width$: Observable<number>;
+  template: DesignerTemplate;
 
   constructor(private store: Store<DesignerVmAppState>) {
 
   }
 
   ngOnInit(): void {
-    this.width$ = this.store.select(x => x.designerVm.width);
+    this.template = {
+      title: "title",
+      backgroundColor: "#eeeeee",
+      sections: [
+        {
+          widthBehavior: null,
+          width: null,
+          innerBackgroundColor: "#333333",
+          outerBackgroundColor: "#aaaaaa"
+        }
+      ]
+    }
   }
 
-  handleLeftSizeHandle(sizeStep: number) {
-    let props = { changeAmount: sizeStep * (-1) }
-    this.store.dispatch(changeWidth(props))
-  }
-
-  handleRightSizeHandle(sizeStep: number) {
-    let props = { changeAmount: sizeStep }
-    this.store.dispatch(changeWidth(props))
-  }
 }
