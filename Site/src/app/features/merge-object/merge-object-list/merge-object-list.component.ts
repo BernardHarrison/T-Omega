@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { Store } from "@ngrx/store";
 import { AlertService } from "ngx-alerts";
 import * as fromActions from "src/app/stores/merge-object-store/merge-object.actions";
+import * as fromFeatureActions from "../store/merge-object-feature.actions";
 import { Router } from "@angular/router";
 
 @Component({
@@ -42,7 +43,9 @@ export class MergeObjectListComponent implements OnInit {
   }
 
   onSelectItem(item: MergeObject) {
-    this.store.dispatch(fromActions.setMergeObjectAction({ payload: item }));
+    this.store.dispatch(
+      fromFeatureActions.selectedMergeObject({ payload: item })
+    );
     this.router.navigate(["/merge-object-edit"]);
   }
 

@@ -14,11 +14,12 @@ const MERGE_OBJECT_KEY = "MERGE_OBJECT_KEY";
 export class MergeObjectApiService implements IMergeObjectApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     storage.set(MERGE_OBJECT_KEY, [
-      // {
-      //   id: 1,
-      //   fieldName: "address",
-      //   objects: [{ id: 1, name: "test", type: "String" }]
-      // }
+      {
+        id: 1,
+        fieldName: "Field One",
+        objects: [{ id: 1, name: "test", type: "String" }],
+        fields: [{ id: 1, name: "state", type: "String" }]
+      }
     ]);
   }
 
@@ -36,6 +37,8 @@ export class MergeObjectApiService implements IMergeObjectApi {
   create(entity: MergeObject): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     entity.id = Math.floor(Math.random() * 10000);
+    entity.fields = [];
+    entity.objects = [];
     items.push(entity);
     this.storage.set(MERGE_OBJECT_KEY, items);
     return this.get();
@@ -58,31 +61,27 @@ export class MergeObjectApiService implements IMergeObjectApi {
     return this.get();
   }
 
-  addField(field: MergeField, model: MergeObject): Observable<MergeObject> {
-    debugger;
+  addField(field: MergeField, model: MergeObject): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    let mergeObj = items.filter(x => x.id === model.id)[0] || { ...model };
-    mergeObj.fields = mergeObj.fields instanceof Array ? mergeObj.fields : [];
-    mergeObj.fields.push({ ...field });
-    items.push(mergeObj);
-    this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(mergeObj);
-
-    // let selectedItem: MergeObject;
-    // items.forEach((item, index) => {
-    //   if (item.id == model.id) {
-    //     if (!item.fields) {
-    //       item.fields = [];
-    //       item.fields.push(field);
-    //       selectedItem = item;
-    //     } else {
-    //       item.fields.push(field);
-    //       selectedItem = item;
-    //     }
-    //   }
-    // });
+    // let mergeObj = items.filter(x => x.id === model.id)[0] || { ...model };
+    // mergeObj.fields = mergeObj.fields instanceof Array ? mergeObj.fields : [];
+    // mergeObj.fields.push({ ...field });
+    // items.push(mergeObj);
     // this.storage.set(MERGE_OBJECT_KEY, items);
-    // return of(selectedItem);
+    // return of(items);
+
+    items.forEach((item, index) => {
+      if (item.id == model.id) {
+        if (!item.fields) {
+          item.fields = [];
+          item.fields.push(field);
+        } else {
+          item.fields.push(field);
+        }
+      }
+    });
+    this.storage.set(MERGE_OBJECT_KEY, items);
+    return of(items);
   }
   removeField(
     field: MergeField,
@@ -91,8 +90,10 @@ export class MergeObjectApiService implements IMergeObjectApi {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     items.forEach((item, index) => {
       if (item.id == model.id) {
-        item.objects.forEach((mergeField, index) => {
-          if (mergeField.id == field.id) item.objects.splice(index, 1);
+        item.fields.forEach(mergeField => {
+          if (mergeField.id == field.id) {
+            item.fields.splice(index, 1);
+          }
         });
       }
     });

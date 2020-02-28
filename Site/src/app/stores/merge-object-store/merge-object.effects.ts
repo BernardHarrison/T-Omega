@@ -98,8 +98,8 @@ export class MergeObjectEffects {
       ofType(fromActions.addMergeToFieldsAction),
       mergeMap(action =>
         this.api.addField(action.field, action.model).pipe(
-          mergeMap(item => [
-            fromActions.setMergeObjectAction({ payload: item })
+          mergeMap(list => [
+            fromActions.setMergeObjectsAction({ payload: list })
           ]),
           catchError(error =>
             of(fromActions.mergeObjectApiErrorAction({ payload: error }))

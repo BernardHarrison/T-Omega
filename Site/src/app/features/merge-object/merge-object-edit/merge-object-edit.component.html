@@ -1,8 +1,32 @@
 <div class="row"
-    *ngIf="selectedMergeObject$ | async; let selectedItem">
-    <div class="col-sm-8">
+     *ngIf="selectedMergeObject$ | async; let selectedObject">
+    <!-- <div class="col-sm-8">
         <app-merge-object-component [selectedMergeObject]="selectedMergeObject$ | async"
             [mergeFields]="mergeFields$ | async"></app-merge-object-component>
+    </div> -->
+    <div class="col-sm-8">
+        <header class="text-secondary border border-secondary text-center pt-2 mt-4">
+            <h6><i class="fas fa-code"></i> {{selectedObject.fieldName}} Model</h6>
+        </header>
+        <div class="mt-3 merge-fields-builder bg-secondary">
+            <div class="text-info model-filler">{{ "{" }}</div>
+
+            <div class="mergefield-container mt-1 row"
+                 *ngFor="let mergeField of selectedObject.fields">
+                <div class="border border-info bg-dark offset-2 col-sm-8 text-info mergefield">{{mergeField.name}}:
+                    {{mergeField.type}} </div>
+                <div>
+                    <button title="Remove MergeField"
+                            (click)="removeMergeField(mergeField, selectedObject)"
+                            class="btn btn-danger mergfield-button"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+
+
+            <div class="text-info model-filler">{{"}"}}</div>
+
+        </div>
+
     </div>
     <div class="col-sm-4">
         <aside class="mergfield-items-container">
@@ -11,12 +35,12 @@
             </header>
             <div class="mt-3 merge-fields">
 
-                <!-- <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush">
                     <li class="list-group-item pt-1 pb-1 text-info mergeFieldItem"
-                        *ngFor="let item of allMergeField"><a
-                           (click)="addMergeField(item, selectedItem)">{{item.name}}</a>
+                        *ngFor="let item of notSelectedMergeFields$ | async"><a
+                           (click)="addMergeField(item, selectedObject)">{{item.name}}</a>
                     </li>
-                </ul> -->
+                </ul>
             </div>
 
         </aside>

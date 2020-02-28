@@ -18,13 +18,9 @@ import { HomeComponent } from "./pages/home/home.component";
 import { NavComponent } from "./shared/components/nav/nav.component";
 
 import { MergeFieldApiService } from "./apis/merge-field-api.service";
-import { ModelBuilderLocalApi } from "./apis/model-builder-local-api";
 
 import { MERGE_FIELD_STORE_API } from "./stores/merge-field-store";
-import { MODEL_FIELD_STORE_API } from "./stores/model-builder-store";
 
-import { ModelBuilderModule } from "./features/model-builder/model-builder.module";
-import { ModelBuilderStoreModule } from "./stores/model-builder-store/model-builder-store.module";
 import { MergeObjectModule } from "./features/merge-object/merge-object.module";
 import { MERGE_OBJECT_STORE_API } from "./stores/merge-object-store";
 import { MergeObjectApiService } from "./apis/merge-object-api.service";
@@ -44,9 +40,7 @@ import { MergeObjectComponentComponent } from "./features/merge-object-component
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
-    ModelBuilderStoreModule,
     MergeObjectStoreModule,
-    ModelBuilderModule,
     MergeObjectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -56,7 +50,6 @@ import { MergeObjectComponentComponent } from "./features/merge-object-component
   ],
   providers: [
     { provide: MERGE_FIELD_STORE_API, useClass: MergeFieldApiService },
-    { provide: MODEL_FIELD_STORE_API, useClass: ModelBuilderLocalApi },
     { provide: MERGE_OBJECT_STORE_API, useClass: MergeObjectApiService }
   ],
   bootstrap: [AppComponent]

@@ -5,7 +5,6 @@ import {
   createSelector,
   MetaReducer
 } from "@ngrx/store";
-import { environment } from "../../../environments/environment";
 import { MergeField, MergeFieldState } from "../merge-field-store";
 import { Observable } from "rxjs";
 import { InjectionToken } from "@angular/core";
@@ -21,22 +20,8 @@ export class MergeObject {
   fields: Array<MergeField>;
 }
 
-/*
-{
-  firstName:string,
-  address:{
-    street: {
-      houseNumber:number,
-      streetName: string
-    },
-    zip: number
-  }
-}
-*/
-
 export interface MergeObjectState {
   list: MergeObject[];
-  item: MergeObject;
   error: Error;
   busy: boolean;
 }
@@ -51,7 +36,7 @@ export interface IMergeObjectApi {
   update(entity: MergeObject): Observable<MergeObject[]>;
   create(entity: MergeObject): Observable<MergeObject[]>;
   delete(entity: MergeObject): Observable<MergeObject[]>;
-  addField(field: MergeField, model: MergeObject): Observable<MergeObject>;
+  addField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
   removeField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
 }
 
