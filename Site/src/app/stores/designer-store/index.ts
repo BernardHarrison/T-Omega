@@ -1,4 +1,6 @@
-import { ConditionDefinition } from '../condition-builder-store';
+import { InjectionToken } from '@angular/core';
+
+export const desingerStoreKey = "designerStore";
 
 export interface TemplateDefinition {
 	id: number;
@@ -35,9 +37,67 @@ export interface WidthDefinition {
 	percentage: number;
 }
 
-export interface DesignerState {
-	starterTemplates: DesignerTemplate[];
-	starterSections: DesignerSection[];
-	templateDefinitionId: number;
-
+export interface ApiCollectionState<T> {
+	list: T[];
+	busy: boolean;
+	error: Error;
 }
+
+export interface ApiEntityState<T> {
+	item: T;
+	busy: boolean;
+	error: Error
+}
+
+
+export interface DesignerState {
+	starterTemplates: ApiCollectionState<DesignerTemplate>;
+	starterSections: ApiCollectionState<DesignerSection>;
+	userSections: ApiCollectionState<DesignerSection>;
+	templateDefinition: ApiEntityState<TemplateDefinition>;
+	selectedTemplate: ApiEntityState<DesignerTemplate>;
+}
+
+
+export class DesignerAppState {
+	designerStore: DesignerState;
+}
+
+export const starterTemplatesInitialState: ApiCollectionState<DesignerTemplate> = {
+	list: [],
+	busy: false,
+	error: null
+};
+
+export const starterSectionsInitialState: ApiCollectionState<DesignerSection> = {
+	list: [],
+	busy: false,
+	error: null
+};
+
+export const userSectionsInitialState: ApiCollectionState<DesignerSection> = {
+	list: [],
+	busy: false,
+	error: null
+};
+
+export const templateDefinitionInitialState: ApiEntityState<TemplateDefinition> = {
+	item: null,
+	busy: false,
+	error: null
+};
+
+export const selectedTemplateInitialState: ApiEntityState<DesignerTemplate> = {
+	item: null,
+	busy: false,
+	error: null
+};
+
+export interface DesignerStoreApi {
+	getStarterTemplates(): DesignerTemplate[];
+	getStarterSections(): DesignerSection[];
+}
+
+export const DESIGNER_STORE_API = new InjectionToken<DesignerStoreApi>(
+	"DESIGNER_STORE_API"
+);
