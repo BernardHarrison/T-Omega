@@ -6,27 +6,31 @@ import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DesignerVmModule } from './store/designer-vm.module';
-import { RulerComponent } from './components/ruler/ruler.component';
 import { TemplateComponent } from './components/template/template.component';
-import { SizingHandleDirective } from './directives/sizing-handle.directive';
+import { DESIGNER_STORE_API } from 'src/app/stores/designer-store';
+import { DesignerStoreApi } from 'src/app/apis/designer-store-api.service';
+import { DesignerStoreModule } from 'src/app/stores/designer-store/designer-store.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    RulerComponent,
     TemplateComponent,
-    SizingHandleDirective
   ],
   imports: [
     BrowserModule,
     DesignerVmModule,
+
+    DesignerStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25 }),
+    StoreDevtoolsModule.instrument({ maxAge: 25 })
+
   ],
-  providers: [],
+  providers: [
+    { provide: DESIGNER_STORE_API, useClass: DesignerStoreApi }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

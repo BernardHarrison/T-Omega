@@ -2,9 +2,9 @@
 	[style.backgroundColor]="template.backgroundColor">
 	<div class="designer-section"
 		*ngFor="let section of template.sections"
-		[style.backgroundColor]="section.outerBackgroundColor">
+		[style.backgroundColor]="section.outer.color">
 		<div class="designer-section-inner"
-			[style.backgroundColor]="section.innerBackgroundColor">
+			[style.backgroundColor]="section.inner.color">
 			<div class="designer-cell designer-cell-100">
 
 			</div>

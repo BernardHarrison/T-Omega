@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export const desingerStoreKey = "designerStore";
 
@@ -20,11 +21,25 @@ export interface DesignerTemplate {
 	sections: DesignerSection[];
 }
 
+export interface SizeDefinition {
+	top: number;
+	bottom: number;
+	left: number;
+	right: number;
+}
+
+export interface SectionDefinition {
+	behavior: WidthBehavior;
+	pixelWidth: number;
+	percentageWidth: number;
+	color: string; //Background color
+}
+
 export interface DesignerSection {
-	widthBehavior: WidthBehavior;
-	width: WidthDefinition;
-	innerBackgroundColor: string;
-	outerBackgroundColor: string;
+	outer: SectionDefinition;
+	inner: SectionDefinition;
+	padding: SizeDefinition;
+	margin: SizeDefinition;
 }
 
 export enum WidthBehavior {
@@ -32,72 +47,59 @@ export enum WidthBehavior {
 	fixed
 }
 
-export interface WidthDefinition {
-	pixel: number;
-	percentage: number;
-}
-
-export interface ApiCollectionState<T> {
-	list: T[];
-	busy: boolean;
-	error: Error;
-}
-
 export interface ApiEntityState<T> {
-	item: T;
+	entity: T;
 	busy: boolean;
 	error: Error
 }
 
-
 export interface DesignerState {
-	starterTemplates: ApiCollectionState<DesignerTemplate>;
-	starterSections: ApiCollectionState<DesignerSection>;
-	userSections: ApiCollectionState<DesignerSection>;
+	starterTemplates: ApiEntityState<DesignerTemplate[]>;
+	starterSections: ApiEntityState<DesignerSection[]>;
+	userSections: ApiEntityState<DesignerSection[]>;
 	templateDefinition: ApiEntityState<TemplateDefinition>;
 	selectedTemplate: ApiEntityState<DesignerTemplate>;
 }
-
 
 export class DesignerAppState {
 	designerStore: DesignerState;
 }
 
-export const starterTemplatesInitialState: ApiCollectionState<DesignerTemplate> = {
-	list: [],
+export const starterTemplatesInitialState: ApiEntityState<DesignerTemplate[]> = {
+	entity: [],
 	busy: false,
 	error: null
 };
 
-export const starterSectionsInitialState: ApiCollectionState<DesignerSection> = {
-	list: [],
+export const starterSectionsInitialState: ApiEntityState<DesignerSection[]> = {
+	entity: [],
 	busy: false,
 	error: null
 };
 
-export const userSectionsInitialState: ApiCollectionState<DesignerSection> = {
-	list: [],
+export const userSectionsInitialState: ApiEntityState<DesignerSection[]> = {
+	entity: [],
 	busy: false,
 	error: null
 };
 
 export const templateDefinitionInitialState: ApiEntityState<TemplateDefinition> = {
-	item: null,
+	entity: null,
 	busy: false,
 	error: null
 };
 
 export const selectedTemplateInitialState: ApiEntityState<DesignerTemplate> = {
-	item: null,
+	entity: null,
 	busy: false,
 	error: null
 };
 
-export interface DesignerStoreApi {
-	getStarterTemplates(): DesignerTemplate[];
-	getStarterSections(): DesignerSection[];
+export interface DesignerStoreApiInterface {
+	getStarterTemplates(): Observable<DesignerTemplate[]>;
+	getStarterSections(): Observable<DesignerSection[]>;
 }
 
-export const DESIGNER_STORE_API = new InjectionToken<DesignerStoreApi>(
+export const DESIGNER_STORE_API = new InjectionToken<DesignerStoreApiInterface>(
 	"DESIGNER_STORE_API"
 );

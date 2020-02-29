@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { DesignerVmState } from '.';
 import { widthReducer } from './designer-vm.reducers';
+import { DesignerAppState } from 'src/app/stores/designer-store';
 
 const DESIGNER_VM_STORE = "designerVm"
 
@@ -11,7 +12,7 @@ const reducer: ActionReducerMap<DesignerVmState> = {
   width: widthReducer
 }
 
-export class DesignerVmAppState {
+export class DesignerVmAppState extends DesignerAppState {
   designerVm: DesignerVmState
 }
 
