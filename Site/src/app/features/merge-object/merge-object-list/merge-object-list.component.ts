@@ -42,9 +42,7 @@ export class MergeObjectListComponent implements OnInit {
   }
 
   onSelectItem(item: MergeObject) {
-    // this.store.dispatch(
-    //   fromFeatureActions.selectedMergeObject({ payload: item })
-    // );
+    this.store.dispatch(fromActions.setMergeObjectAction({ payload: item }));
     this.router.navigate(["/merge-object-edit"]);
   }
 

@@ -32,9 +32,7 @@ export class MergeObjectDummyComponent implements OnInit {
     return this.mergeFields.find(x => x.id == id);
   }
 
-  ngOnInit() {
-    //console.log(this.mergeFields);
-  }
+  ngOnInit() {}
 
   addMergeObject() {
     // this.store.dispatch(addNewObject({ fieldName: string, selectedMergeObject }));

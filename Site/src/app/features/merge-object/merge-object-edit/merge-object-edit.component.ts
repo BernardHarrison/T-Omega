@@ -22,5 +22,9 @@ export class MergeObjectEditComponent implements OnInit {
     );
 
     this.mergeFields$ = this.store.select(state => state.mergeField.list);
+
+    this.mergeFields$.subscribe(x => console.log(x));
+    //null
+    this.selectedMergeObject$.subscribe(x => console.log(x));
   }
 }
