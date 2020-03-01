@@ -13,14 +13,8 @@ const MERGE_OBJECT_KEY = "MERGE_OBJECT_KEY";
 })
 export class MergeObjectApiService implements IMergeObjectApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    storage.set(MERGE_OBJECT_KEY, [
-      {
-        id: 1,
-        fieldName: "Field One",
-        objects: [{ id: 1, name: "test", type: "String" }],
-        fields: [{ id: 1, name: "state", type: "String" }]
-      }
-    ]);
+    let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
+    if (!(items instanceof Array)) storage.set(MERGE_OBJECT_KEY, []);
   }
 
   get(): Observable<MergeObject[]> {
@@ -61,17 +55,12 @@ export class MergeObjectApiService implements IMergeObjectApi {
     return this.get();
   }
 
-  addField(field: MergeField, model: MergeObject): Observable<MergeObject[]> {
+  addField(field: MergeField, model: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    // let mergeObj = items.filter(x => x.id === model.id)[0] || { ...model };
-    // mergeObj.fields = mergeObj.fields instanceof Array ? mergeObj.fields : [];
-    // mergeObj.fields.push({ ...field });
-    // items.push(mergeObj);
-    // this.storage.set(MERGE_OBJECT_KEY, items);
-    // return of(items);
-
+    let currentItem;
     items.forEach((item, index) => {
       if (item.id == model.id) {
+        currentItem = item;
         if (!item.fields) {
           item.fields = [];
           item.fields.push(field);
@@ -81,8 +70,30 @@ export class MergeObjectApiService implements IMergeObjectApi {
       }
     });
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(items);
+    return of(currentItem);
   }
+
+  addObject(field: string, model: MergeObject): Observable<MergeObject> {
+    let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
+    let currentItem;
+    items.forEach((item, index) => {
+      if (item.id == model.id) {
+        currentItem = item;
+        let mergeObject = new MergeObject();
+        mergeObject.fieldName = field;
+        mergeObject.id = Math.floor(Math.random() * 10000);
+        if (!item.objects) {
+          item.objects = [];
+          item.objects.push(mergeObject);
+        } else {
+          item.objects.push(mergeObject);
+        }
+      }
+    });
+    this.storage.set(MERGE_OBJECT_KEY, items);
+    return of(currentItem);
+  }
+
   removeField(
     field: MergeField,
     model: MergeObject

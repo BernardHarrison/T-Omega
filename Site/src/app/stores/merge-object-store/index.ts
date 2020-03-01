@@ -22,6 +22,7 @@ export class MergeObject {
 
 export interface MergeObjectState {
   list: MergeObject[];
+  item: MergeObject;
   error: Error;
   busy: boolean;
 }
@@ -36,7 +37,8 @@ export interface IMergeObjectApi {
   update(entity: MergeObject): Observable<MergeObject[]>;
   create(entity: MergeObject): Observable<MergeObject[]>;
   delete(entity: MergeObject): Observable<MergeObject[]>;
-  addField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
+  addField(field: MergeField, model: MergeObject): Observable<MergeObject>;
+  addObject(field: string, model: MergeObject): Observable<MergeObject>;
   removeField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
 }
 
