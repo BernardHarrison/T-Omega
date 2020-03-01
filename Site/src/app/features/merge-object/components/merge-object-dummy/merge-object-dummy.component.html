@@ -1,5 +1,7 @@
 <div class="text-info model-filler">{{selectedMergeObject.fieldName}} {{ ": {"}}</div>
+
 <app-merge-object-dummy-component [selectedMergeObject]="mergeObject"
+                                  [mergeFields]="mergeFields"
                                   *ngFor="let mergeObject of selectedMergeObject.objects">
 </app-merge-object-dummy-component>
 

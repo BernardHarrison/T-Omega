@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import * as fromActions from "./merge-object.actions";
-import { mergeMap, catchError } from "rxjs/operators";
+import { mergeMap, catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { IMergeObjectApi, MERGE_OBJECT_STORE_API } from ".";
 
@@ -98,8 +98,8 @@ export class MergeObjectEffects {
       ofType(fromActions.addMergeToFieldsAction),
       mergeMap(action =>
         this.api.addField(action.field, action.model).pipe(
-          mergeMap(list => [
-            fromActions.setMergeObjectsAction({ payload: list })
+          mergeMap(item => [
+            fromActions.setMergeObjectAction({ payload: item })
           ]),
           catchError(error =>
             of(fromActions.mergeObjectApiErrorAction({ payload: error }))

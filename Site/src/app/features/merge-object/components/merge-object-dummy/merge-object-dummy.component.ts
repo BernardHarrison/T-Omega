@@ -20,19 +20,24 @@ export class MergeObjectDummyComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   get availableMergeFields(): MergeField[] {
-    return this.mergeFields.filter(
-      x => !this.selectedMergeObject.fields.includes(x)
-    );
+    return this.selectedMergeObject &&
+      this.selectedMergeObject.fields instanceof Array
+      ? this.mergeFields.filter(
+          x => !this.selectedMergeObject.fields.includes(x)
+        )
+      : [];
   }
 
   getMergeField(id: number): MergeField {
     return this.mergeFields.find(x => x.id == id);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    //console.log(this.mergeFields);
+  }
 
   addMergeObject() {
-    //this.store.dispatch(addNewObject({ fieldName: string, selectedMergeObject }));
+    // this.store.dispatch(addNewObject({ fieldName: string, selectedMergeObject }));
   }
 
   addMergeField($evt) {

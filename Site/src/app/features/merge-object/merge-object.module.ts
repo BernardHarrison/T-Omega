@@ -5,10 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { MergeObjectRoutingModule } from "./merge-object-routing.module";
 import { MergeObjectListComponent } from "./merge-object-list/merge-object-list.component";
 import { MergeObjectEditComponent } from "./merge-object-edit/merge-object-edit.component";
-import { StoreModule } from "@ngrx/store";
-import * as fromMergeObjectFeature from "./store/merge-object-feature.reducer";
-import { EffectsModule } from "@ngrx/effects";
-import { MergeObjectFeatureEffects } from "./store/merge-object-feature.effects";
+
 import { MergeObjectDummyComponent } from "./components/merge-object-dummy/merge-object-dummy.component";
 import { MergeFieldDummyComponent } from "./components/merge-field-dummy/merge-field-dummy-component";
 
@@ -19,15 +16,6 @@ import { MergeFieldDummyComponent } from "./components/merge-field-dummy/merge-f
     MergeObjectDummyComponent,
     MergeFieldDummyComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MergeObjectRoutingModule,
-    StoreModule.forFeature(
-      fromMergeObjectFeature.mergeObjectFeatureFeatureKey,
-      fromMergeObjectFeature.reducer
-    ),
-    EffectsModule.forFeature([MergeObjectFeatureEffects])
-  ]
+  imports: [CommonModule, FormsModule, MergeObjectRoutingModule]
 })
 export class MergeObjectModule {}

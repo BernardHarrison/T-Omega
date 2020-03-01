@@ -31,6 +31,11 @@ export const addMergeToFieldsAction = createAction(
   props<{ field: MergeField; model: MergeObject }>()
 );
 
+export const setMergeObjectAction = createAction(
+  MergeObjectTypes.SET_MERGEOBJECT,
+  props<{ payload: MergeObject }>()
+);
+
 export const removeMergeFromFieldsAction = createAction(
   MergeObjectTypes.REMOVE_MERGE_FROM_OBJECTS,
   props<{ field: MergeField; model: MergeObject }>()
