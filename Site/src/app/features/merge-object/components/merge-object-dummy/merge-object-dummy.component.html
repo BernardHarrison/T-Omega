@@ -1,12 +1,12 @@
 <div class="text-info model-filler">{{selectedMergeObject.fieldName}} {{ ": {"}}</div>
 
 <app-merge-object-dummy-component [selectedMergeObject]="mergeObject"
-                                  [mergeFields]="mergeFields"
-                                  *ngFor="let mergeObject of selectedMergeObject.objects">
+    [mergeFields]="mergeFields"
+    *ngFor="let mergeObject of selectedMergeObject.objects">
 </app-merge-object-dummy-component>
 
 <app-merge-field-dummy-component [mergeField]="mergeField"
-                                 *ngFor="let mergeField of selectedMergeObject.fields">
+    *ngFor="let mergeField of selectedMergeObject.fields">
 
 </app-merge-field-dummy-component>
 <div class="text-info model-filler">{{"}"}}</div>
@@ -15,23 +15,22 @@
 
     <div *ngIf="displayInput">
         <form #f="ngForm"
-              (ngSubmit)="addMergeObject()"
-              novalidate>
+            (ngSubmit)="addMergeObject()"
+            novalidate>
             <input name="first"
-                   [(ngModel)]="addObjectName"
-                   #name="ngModel">
+                [(ngModel)]="addObjectName"
+                #name="ngModel">
             <button>add</button>
         </form>
 
     </div>
 
     <select (change)="addMergeField()"
-            *ngIf="availableMergeFields && availableMergeFields.length"
-            [(ngModel)]="selectedField">
-        <option [ngValue]="defaultPlaceholder"
-                disabled>--Add Merge Field--</option>
+        *ngIf="availableMergeFields && availableMergeFields.length"
+        [(ngModel)]="selectedField">
+        <option [ngValue]="defaultPlaceholder">--Add Merge Field--</option>
         <option [ngValue]="mergeField"
-                *ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
+            *ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
     </select>
     <a href="">Create Merge Field</a>
 </div>

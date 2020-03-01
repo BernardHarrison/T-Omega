@@ -29,14 +29,15 @@ export class MergeObjectDummyComponent implements OnInit {
   //temporary
   displayInput: boolean = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
   get availableMergeFields(): MergeField[] {
+    this.selectedField = DEFAULT_PLACEHOLDER;
     return this.selectedMergeObject &&
       this.selectedMergeObject.fields instanceof Array
       ? this.mergeFields.filter(x =>
-          this.selectedMergeObject.fields.find(y => y.id == x.id) ? false : true
-        )
+        this.selectedMergeObject.fields.find(y => y.id == x.id) ? false : true
+      )
       : [];
   }
 
@@ -44,7 +45,7 @@ export class MergeObjectDummyComponent implements OnInit {
     return DEFAULT_PLACEHOLDER;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   openDialog() {
     this.displayInput = true;
@@ -65,6 +66,6 @@ export class MergeObjectDummyComponent implements OnInit {
       field: this.selectedField,
       model: this.selectedMergeObject
     });
-    this.selectedField = DEFAULT_PLACEHOLDER;
+
   }
 }
