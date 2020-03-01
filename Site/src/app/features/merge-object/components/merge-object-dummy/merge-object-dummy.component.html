@@ -11,7 +11,19 @@
 </app-merge-field-dummy-component>
 <div class="text-info model-filler">{{"}"}}</div>
 <div>
-    <button (click)="addMergeObject()">AddObject</button>
+    <button (click)="openDialog()">AddObject</button>
+
+    <div *ngIf="displayInput">
+        <form #f="ngForm"
+              (ngSubmit)="addMergeObject()"
+              novalidate>
+            <input name="first"
+                   [(ngModel)]="addObjectName"
+                   #name="ngModel">
+            <button>add</button>
+        </form>
+
+    </div>
 
     <select (change)="addMergeField($event)">
         <option value="{{mergeField.id}}"

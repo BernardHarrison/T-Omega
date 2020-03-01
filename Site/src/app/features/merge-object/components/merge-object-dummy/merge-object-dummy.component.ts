@@ -3,7 +3,10 @@ import { MergeObject } from "src/app/stores/merge-object-store";
 import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import { MergeField } from "src/app/stores/merge-field-store";
-import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-object.actions";
+import {
+  addMergeToFieldsAction,
+  addObjectToObjectsAction
+} from "src/app/stores/merge-object-store/merge-object.actions";
 
 @Component({
   selector: "app-merge-object-dummy-component",
@@ -16,6 +19,10 @@ export class MergeObjectDummyComponent implements OnInit {
 
   @Input()
   mergeFields: MergeField[];
+  addObjectName: string;
+
+  //temporary
+  displayInput: boolean = false;
 
   constructor(private store: Store<AppState>) {}
 
@@ -34,8 +41,18 @@ export class MergeObjectDummyComponent implements OnInit {
 
   ngOnInit() {}
 
+  openDialog() {
+    this.displayInput = true;
+  }
+
   addMergeObject() {
-    // this.store.dispatch(addNewObject({ fieldName: string, selectedMergeObject }));
+    this.store.dispatch(
+      addObjectToObjectsAction({
+        fieldName: this.addObjectName,
+        model: this.selectedMergeObject
+      })
+    );
+    this.displayInput = false;
   }
 
   addMergeField($evt) {
