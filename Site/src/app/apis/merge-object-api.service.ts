@@ -82,8 +82,9 @@ export class MergeObjectApiService implements IMergeObjectApi {
         let mergeObject = new MergeObject();
         mergeObject.fieldName = field;
         mergeObject.id = Math.floor(Math.random() * 10000);
+        mergeObject.fields = [];
+        mergeObject.objects = [];
         if (!item.objects) {
-          item.objects = [];
           item.objects.push(mergeObject);
         } else {
           item.objects.push(mergeObject);
