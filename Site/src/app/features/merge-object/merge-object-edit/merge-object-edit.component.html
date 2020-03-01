@@ -2,8 +2,8 @@
      *ngIf="selectedMergeObject$ | async; let selectedObject">
     <div class="col-sm-8">
         <app-merge-object-dummy-component [selectedMergeObject]="selectedMergeObject$ | async"
-                                          [mergeFields]="mergeFields$ | async"></app-merge-object-dummy-component>
+                                          [mergeFields]="mergeFields$ | async"
+                                          (addMergeFieldRequest)="addMergeFieldToMergeObject($event)">
+        </app-merge-object-dummy-component>
     </div>
-
-
 </div>

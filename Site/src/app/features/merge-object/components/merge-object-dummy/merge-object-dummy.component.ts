@@ -1,12 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MergeObject } from "src/app/stores/merge-object-store";
 import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import { MergeField } from "src/app/stores/merge-field-store";
-import {
-  addMergeToFieldsAction,
-  addObjectToObjectsAction
-} from "src/app/stores/merge-object-store/merge-object.actions";
+import { addObjectToObjectsAction } from "src/app/stores/merge-object-store/merge-object.actions";
+
+const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
 @Component({
   selector: "app-merge-object-dummy-component",
@@ -21,6 +20,12 @@ export class MergeObjectDummyComponent implements OnInit {
   mergeFields: MergeField[];
   addObjectName: string;
 
+  @Output() addMergeFieldRequest = new EventEmitter<{
+    field: MergeField;
+    model: MergeObject;
+  }>();
+
+  selectedField: any = DEFAULT_PLACEHOLDER;
   //temporary
   displayInput: boolean = false;
 
@@ -29,14 +34,14 @@ export class MergeObjectDummyComponent implements OnInit {
   get availableMergeFields(): MergeField[] {
     return this.selectedMergeObject &&
       this.selectedMergeObject.fields instanceof Array
-      ? this.mergeFields.filter(
-          x => !this.selectedMergeObject.fields.includes(x)
+      ? this.mergeFields.filter(x =>
+          this.selectedMergeObject.fields.find(y => y.id == x.id) ? false : true
         )
       : [];
   }
 
-  getMergeField(id: number): MergeField {
-    return this.mergeFields.find(x => x.id == id);
+  get defaultPlaceholder() {
+    return DEFAULT_PLACEHOLDER;
   }
 
   ngOnInit() {}
@@ -55,14 +60,11 @@ export class MergeObjectDummyComponent implements OnInit {
     this.displayInput = false;
   }
 
-  addMergeField($evt) {
-    let fieldId = parseInt($evt.srcElement.value);
-    let newField = this.getMergeField(fieldId);
-    this.store.dispatch(
-      addMergeToFieldsAction({
-        field: newField,
-        model: this.selectedMergeObject
-      })
-    );
+  addMergeField() {
+    this.addMergeFieldRequest.emit({
+      field: this.selectedField,
+      model: this.selectedMergeObject
+    });
+    this.selectedField = DEFAULT_PLACEHOLDER;
   }
 }

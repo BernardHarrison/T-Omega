@@ -25,8 +25,13 @@
 
     </div>
 
-    <select (change)="addMergeField($event)">
-        <option value="{{mergeField.id}}"
+    <select (change)="addMergeField()"
+            *ngIf="availableMergeFields && availableMergeFields.length"
+            [(ngModel)]="selectedField">
+        <option [ngValue]="defaultPlaceholder"
+                disabled>--Add Merge Field--</option>
+        <option [ngValue]="mergeField"
                 *ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
     </select>
+    <a href="">Create Merge Field</a>
 </div>
