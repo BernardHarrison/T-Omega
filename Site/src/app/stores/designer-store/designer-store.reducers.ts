@@ -1,9 +1,9 @@
 import { createReducer, on, ActionReducerMap } from '@ngrx/store';
-import * as fromtDesignerStore from '.';
+import * as fromDesignerStore from '.';
 import * as fromActions from './designer-store.actions';
 
 export const starterSectionsReducer = createReducer(
-    fromtDesignerStore.starterSectionsInitialState,
+    fromDesignerStore.starterSectionsInitialState,
     on(fromActions.loadStarterTemplates, (state, action) => {
         return state;
     }),
@@ -19,39 +19,39 @@ export const starterSectionsReducer = createReducer(
 )
 
 export const starterTemplatesReducer = createReducer(
-    fromtDesignerStore.starterTemplatesInitialState,
+    fromDesignerStore.starterTemplatesInitialState,
     // on(null, (state, action) => {
     //     return state;
     // })
 )
 
 export const userSectionsReducer = createReducer(
-    fromtDesignerStore.userSectionsInitialState,
+    fromDesignerStore.userSectionsInitialState,
     // on(null, (state, action) => {
     //     return state;
     // })
 )
 
 export const templateDefinitionReducer = createReducer(
-    fromtDesignerStore.templateDefinitionInitialState,
-    // on(null, (state, action) => {
-    //     return state
-    // })
+    fromDesignerStore.templateDefinitionInitialState,
+    on(fromActions.loadTemplateDefinition, (state, action) => {
+        return state
+    }),
+    on(fromActions.setTemplateDefinition, (state, action) => {
+        return { ...state, entity: action.definition }
+    }),
+    on(fromActions.loadTemplateDefinitionBusy, (state, action) => {
+        return { ...state, busy: action.busy }
+    }),
+    on(fromActions.loadTemplateDefinitionError, (state, action) => {
+        return { ...state, error: action.error }
+    }),
 )
 
-export const selectedTemplateReducer = createReducer(
-    fromtDesignerStore.selectedTemplateInitialState,
-    // on(null, (state, action) => {
-    //     return state;
-    // })
-)
-
-
-export const designerReducerMap: ActionReducerMap<fromtDesignerStore.DesignerState> = {
+export const designerReducerMap: ActionReducerMap<fromDesignerStore.DesignerState> = {
     starterTemplates: starterTemplatesReducer,
     starterSections: starterSectionsReducer,
     userSections: userSectionsReducer,
-    templateDefinition: templateDefinitionReducer,
-    selectedTemplate: selectedTemplateReducer
+    templateDefinition: templateDefinitionReducer
 }
 

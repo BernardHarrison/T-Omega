@@ -1,13 +1,1 @@
-<div class="designer-wrapper"
-	[style.backgroundColor]="template.backgroundColor">
-	<div class="designer-section"
-		*ngFor="let section of template.sections"
-		[style.backgroundColor]="section.outer.color">
-		<div class="designer-section-inner"
-			[style.backgroundColor]="section.inner.color">
-			<div class="designer-cell designer-cell-100">
-
-			</div>
-		</div>
-	</div>
-</div>
+<designer-template [template]="selectedTemplate$ | async"></designer-template>

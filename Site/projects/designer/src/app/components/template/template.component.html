@@ -1,1 +1,9 @@
-<div></div>
+<ng-container *ngIf="template; else templateSelector">
+	<div class="designer-wrapper"
+		[style.backgroundColor]="template.backgroundColor">
+		<app-designer-sections [sections]="template.sections"></app-designer-sections>
+	</div>
+</ng-container>
+<ng-template #templateSelector>
+	<h1>TODO Select your template</h1>
+</ng-template>

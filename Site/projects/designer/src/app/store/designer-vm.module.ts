@@ -1,26 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule, ActionReducerMap } from '@ngrx/store';
-import { DesignerVmState } from '.';
-import { widthReducer } from './designer-vm.reducers';
-import { DesignerAppState } from 'src/app/stores/designer-store';
-
-const DESIGNER_VM_STORE = "designerVm"
-
-const reducer: ActionReducerMap<DesignerVmState> = {
-  template: null,
-  width: widthReducer
-}
-
-export class DesignerVmAppState extends DesignerAppState {
-  designerVm: DesignerVmState
-}
+import { StoreModule } from '@ngrx/store';
+import { DESIGNER_VM_STORE } from '.';
+import { designerVmReducerMap } from './designer-vm.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { DesignerVmEffects } from './designer-vm.effects';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature(DESIGNER_VM_STORE, reducer),
+    StoreModule.forFeature(DESIGNER_VM_STORE, designerVmReducerMap),
+    EffectsModule.forFeature([DesignerVmEffects])
   ]
 })
 export class DesignerVmModule { }

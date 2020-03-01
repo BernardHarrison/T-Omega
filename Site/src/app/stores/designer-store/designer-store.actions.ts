@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { DesignerSection } from '.';
+import { DesignerSection, TemplateDefinition } from '.';
 
 const PREFIX = "[Designer Store] - "
 
@@ -29,3 +29,22 @@ export const loadStarterTemplates = createAction(
     `${PREFIX} Load starter templates`
 );
 
+//Designer template definition
+export const loadTemplateDefinition = createAction(
+    `${PREFIX} Load the designer template definition`
+);
+
+export const setTemplateDefinition = createAction(
+    `${PREFIX} Set template definition`,
+    props<{ definition: TemplateDefinition }>()
+);
+
+export const loadTemplateDefinitionBusy = createAction(
+    `${PREFIX} Set busy for loading template definition`,
+    props<{ busy: boolean }>()
+);
+
+export const loadTemplateDefinitionError = createAction(
+    `${PREFIX} Set error for loading template definition`,
+    props<{ error: Error }>()
+)

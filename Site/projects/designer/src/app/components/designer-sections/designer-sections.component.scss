@@ -1,0 +1,32 @@
+
+.designer-section{
+	width: 600px;
+	padding: 20px;
+	margin:auto;
+	display: table;
+}
+
+.designer-section-inner{
+	display: table-row;
+}
+
+.designer-cell-100{
+	width: 100%;
+}
+.designer-cell-count-50{
+	width: 50%;
+}
+
+.designer-cell-count-33{
+	width: 33.33%;
+}
+
+.designer-cell-count-25{
+	width: 25%;
+}
+
+.designer-cell{
+	background-color: aliceblue;
+	padding: 20px;
+	display: table-cell;
+}

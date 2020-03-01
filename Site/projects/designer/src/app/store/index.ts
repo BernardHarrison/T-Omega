@@ -1,6 +1,12 @@
-import { TemplateDefinition } from 'src/app/stores/designer-store';
+import { DesignerTemplate, DesignerAppState } from 'src/app/stores/designer-store';
+
+export const DESIGNER_VM_STORE = "designerVm"
 
 export class DesignerVmState {
-	template: TemplateDefinition;
-	width: number;
+	selectedTemplate: DesignerTemplate;
 }
+
+export class DesignerVmAppState extends DesignerAppState {
+	designerVm: DesignerVmState
+}
+

@@ -53,4 +53,4 @@ import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

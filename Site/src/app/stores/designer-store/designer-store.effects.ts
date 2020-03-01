@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { DESIGNER_STORE_API, DesignerStoreApiInterface, DesignerAppState } from '.';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { loadStarterSections, setStarterSections, loadStarterSectionsError, loadStarterSectionsBusy } from './designer-store.actions';
+import { loadStarterSections, setStarterSections, loadStarterSectionsError, loadStarterSectionsBusy, loadTemplateDefinition, setTemplateDefinition, loadTemplateDefinitionBusy, loadTemplateDefinitionError } from './designer-store.actions';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -27,6 +27,21 @@ export class DesingerStoreEffects {
         mergeMap(action => [
             action,
             loadStarterSectionsBusy({ busy: false })
+        ])
+    );
+
+    @Effect() loadTemplateDefinitionEffect$: Observable<Action> = this.actions$.pipe(
+        ofType(loadTemplateDefinition),
+        tap(actions => this.store.dispatch(loadTemplateDefinitionBusy({ busy: true }))),
+        tap(actions => this.store.dispatch(loadTemplateDefinitionError({ error: null }))),
+        mergeMap(action =>
+            this.api.getTemplateDefinition().pipe(
+                mergeMap(result => of(setTemplateDefinition({ definition: result }))),
+                catchError(err => of(loadTemplateDefinitionError({ error: err })))
+            )),
+        mergeMap(action => [
+            action,
+            loadTemplateDefinitionBusy({ busy: false })
         ])
     );
 

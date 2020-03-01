@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DesignerTemplate } from 'src/app/stores/designer-store';
 
 @Component({
   selector: 'designer-template',
@@ -9,7 +10,7 @@ export class TemplateComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  @Input() template: DesignerTemplate;
 }

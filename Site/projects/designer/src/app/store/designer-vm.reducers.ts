@@ -1,15 +1,13 @@
-import { createReducer, on } from "@ngrx/store";
+import { createReducer, on, ActionReducerMap } from "@ngrx/store";
 import * as fromActions from './designer-vm.actions';
+import { DesignerVmState } from '.';
 
-const INITIAL_WIDTH = 1080;
-const MAX_WIDTH = 4000;
-const MIN_WIDTH = 320;
-
-export const widthReducer = createReducer(INITIAL_WIDTH,
-	on(fromActions.changeWidth, (state, actions) => {
-		var newValue = state + actions.changeAmount;
-		return newValue >= MAX_WIDTH ? MAX_WIDTH
-			: newValue <= MIN_WIDTH ? MIN_WIDTH
-				: newValue
+export const setSelectedTemplateRecucer = createReducer(null,
+	on(fromActions.setSelectedTemplate, (state, action) => {
+		return action.template
 	}),
 )
+
+export const designerVmReducerMap: ActionReducerMap<DesignerVmState> = {
+	selectedTemplate: setSelectedTemplateRecucer,
+}

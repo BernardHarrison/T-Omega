@@ -1,8 +1,9 @@
 import { createAction, props } from "@ngrx/store";
+import { DesignerTemplate } from 'src/app/stores/designer-store';
 
 const PREFIX = "[Designer Vm] - ";
 
-export const changeWidth = createAction(
-	`${PREFIX} Change the designer width by given amount`,
-	props<{ changeAmount: number }>()
+export const setSelectedTemplate = createAction(
+	`${PREFIX} Set the current designer template`,
+	props<{ template: DesignerTemplate }>()
 );

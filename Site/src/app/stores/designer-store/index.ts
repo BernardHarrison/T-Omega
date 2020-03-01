@@ -1,17 +1,18 @@
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConditionDefinition } from '../condition-builder-store';
 
 export const desingerStoreKey = "designerStore";
 
 export interface TemplateDefinition {
-	id: number;
+	id: number | null;
 	name: string;
 	default: DesignerTemplate;
 	conditionStates: ConditionTemplateMap[];
 }
 
 export interface ConditionTemplateMap {
-
+	condition: ConditionDefinition
 	tempate: DesignerTemplate;
 }
 
@@ -58,7 +59,6 @@ export interface DesignerState {
 	starterSections: ApiEntityState<DesignerSection[]>;
 	userSections: ApiEntityState<DesignerSection[]>;
 	templateDefinition: ApiEntityState<TemplateDefinition>;
-	selectedTemplate: ApiEntityState<DesignerTemplate>;
 }
 
 export class DesignerAppState {
@@ -84,7 +84,12 @@ export const userSectionsInitialState: ApiEntityState<DesignerSection[]> = {
 };
 
 export const templateDefinitionInitialState: ApiEntityState<TemplateDefinition> = {
-	entity: null,
+	entity: {
+		id: null,
+		name: null,
+		default: null,
+		conditionStates: []
+	},
 	busy: false,
 	error: null
 };
@@ -98,6 +103,7 @@ export const selectedTemplateInitialState: ApiEntityState<DesignerTemplate> = {
 export interface DesignerStoreApiInterface {
 	getStarterTemplates(): Observable<DesignerTemplate[]>;
 	getStarterSections(): Observable<DesignerSection[]>;
+	getTemplateDefinition(): Observable<TemplateDefinition>;
 }
 
 export const DESIGNER_STORE_API = new InjectionToken<DesignerStoreApiInterface>(
