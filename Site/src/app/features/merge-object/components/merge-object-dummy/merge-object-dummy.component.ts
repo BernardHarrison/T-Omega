@@ -3,7 +3,10 @@ import { MergeObject } from "src/app/stores/merge-object-store";
 import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import { MergeField } from "src/app/stores/merge-field-store";
-import { addObjectToObjectsAction } from "src/app/stores/merge-object-store/merge-object.actions";
+import {
+  addObjectToObjectsAction,
+  addMergeToFieldsAction
+} from "src/app/stores/merge-object-store/merge-object.actions";
 
 const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
@@ -59,9 +62,15 @@ export class MergeObjectDummyComponent implements OnInit {
   }
 
   addMergeField() {
-    this.addMergeFieldRequest.emit({
-      field: this.selectedField,
-      model: this.selectedMergeObject
-    });
+    this.store.dispatch(
+      addMergeToFieldsAction({
+        field: this.selectedField,
+        model: this.selectedMergeObject
+      })
+    );
+    // this.addMergeFieldRequest.emit({
+    //   field: this.selectedField,
+    //   model: this.selectedMergeObject
+    // });
   }
 }

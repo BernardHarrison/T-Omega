@@ -20,6 +20,13 @@ export class MergeObject {
   fields: Array<MergeField>;
 }
 
+export interface MergeModel {
+  id: number;
+  title: string;
+  objects: Array<MergeObject>;
+  fields: Array<MergeField>;
+}
+
 export interface MergeObjectState {
   list: MergeObject[];
   item: MergeObject;
@@ -44,4 +51,13 @@ export interface IMergeObjectApi {
 
 export const MERGE_OBJECT_STORE_API = new InjectionToken<IMergeObjectApi>(
   "MERGE_OBJECT_STORE_API"
+);
+
+export interface IModelObjectApi {
+  get(): Observable<MergeModel[]>;
+  create(entity: MergeModel): Observable<MergeModel[]>;
+}
+
+export const MODEL_STORE_API = new InjectionToken<IModelObjectApi>(
+  "MODEL_STORE_API"
 );
