@@ -1,12 +1,13 @@
 import { Injectable, Inject } from "@angular/core";
+
+import { Observable, of } from "rxjs";
+import { StorageService, LOCAL_STORAGE } from "ngx-webstorage-service";
+import { delay } from "rxjs/operators";
 import {
   IModelObjectApi,
   MergeObject,
   MergeModel
-} from "../stores/merge-object-store";
-import { Observable, of } from "rxjs";
-import { StorageService, LOCAL_STORAGE } from "ngx-webstorage-service";
-import { delay } from "rxjs/operators";
+} from "../stores/model-store";
 
 const MODEL_KEY = "MODEL_KEY";
 
@@ -36,6 +37,23 @@ export class ModelApiService implements IModelObjectApi {
     entity.fields = [];
     entity.objects = [];
     items.push(entity);
+    this.storage.set(MODEL_KEY, items);
+    return this.get();
+  }
+  update(entity: MergeModel): Observable<MergeModel[]> {
+    let items = <MergeModel[]>this.storage.get(MODEL_KEY);
+    items.forEach((item, index) => {
+      if (item.id == entity.id) items.splice(index, 1);
+    });
+    items.push(entity);
+    this.storage.set(MODEL_KEY, items);
+    return this.get();
+  }
+  delete(entity: MergeModel): Observable<MergeModel[]> {
+    let items = <MergeModel[]>this.storage.get(MODEL_KEY);
+    items.forEach((item, index) => {
+      if (item.id == entity.id) items.splice(index, 1);
+    });
     this.storage.set(MODEL_KEY, items);
     return this.get();
   }

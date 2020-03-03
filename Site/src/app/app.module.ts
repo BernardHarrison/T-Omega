@@ -22,13 +22,11 @@ import { MergeFieldApiService } from "./apis/merge-field-api.service";
 import { MERGE_FIELD_STORE_API } from "./stores/merge-field-store";
 
 import { MergeObjectModule } from "./features/merge-object/merge-object.module";
-import {
-  MERGE_OBJECT_STORE_API,
-  MODEL_STORE_API
-} from "./stores/merge-object-store";
+import { MERGE_OBJECT_STORE_API } from "./stores/merge-object-store";
 import { MergeObjectApiService } from "./apis/merge-object-api.service";
 import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object-store.module";
 import { ModelApiService } from "./apis/model-api.service";
+import { MODEL_STORE_API } from "./stores/model-store";
 
 @NgModule({
   declarations: [
