@@ -45,8 +45,8 @@ export class MergeObjectListComponent implements OnInit {
     this.busy$ = this.store.select(state => state.modelState.busy);
   }
 
-  onSelectItem(item: MergeObject) {
-    this.store.dispatch(fromActions.setMergeObjectAction({ payload: item }));
+  onSelectItem(item: MergeModel) {
+    this.store.dispatch(fromModelActions.setModelAction({ payload: item }));
     this.router.navigate(["/merge-object-edit"]);
   }
 

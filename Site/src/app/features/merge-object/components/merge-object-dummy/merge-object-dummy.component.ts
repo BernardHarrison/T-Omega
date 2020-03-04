@@ -7,6 +7,7 @@ import {
   addObjectToObjectsAction,
   addMergeToFieldsAction
 } from "src/app/stores/merge-object-store/merge-object.actions";
+import { MergeModel } from "src/app/stores/model-store";
 
 const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
@@ -17,7 +18,7 @@ const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 })
 export class MergeObjectDummyComponent implements OnInit {
   @Input()
-  selectedMergeObject: MergeObject;
+  selectedMergeModel: MergeModel;
 
   @Input()
   mergeFields: MergeField[];
@@ -37,7 +38,7 @@ export class MergeObjectDummyComponent implements OnInit {
   get availableMergeFields(): MergeField[] {
     this.selectedField = DEFAULT_PLACEHOLDER;
     return this.mergeFields.filter(x =>
-      this.selectedMergeObject.fields.find(y => y.id == x.id) ? false : true
+      this.selectedMergeModel.fields.find(y => y.id == x.id) ? false : true
     );
   }
 
@@ -52,22 +53,22 @@ export class MergeObjectDummyComponent implements OnInit {
   }
 
   addMergeObject() {
-    this.store.dispatch(
-      addObjectToObjectsAction({
-        fieldName: this.addObjectName,
-        model: this.selectedMergeObject
-      })
-    );
-    this.displayInput = false;
+    // this.store.dispatch(
+    //   addObjectToObjectsAction({
+    //     fieldName: this.addObjectName,
+    //     model: this.selectedMergeObject
+    //   })
+    // );
+    // this.displayInput = false;
   }
 
   addMergeField() {
-    this.store.dispatch(
-      addMergeToFieldsAction({
-        field: this.selectedField,
-        model: this.selectedMergeObject
-      })
-    );
+    // this.store.dispatch(
+    //   addMergeToFieldsAction({
+    //     field: this.selectedField,
+    //     model: this.selectedMergeObject
+    //   })
+    // );
     // this.addMergeFieldRequest.emit({
     //   field: this.selectedField,
     //   model: this.selectedMergeObject

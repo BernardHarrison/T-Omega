@@ -5,6 +5,7 @@ import { Observable, forkJoin, merge } from "rxjs";
 import { MergeField } from "src/app/stores/merge-field-store";
 import { AppState } from "src/app/app.state";
 import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-object.actions";
+import { MergeModel } from "src/app/stores/model-store";
 
 @Component({
   selector: "app-merge-object-edit",
@@ -12,14 +13,14 @@ import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-
   styleUrls: ["./merge-object-edit.component.scss"]
 })
 export class MergeObjectEditComponent implements OnInit {
-  selectedMergeObject$: Observable<MergeObject>;
+  selectedMergeModel$: Observable<MergeModel>;
   mergeFields$: Observable<MergeField[]>;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.selectedMergeObject$ = this.store.select(
-      state => state.mergeObjectState.item
+    this.selectedMergeModel$ = this.store.select(
+      state => state.modelState.item
     );
 
     this.mergeFields$ = this.store.select(state => state.mergeField.list);
