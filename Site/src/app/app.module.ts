@@ -27,6 +27,7 @@ import { MergeObjectApiService } from "./apis/merge-object-api.service";
 import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object-store.module";
 import { ModelApiService } from "./apis/model-api.service";
 import { MODEL_STORE_API } from "./stores/model-store";
+import { ModelStoreModule } from "./stores/model-store/model-store.module";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MODEL_STORE_API } from "./stores/model-store";
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     MergeFieldModule,
+    ModelStoreModule,
     MergeObjectStoreModule,
     MergeObjectModule,
     AppRoutingModule,

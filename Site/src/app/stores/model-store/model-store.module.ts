@@ -3,8 +3,9 @@ import { CommonModule } from "@angular/common";
 import { StoreModule } from "@ngrx/store";
 import * as fromModelState from "./";
 import { EffectsModule } from "@ngrx/effects";
-import { reducer } from "../merge-field-store/merge-field.reducer";
+
 import { ModelEffects } from "./model.effects";
+import { reducer } from "./model.reducer";
 
 @NgModule({
   declarations: [],
@@ -14,4 +15,4 @@ import { ModelEffects } from "./model.effects";
     EffectsModule.forFeature([ModelEffects])
   ]
 })
-export class MergeObjectStoreModule {}
+export class ModelStoreModule {}

@@ -1,6 +1,6 @@
 <div class="row table-header">
     <div class="col-sm-9 mt-4">
-        <h3>Manage Merge Field Objects</h3>
+        <h3>Manage Model Objects</h3>
     </div>
     <div class="text-right mt-4 col-sm-3">
         <button class="btn btn-success"
@@ -25,7 +25,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of list$ | async">
-                <td>{{item.fieldName}}</td>
+                <td>{{item.title}}</td>
                 <td class="text-right merge-button-container">
                     <button class="btn btn-warning mr-1"
                             (click)="openModal(updateTemplateModel, item)"><i class="fas fa-edit"></i></button>
@@ -58,7 +58,7 @@
                 <input type="text"
                        class="form-control"
                        id="createName"
-                       [(ngModel)]="createMergeObject.fieldName"
+                       [(ngModel)]="createMergeModel.title"
                        name="name"
                        required
                        #name="ngModel"
@@ -87,11 +87,11 @@
               (ngSubmit)="onUpdate()"
               novalidate>
             <div class="form-group">
-                <label for="updateName">Merge Object Name</label>
+                <label for="updateName">Model Name</label>
                 <input type="text"
                        class="form-control"
                        id="updateName"
-                       [(ngModel)]="updateMergeObject.fieldName"
+                       [(ngModel)]="updateMergeModel.title"
                        name="name"
                        required
                        #name="ngModel">

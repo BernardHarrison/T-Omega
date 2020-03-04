@@ -20,7 +20,7 @@ export class MergeObject {
   fields: Array<MergeField>;
 }
 
-export interface MergeModel {
+export class MergeModel {
   id: number;
   title: string;
   objects: Array<MergeObject>;

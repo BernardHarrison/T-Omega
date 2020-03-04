@@ -24,6 +24,7 @@ export class ModelApiService implements IModelObjectApi {
     let items = <MergeModel[]>this.storage.get(MODEL_KEY);
     if (!items) {
       this.storage.set(MODEL_KEY, []);
+
       return this.get();
     }
     return of(items).pipe(
