@@ -63,6 +63,11 @@ export const deleteMergeObjectAction = createAction(
   props<{ payload: MergeObject }>()
 );
 
+export const removeMergeObjectAction = createAction(
+  MergeObjectTypes.DELETE,
+  props<{ payload: MergeObject }>()
+);
+
 export const mergeObjectApiBusyAction = createAction(
   MergeObjectTypes.BUSY,
   props<{ payload: boolean }>()

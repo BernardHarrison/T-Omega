@@ -1,6 +1,21 @@
-<p>{{ mergeObject.fieldName + ": {" }} <button (click)="edit()">edit</button></p>
-<app-merge-field-item *ngFor="let field of mergeObject.fields"
-	[field]="field"></app-merge-field-item>
-<app-merge-object-item *ngFor="let mergeItem of mergeObject.objects"
-	[mergeObject]="mergeItem"></app-merge-object-item>
+<p>{{ mergeObject.fieldName + ": {" }}
+	<input placeholder="New Object Property Name"
+		[(ngModel)]="newObjectFieldName" />
+	<button *ngIf="newObjectFieldName"
+		(click)="addMergeObject()">add</button>
+	<select (change)="addMergeField(selectedField)"
+		*ngIf="availableMergeFields && availableMergeFields.length"
+		[(ngModel)]="selectedField">
+		<option [ngValue]="defaultPlaceholder">--Add Merge Field--</option>
+		<option [ngValue]="mergeField"
+			*ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
+	</select><button (click)="removeMergeObject()">x</button>
+</p>
+<div class="field-list">
+	<app-merge-field-item *ngFor="let field of mergeObject.fields"
+		[field]="field"
+		(removeRequest)="removeMergeField($event)"></app-merge-field-item>
+	<app-merge-object-item *ngFor="let mergeItem of mergeObject.objects"
+		[mergeObject]="mergeItem"></app-merge-object-item>
+</div>
 <p>{{ "}" }}</p>

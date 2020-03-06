@@ -1,5 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { MergeObject } from 'src/app/stores/merge-object-store';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { MergeField } from 'src/app/stores/merge-field-store';
+import { addMergeToFieldsAction, removeMergeFromFieldsAction, addObjectToObjectsAction, removeMergeObjectAction } from 'src/app/stores/merge-object-store/merge-object.actions';
+import { take } from 'rxjs/operators';
+
+const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
 @Component({
   selector: 'app-merge-object-item',
@@ -8,15 +15,59 @@ import { MergeObject } from 'src/app/stores/merge-object-store';
 })
 export class MergeObjectItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store
+      .select(state => state.mergeField.list)
+      .pipe(take(1))
+      .subscribe(x => (this.mergeFields = x));
   }
 
   @Input() mergeObject: MergeObject;
 
-  edit() {
-    //TODO call action to select this merge object
+  newObjectFieldName: string;
+  selectedField: any = DEFAULT_PLACEHOLDER; //Needed to capture the users selcted mergeField
+
+  mergeFields: MergeField[];
+
+  get defaultPlaceholder() {
+    return DEFAULT_PLACEHOLDER;
   }
+
+  get availableMergeFields(): MergeField[] {
+    this.selectedField = DEFAULT_PLACEHOLDER;
+    //TODO: Remove this Array check. Let it fail.
+    return this.mergeObject.fields instanceof Array ? this.mergeFields.filter(x =>
+      this.mergeObject.fields.find(y => y.id == x.id) ? false : true
+    ) : [];
+  }
+
+  addMergeField(field: MergeField) {
+    this.store.dispatch(addMergeToFieldsAction({
+      field,
+      model: this.mergeObject
+    }));
+  }
+
+  removeMergeField(field: MergeField) {
+    this.store.dispatch(removeMergeFromFieldsAction({
+      field,
+      model: this.mergeObject
+    }));
+  }
+
+  addMergeObject() {
+    this.store.dispatch(addObjectToObjectsAction({
+      fieldName: this.newObjectFieldName,
+      model: this.mergeObject
+    }));
+    this.newObjectFieldName = null;
+  }
+
+  removeMergeObject() {
+    this.store.dispatch(removeMergeObjectAction({ payload: this.mergeObject }))
+  }
+
 
 }

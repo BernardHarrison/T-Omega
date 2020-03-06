@@ -152,4 +152,24 @@ export class MergeObjectEffects {
       ])
     )
   );
+
+  removeObject$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.removeMergeObjectAction),
+      mergeMap(action =>
+        this.api.removeObject(action.payload).pipe(
+          mergeMap(item => [
+            fromActions.setMergeObjectAction({ payload: item })
+          ]),
+          catchError(error =>
+            of(fromActions.mergeObjectApiErrorAction({ payload: error }))
+          )
+        )
+      ),
+      mergeMap(action => [
+        action,
+        fromActions.mergeObjectApiBusyAction({ payload: false })
+      ])
+    )
+  );
 }
