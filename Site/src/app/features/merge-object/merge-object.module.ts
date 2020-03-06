@@ -8,13 +8,17 @@ import { MergeObjectEditComponent } from "./merge-object-edit/merge-object-edit.
 
 import { MergeObjectDummyComponent } from "./components/merge-object-dummy/merge-object-dummy.component";
 import { MergeFieldDummyComponent } from "./components/merge-field-dummy/merge-field-dummy-component";
+import { MergeObjectItemComponent } from './merge-object-item/merge-object-item.component';
+import { MergeFieldItemComponent } from './merge-field-item/merge-field-item.component';
 
 @NgModule({
   declarations: [
     MergeObjectListComponent,
     MergeObjectEditComponent,
     MergeObjectDummyComponent,
-    MergeFieldDummyComponent
+    MergeFieldDummyComponent,
+    MergeObjectItemComponent,
+    MergeFieldItemComponent
   ],
   imports: [CommonModule, FormsModule, MergeObjectRoutingModule]
 })

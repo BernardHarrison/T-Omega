@@ -3,10 +3,6 @@ import { MergeObject } from "src/app/stores/merge-object-store";
 import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import { MergeField } from "src/app/stores/merge-field-store";
-import {
-  addObjectToObjectsAction,
-  addMergeToFieldsAction
-} from "src/app/stores/merge-object-store/merge-object.actions";
 import { MergeModel } from "src/app/stores/model-store";
 
 const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
@@ -33,7 +29,7 @@ export class MergeObjectDummyComponent implements OnInit {
   //temporary
   displayInput: boolean = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
   get availableMergeFields(): MergeField[] {
     this.selectedField = DEFAULT_PLACEHOLDER;
@@ -46,7 +42,7 @@ export class MergeObjectDummyComponent implements OnInit {
     return DEFAULT_PLACEHOLDER;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   openDialog() {
     this.displayInput = true;

@@ -1,0 +1,6 @@
+<p>{{ mergeObject.fieldName + ": {" }} <button (click)="edit()">edit</button></p>
+<app-merge-field-item *ngFor="let field of mergeObject.fields"
+	[field]="field"></app-merge-field-item>
+<app-merge-object-item *ngFor="let mergeItem of mergeObject.objects"
+	[mergeObject]="mergeItem"></app-merge-object-item>
+<p>{{ "}" }}</p>
