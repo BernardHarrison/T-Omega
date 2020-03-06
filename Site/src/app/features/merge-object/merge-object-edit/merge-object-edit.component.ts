@@ -20,9 +20,12 @@ export class MergeObjectEditComponent implements OnInit {
   mergeFields: MergeField[]; //List of all fields in the database
   mergeObjectFields: MergeField[]; // List of all fields in this object
 
+  mergeObjects: MergeObject[]; //List of all merge objects in the database
+  mergeObjectObjects: MergeObject[];//List of all merge objects in this merge object
+
   selectedField: any; //Needed to capture the users selcted mergeField
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.selectedMergeObject$ = this.store.select(
@@ -37,6 +40,8 @@ export class MergeObjectEditComponent implements OnInit {
       .select(state => state.mergeField.list)
       .pipe(take(1))
       .subscribe(x => (this.mergeFields = x));
+
+    this.store.select(x => x.mergeObjectState.list).pipe(take(1)).subscribe(x => this.mergeObjects = x);
   }
 
   get defaultPlaceholder() {
@@ -46,6 +51,12 @@ export class MergeObjectEditComponent implements OnInit {
   get availableMergeFields(): MergeField[] {
     return this.mergeFields.filter(x =>
       this.mergeObjectFields.find(y => y.id == x.id) ? false : true
+    );
+  }
+
+  get availableMergeObjects(): MergeObject[] {
+    return this.mergeObjects.filter(x =>
+      this.mergeObjectObjects.find(y => y.id == x.id) ? false : true
     );
   }
 

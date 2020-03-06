@@ -39,7 +39,7 @@ export interface IMergeObjectApi {
   delete(entity: MergeObject): Observable<MergeObject[]>;
   addField(field: MergeField, model: MergeObject): Observable<MergeObject>;
   addObject(field: string, model: MergeObject): Observable<MergeObject>;
-  removeField(field: MergeField, model: MergeObject): Observable<MergeObject[]>;
+  removeField(field: MergeField, model: MergeObject): Observable<MergeObject>;
 }
 
 export const MERGE_OBJECT_STORE_API = new InjectionToken<IMergeObjectApi>(

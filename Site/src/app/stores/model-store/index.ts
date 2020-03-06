@@ -8,17 +8,10 @@ import {
 import { MergeField, MergeFieldState } from "../merge-field-store";
 import { Observable } from "rxjs";
 import { InjectionToken } from "@angular/core";
+import { MergeObject } from '../merge-object-store';
 
 //1) Define a key for this store
 export const MODEL_KEY = "modelState";
-
-//2) Define the model for this store
-export class MergeObject {
-  id: number | null;
-  fieldName: string;
-  objects: Array<MergeObject>;
-  fields: Array<MergeField>;
-}
 
 export class MergeModel {
   id: number;

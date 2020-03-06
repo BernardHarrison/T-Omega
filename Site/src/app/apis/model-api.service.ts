@@ -5,9 +5,9 @@ import { StorageService, LOCAL_STORAGE } from "ngx-webstorage-service";
 import { delay } from "rxjs/operators";
 import {
   IModelObjectApi,
-  MergeObject,
   MergeModel
 } from "../stores/model-store";
+import { MergeObject } from '../stores/merge-object-store';
 
 const MODEL_KEY = "MODEL_KEY";
 

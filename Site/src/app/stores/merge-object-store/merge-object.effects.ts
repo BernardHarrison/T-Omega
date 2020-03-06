@@ -11,7 +11,7 @@ export class MergeObjectEffects {
   constructor(
     private actions$: Actions,
     @Inject(MERGE_OBJECT_STORE_API) private api: IMergeObjectApi
-  ) {}
+  ) { }
 
   load$ = createEffect(() =>
     this.actions$.pipe(
@@ -138,8 +138,8 @@ export class MergeObjectEffects {
       ofType(fromActions.removeMergeFromFieldsAction),
       mergeMap(action =>
         this.api.removeField(action.field, action.model).pipe(
-          mergeMap(list => [
-            fromActions.setMergeObjectsAction({ payload: list })
+          mergeMap(item => [
+            fromActions.setMergeObjectAction({ payload: item })
           ]),
           catchError(error =>
             of(fromActions.mergeObjectApiErrorAction({ payload: error }))

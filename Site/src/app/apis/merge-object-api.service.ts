@@ -7,6 +7,7 @@ import { MergeObject, IMergeObjectApi } from "../stores/merge-object-store";
 import { MergeField } from "../stores/merge-field-store";
 
 const MERGE_OBJECT_KEY = "MERGE_OBJECT_KEY";
+const PARENT_ID = "parentId";
 
 @Injectable({
   providedIn: "root"
@@ -15,6 +16,15 @@ export class MergeObjectApiService implements IMergeObjectApi {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     if (!(items instanceof Array)) storage.set(MERGE_OBJECT_KEY, []);
+  }
+
+  private createNew(entity: MergeObject) {
+    return {
+      ...entity,
+      id: Math.floor(Math.random() * 1000000),
+      fields: [],
+      objects: []
+    }
   }
 
   get(): Observable<MergeObject[]> {
@@ -28,89 +38,68 @@ export class MergeObjectApiService implements IMergeObjectApi {
       //mergeMap(x => throwError(new Error("Api Error")))
     );
   }
+
+  populateChildren(item: MergeObject, items: MergeObject[]) {
+    item.objects = items.filter(x => x[PARENT_ID] == x.id);
+    item.objects.forEach(element => this.populateChildren(element, items));
+  }
+
+  root(mergeObject: MergeObject): Observable<MergeObject> {
+    let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
+    let item = { ...mergeObject };
+    while (item[PARENT_ID]) {
+      item = items.find(x => x.id == item[PARENT_ID]);
+    }
+    this.populateChildren(item, items);
+    return of(item);
+  }
+
   create(entity: MergeObject): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    entity.id = Math.floor(Math.random() * 10000);
-    entity.fields = [];
-    entity.objects = [];
-    items.push(entity);
+    items.push(this.createNew(entity));
     this.storage.set(MERGE_OBJECT_KEY, items);
     return this.get();
   }
+
   update(entity: MergeObject): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    items.forEach((item, index) => {
-      if (item.id == entity.id) items.splice(index, 1);
-    });
+    items = items.filter(x => x.id != entity.id);
     items.push(entity);
     this.storage.set(MERGE_OBJECT_KEY, items);
     return this.get();
   }
+
   delete(entity: MergeObject): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    items.forEach((item, index) => {
-      if (item.id == entity.id) items.splice(index, 1);
-    });
+    items = items.filter(x => x.id != entity.id);
     this.storage.set(MERGE_OBJECT_KEY, items);
     return this.get();
   }
 
-  addField(field: MergeField, model: MergeObject): Observable<MergeObject> {
+  addField(field: MergeField, mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    let currentItem;
-    items.forEach((item, index) => {
-      if (item.id == model.id) {
-        currentItem = item;
-        if (!item.fields) {
-          item.fields = [];
-          item.fields.push(field);
-        } else {
-          item.fields.push(field);
-        }
-      }
-    });
+    let item = items.find(x => x.id == mergeObject.id);
+    item.fields.push(field);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(currentItem);
+    return this.root(item);
   }
 
-  addObject(field: string, model: MergeObject): Observable<MergeObject> {
+  addObject(fieldName: string, mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    let currentItem;
-    items.forEach((item, index) => {
-      if (item.id == model.id) {
-        currentItem = item;
-        let mergeObject = new MergeObject();
-        mergeObject.fieldName = field;
-        mergeObject.id = Math.floor(Math.random() * 10000);
-        mergeObject.fields = [];
-        mergeObject.objects = [];
-        if (!item.objects) {
-          item.objects.push(mergeObject);
-        } else {
-          item.objects.push(mergeObject);
-        }
-      }
-    });
+    let item = items.find(x => x.id == mergeObject.id);
+    let newObj = this.createNew({ fieldName, id: null, fields: null, objects: null });
+    newObj[PARENT_ID] = item.id;
+    items.push(newObj);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(currentItem);
+    return this.root(item);
+
   }
 
-  removeField(
-    field: MergeField,
-    model: MergeObject
-  ): Observable<MergeObject[]> {
+  removeField(field: MergeField, mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    items.forEach((item, index) => {
-      if (item.id == model.id) {
-        item.fields.forEach(mergeField => {
-          if (mergeField.id == field.id) {
-            item.fields.splice(index, 1);
-          }
-        });
-      }
-    });
-    //throw new Error("Method not implemented.");
+    let item = items.find(x => x.id == mergeObject.id);
+    item.fields = item.fields.filter(x => x.id != field.id);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return this.get();
+    return this.root(item);
   }
 }
