@@ -1,18 +1,19 @@
 <div class="row"
-     *ngIf="selectedMergeObject$ | async; let selectedMergeObject">
+    *ngIf="selectedMergeObject$ | async; let selectedMergeObject">
     <div class="col-sm-8">
         <p>{{ selectedMergeObject.fieldName + ": {" }}</p>
         <app-merge-field-item *ngFor="let field of selectedMergeObject.fields"
-                              [field]="field"></app-merge-field-item>
+            [field]="field"
+            (removeRequest)="removeMergeField($event, selectedMergeObject)"></app-merge-field-item>
         <app-merge-object-item *ngFor="let mergeItem of selectedMergeObject.objects"
-                               [mergeObject]="mergeItem"></app-merge-object-item>
+            [mergeObject]="mergeItem"></app-merge-object-item>
         <p>{{ "}" }}
             <select (change)="addMergeField(selectedField, selectedMergeObject)"
-                    *ngIf="availableMergeFields && availableMergeFields.length"
-                    [(ngModel)]="selectedField">
+                *ngIf="availableMergeFields && availableMergeFields.length"
+                [(ngModel)]="selectedField">
                 <option [ngValue]="defaultPlaceholder">--Add Merge Field--</option>
                 <option [ngValue]="mergeField"
-                        *ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
+                    *ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
             </select>
         </p>
     </div>

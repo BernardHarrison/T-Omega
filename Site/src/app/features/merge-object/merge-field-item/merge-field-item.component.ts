@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MergeField } from 'src/app/stores/merge-field-store';
 
 @Component({
@@ -14,5 +14,11 @@ export class MergeFieldItemComponent implements OnInit {
   }
 
   @Input() field: MergeField;
+
+  @Output() removeRequest = new EventEmitter<MergeField>()
+
+  remove() {
+    this.removeRequest.emit(this.field);
+  }
 
 }
