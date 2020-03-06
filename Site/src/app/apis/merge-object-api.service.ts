@@ -32,14 +32,14 @@ export class MergeObjectApiService implements IMergeObjectApi {
     item.objects.forEach(element => this.populateChildren(element, items));
   }
 
-  private root(mergeObject: MergeObject): Observable<MergeObject> {
+  private root(mergeObject: MergeObject): MergeObject {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     let item = { ...mergeObject };
     while (item[PARENT_ID]) {
       item = items.find(x => x.id == item[PARENT_ID]);
     }
     this.populateChildren(item, items);
-    return of(item);
+    return item;
   }
 
   private purge(mergeObject: MergeObject, mergeObjects: MergeObject[]) {
@@ -88,7 +88,7 @@ export class MergeObjectApiService implements IMergeObjectApi {
     let item = items.find(x => x.id == mergeObject.id);
     item.fields.push(field);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return this.root(item);
+    return of(this.root(item));
   }
 
   addObject(fieldName: string, mergeObject: MergeObject): Observable<MergeObject> {
@@ -98,7 +98,7 @@ export class MergeObjectApiService implements IMergeObjectApi {
     newObj[PARENT_ID] = item.id;
     items.push(newObj);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return this.root(item);
+    return of(this.root(item));
 
   }
 
@@ -107,14 +107,18 @@ export class MergeObjectApiService implements IMergeObjectApi {
     let item = items.find(x => x.id == mergeObject.id);
     item.fields = item.fields.filter(x => x.id != field.id);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return this.root(item);
+    return of(this.root(item));
   }
 
   removeObject(mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    let item = items.find(x => x.id == mergeObject.id);
-    this.purge(item, items);
-    this.storage.set(MERGE_OBJECT_KEY, items);
-    return this.root(item);
+    //let item = items.find(x => x.id == mergeObject.id);
+    console.log(mergeObject);
+    console.log(items);
+    //console.log(item)
+    // let rootId = this.root(item).id
+    // this.purge(item, items);
+    // this.storage.set(MERGE_OBJECT_KEY, items);
+    return of(this.root(mergeObject));
   }
 }
