@@ -5,7 +5,7 @@ import { Observable, forkJoin, merge } from "rxjs";
 import { MergeField } from "src/app/stores/merge-field-store";
 import { AppState } from "src/app/app.state";
 import { addMergeToFieldsAction } from "src/app/stores/merge-object-store/merge-object.actions";
-import { take, tap } from 'rxjs/operators';
+import { take, tap } from "rxjs/operators";
 
 const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
@@ -15,24 +15,28 @@ const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
   styleUrls: ["./merge-object-edit.component.scss"]
 })
 export class MergeObjectEditComponent implements OnInit {
-
   selectedMergeObject$: Observable<MergeObject>;
 
   mergeFields: MergeField[]; //List of all fields in the database
-  mergeObjectFields: MergeField[];// List of all fields in this object
+  mergeObjectFields: MergeField[]; // List of all fields in this object
 
   selectedField: any; //Needed to capture the users selcted mergeField
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.selectedMergeObject$ = this.store.select(state => state.mergeObjectState.item);
+    this.selectedMergeObject$ = this.store.select(
+      state => state.mergeObjectState.item
+    );
 
-    this.selectedMergeObject$.pipe(
-      tap(x => this.mergeObjectFields = x.fields)
-    )
+    this.selectedMergeObject$.subscribe(
+      item => (this.mergeObjectFields = item.fields)
+    );
 
-    this.store.select(state => state.mergeField.list).pipe(take(1)).subscribe(x => this.mergeFields = x);
+    this.store
+      .select(state => state.mergeField.list)
+      .pipe(take(1))
+      .subscribe(x => (this.mergeFields = x));
   }
 
   get defaultPlaceholder() {

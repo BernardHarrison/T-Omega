@@ -22,11 +22,11 @@ import { AppState } from "src/app/app.state";
   styleUrls: ["./merge-object-list.component.scss"]
 })
 export class MergeObjectListComponent implements OnInit {
-  list$: Observable<MergeModel[]>;
+  list$: Observable<MergeObject[]>;
   busy$: Observable<boolean>;
 
-  updateMergeModel: MergeModel = new MergeModel();
-  createMergeModel: MergeModel = new MergeModel();
+  updateMergeObject: MergeObject = new MergeObject();
+  createMergeObject: MergeObject = new MergeObject();
 
   modalRef: BsModalRef;
   types: any;
@@ -39,46 +39,54 @@ export class MergeObjectListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(fromModelActions.modelApiBusyAction({ payload: true }));
-    this.store.dispatch(fromModelActions.loadModelsAction());
-    this.list$ = this.store.select(state => state.modelState.list);
-    this.busy$ = this.store.select(state => state.modelState.busy);
+    this.store.dispatch(
+      fromActions.mergeObjectApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(fromActions.loadMergeObjectsAction());
+    this.list$ = this.store.select(state => state.mergeObjectState.list);
+    this.busy$ = this.store.select(state => state.mergeObjectState.busy);
   }
 
-  onSelectItem(item: MergeModel) {
-    this.store.dispatch(fromModelActions.setModelAction({ payload: item }));
+  onSelectItem(item: MergeObject) {
+    this.store.dispatch(fromActions.setMergeObjectAction({ payload: item }));
     this.router.navigate(["/merge-object-edit"]);
   }
 
   onCreate() {
     this.alertService.success("Creating New Model");
-    this.store.dispatch(fromModelActions.modelApiBusyAction({ payload: true }));
     this.store.dispatch(
-      fromModelActions.createModelAction({
-        payload: this.createMergeModel
+      fromActions.mergeObjectApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.createMergeObjectAction({
+        payload: this.createMergeObject
       })
     );
-    this.createMergeModel = new MergeModel();
+    this.createMergeObject = new MergeObject();
     this.modalRef.hide();
   }
 
-  openModal(template: TemplateRef<any>, mergeModel: MergeModel) {
-    this.updateMergeModel = mergeModel;
+  openModal(template: TemplateRef<any>, mergeObject: MergeObject) {
+    this.updateMergeObject = mergeObject;
     this.modalRef = this.modalService.show(template);
   }
 
   onUpdate() {
     this.alertService.warning("Updating Merge Field");
-    this.store.dispatch(fromModelActions.modelApiBusyAction({ payload: true }));
     this.store.dispatch(
-      fromModelActions.updateModelAction({ payload: this.updateMergeModel })
+      fromActions.mergeObjectApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(
+      fromActions.updateMergeObjectAction({ payload: this.updateMergeObject })
     );
     this.modalRef.hide();
   }
 
-  onDelete(m: MergeModel) {
+  onDelete(m: MergeObject) {
     this.alertService.danger("Deleting Merge Field");
-    this.store.dispatch(fromModelActions.modelApiBusyAction({ payload: true }));
-    this.store.dispatch(fromModelActions.deleteModelAction({ payload: m }));
+    this.store.dispatch(
+      fromActions.mergeObjectApiBusyAction({ payload: true })
+    );
+    this.store.dispatch(fromActions.deleteMergeObjectAction({ payload: m }));
   }
 }
