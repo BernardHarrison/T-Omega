@@ -8,8 +8,9 @@ import { MergeObjectEditComponent } from "./merge-object-edit/merge-object-edit.
 
 import { MergeObjectDummyComponent } from "./components/merge-object-dummy/merge-object-dummy.component";
 import { MergeFieldDummyComponent } from "./components/merge-field-dummy/merge-field-dummy-component";
-import { MergeObjectItemComponent } from './merge-object-item/merge-object-item.component';
-import { MergeFieldItemComponent } from './merge-field-item/merge-field-item.component';
+import { MergeObjectItemComponent } from "./merge-object-item/merge-object-item.component";
+import { MergeFieldItemComponent } from "./merge-field-item/merge-field-item.component";
+import { BsDropdownModule } from "ngx-bootstrap";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,11 @@ import { MergeFieldItemComponent } from './merge-field-item/merge-field-item.com
     MergeObjectItemComponent,
     MergeFieldItemComponent
   ],
-  imports: [CommonModule, FormsModule, MergeObjectRoutingModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    MergeObjectRoutingModule,
+    BsDropdownModule.forRoot()
+  ]
 })
 export class MergeObjectModule {}

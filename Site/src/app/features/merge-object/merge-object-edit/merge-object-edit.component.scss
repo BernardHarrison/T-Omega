@@ -1,22 +1,27 @@
-.merge-fields {
-  max-height: 400px;
-  overflow-x: hidden;
-}
-.mergefield-container .mergfield {
-  height: 30px;
-  padding-top: 4px;
-}
-.mergefield-container div .mergfield-button {
-  height: 30px;
-  width: 30px;
-  padding-top: 3px;
-  padding-left: 7px;
-  margin-left: 2px;
-}
-.model-filler {
-  font-size: 24px;
-  padding-left: 30px;
-}
-.mergeFieldItem {
-  cursor: pointer;
+// .merge-fields {
+//   max-height: 400px;
+//   overflow-x: hidden;
+// }
+// .mergefield-container .mergfield {
+//   height: 30px;
+//   padding-top: 4px;
+// }
+// .mergefield-container div .mergfield-button {
+//   height: 30px;
+//   width: 30px;
+//   padding-top: 3px;
+//   padding-left: 7px;
+//   margin-left: 2px;
+// }
+// .model-filler {
+//   font-size: 24px;
+//   padding-left: 30px;
+// }
+// .mergeFieldItem {
+//   cursor: pointer;
+// }
+
+.toolbar-container button {
+  padding: 3px 6px;
+  font-size: 10px;
 }
