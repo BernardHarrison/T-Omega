@@ -1,8 +1,8 @@
-import { Injectable, Inject, Type } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import * as fromActions from "./merge-object.actions";
-import { mergeMap, catchError, tap, map } from "rxjs/operators";
+import { mergeMap, catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { IMergeObjectApi, MERGE_OBJECT_STORE_API } from ".";
 

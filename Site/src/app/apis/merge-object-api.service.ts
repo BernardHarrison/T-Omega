@@ -125,16 +125,9 @@ export class MergeObjectApiService implements IMergeObjectApi {
   removeObject(mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     let item = items.find(x => x.id == mergeObject.id);
-    let rootId = this.root(item).id;
+    let root = this.root(item);
     this.purge(item, items);
     this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(
-      this.root({
-        id: rootId,
-        fieldName: null,
-        fields: null,
-        objects: null
-      })
-    );
+    return of(this.root(root));
   }
 }
