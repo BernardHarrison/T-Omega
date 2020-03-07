@@ -9,11 +9,8 @@ import { AlertService } from "ngx-alerts";
 
 import * as fromActions from "src/app/stores/merge-object-store/merge-object.actions";
 import {
-  MergeObject,
-  MergeObjectAppState
+  MergeObject
 } from "src/app/stores/merge-object-store";
-import * as fromModelActions from "src/app/stores/model-store/model.actions";
-import { MergeModel } from "src/app/stores/model-store";
 import { AppState } from "src/app/app.state";
 
 @Component({
@@ -36,12 +33,9 @@ export class MergeObjectListComponent implements OnInit {
     private modalService: BsModalService,
     private alertService: AlertService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.store.dispatch(
-      fromActions.mergeObjectApiBusyAction({ payload: true })
-    );
     this.store.dispatch(fromActions.loadMergeObjectsAction());
     this.list$ = this.store.select(state => state.mergeObjectState.list);
     this.busy$ = this.store.select(state => state.mergeObjectState.busy);
@@ -54,9 +48,6 @@ export class MergeObjectListComponent implements OnInit {
 
   onCreate() {
     this.alertService.success("Creating New Model");
-    this.store.dispatch(
-      fromActions.mergeObjectApiBusyAction({ payload: true })
-    );
     this.store.dispatch(
       fromActions.createMergeObjectAction({
         payload: this.createMergeObject
@@ -74,9 +65,6 @@ export class MergeObjectListComponent implements OnInit {
   onUpdate() {
     this.alertService.warning("Updating Merge Field");
     this.store.dispatch(
-      fromActions.mergeObjectApiBusyAction({ payload: true })
-    );
-    this.store.dispatch(
       fromActions.updateMergeObjectAction({ payload: this.updateMergeObject })
     );
     this.modalRef.hide();
@@ -84,9 +72,6 @@ export class MergeObjectListComponent implements OnInit {
 
   onDelete(m: MergeObject) {
     this.alertService.danger("Deleting Merge Field");
-    this.store.dispatch(
-      fromActions.mergeObjectApiBusyAction({ payload: true })
-    );
     this.store.dispatch(fromActions.deleteMergeObjectAction({ payload: m }));
   }
 }
