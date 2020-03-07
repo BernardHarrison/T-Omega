@@ -11,6 +11,7 @@ import {
 } from "src/app/stores/merge-object-store/merge-object.actions";
 import { take } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { AlertService } from "ngx-alerts";
 
 const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
@@ -22,7 +23,8 @@ const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 export class MergeObjectItemComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class MergeObjectItemComponent implements OnInit {
   }
 
   addMergeField(field: MergeField) {
+    this.alertService.warning("Adding Merge Field");
     this.store.dispatch(
       addMergeToFieldsAction({
         field,
@@ -64,6 +67,7 @@ export class MergeObjectItemComponent implements OnInit {
   }
 
   removeMergeField(field: MergeField) {
+    this.alertService.danger("Removing Merge Field");
     this.store.dispatch(
       removeMergeFromFieldsAction({
         field,
@@ -73,6 +77,7 @@ export class MergeObjectItemComponent implements OnInit {
   }
 
   addMergeObject() {
+    this.alertService.info("Adding Merge Object");
     this.store.dispatch(
       addObjectToObjectsAction({
         fieldName: this.newObjectFieldName,
@@ -84,6 +89,7 @@ export class MergeObjectItemComponent implements OnInit {
   }
 
   removeMergeObject() {
+    this.alertService.danger("Removing Object");
     this.store.dispatch(removeMergeObjectAction({ payload: this.mergeObject }));
   }
 
