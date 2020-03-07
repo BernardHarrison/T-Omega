@@ -1,3 +1,6 @@
-<p>
-	{{field.name}} : {{field.type}} <button (click)="remove()">x</button>
-</p>
+<div class="merge-container">
+	{{field.name}} : {{field.type}} <button type="button"
+			class="btn btn-danger delete-merge-field"
+			title="Remove Merge Field"
+			(click)="remove()"><i class="fas fa-trash-alt"></i></button>
+</div>

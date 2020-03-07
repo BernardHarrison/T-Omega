@@ -1,19 +1,4 @@
-<div class="text-info">{{ mergeObject.fieldName + ": {" }}
-	<!-- <input placeholder="New Object Property Name"
-		   [(ngModel)]="newObjectFieldName" />
-	<button *ngIf="newObjectFieldName"
-			(click)="addMergeObject()">add</button>
-	<select (change)="addMergeField(selectedField)"
-			*ngIf="availableMergeFields && availableMergeFields.length"
-			[(ngModel)]="selectedField">
-		<option [ngValue]="defaultPlaceholder">--Add Merge Field--</option>
-		<option [ngValue]="mergeField"
-				*ngFor="let mergeField of availableMergeFields">{{ mergeField.name }}</option>
-	</select>
-	<button class="btn btn-danger"
-			(click)="removeMergeObject()"><i class="fas fa-trash-alt"></i></button> -->
-
-
+<div class="text-info  mt-2">{{ mergeObject.fieldName + ": {" }}
 	<div class="btn-toolbar toolbar-container"
 		role="toolbar"
 		aria-label="Toolbar with button groups">
@@ -44,7 +29,6 @@
 				title="Remove Object"
 				(click)="removeMergeObject()"><i class="fas fa-trash-alt"></i></button>
 		</div>
-
 
 	</div>
 	<div class="field-list">
