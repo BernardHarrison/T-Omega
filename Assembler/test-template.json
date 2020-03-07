@@ -13,8 +13,18 @@
         ]
     },
     "section": [],
-    "test": {
+    "testGroup": {
         "op": "or",
-        "predicates": []
+        "tests": [],
+        "groups": []
+    },
+    "test": {
+        "subject": "$.firstName",
+        "op": "$.string.startsWith",
+        "val": "Some Value"
+    },
+    "condition": {
+        "id": 1,
+        "testGroup": {}
     }
 }

@@ -1,0 +1,63 @@
+<table class="table">
+	<thead>
+		<th>
+			<h4 class="text-info">{{ mergeObject.fieldName + ": {" }}</h4>
+		</th>
+		<th colspan="2">
+			<div class="btn-toolbar toolbar-container"
+				role="toolbar"
+				aria-label="Toolbar with button groups">
+				<div class="btn-group mr-2"
+					dropdown
+					role="group"
+					aria-label="First group">
+					<button type="button"
+						class="btn btn-info"
+						title="Create Merge Object"
+						(click)="openModal(createTemplate)"><i class="far fa-plus-square"></i></button>
+					<button type="button"
+						*ngIf="availableMergeFields && availableMergeFields.length"
+						dropdownToggle
+						class="btn btn-warning"> <i class="fas fa-plus"></i> Add Merge Field</button>
+					<ul id="dropdown-basic"
+						*dropdownMenu
+						class="dropdown-menu"
+						role="menu"
+						aria-labelledby="button-basic">
+						<li role="menuitem"
+							*ngFor="let mergeField of availableMergeFields"
+							(click)="addMergeField(mergeField)">{{mergeField.name}}</li>
+					</ul>
+
+					<button type="button"
+						class="btn btn-danger"
+						title="Remove Object"
+						(click)="removeMergeObject()"><i class="fas fa-trash-alt"></i></button>
+				</div>
+			</div>
+		</th>
+	</thead>
+	<tbody>
+		<tr *ngFor="let field of mergeObject.fields">
+			<td>&nbsp;</td>
+			<td>
+				{{field.name}}: {{field.type}}
+			</td>
+			<td>
+				<button class="btn btn-small"
+					(click)="removeMergeField(field)">X</button>
+			</td>
+		</tr>
+		<tr *ngFor="let mergeItem of mergeObject.objects">
+			<td>&nbsp;</td>
+			<td colspan="2">
+				<app-merge-object-item [mergeObject]="mergeItem"></app-merge-object-item>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h4 class="text-info">{{ "}" }}</h4>
+			</td>
+		</tr>
+	</tbody>
+</table>
