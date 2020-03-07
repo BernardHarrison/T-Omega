@@ -13,6 +13,7 @@ export enum MergeObjectTypes {
   CREATE = "[Merge Object] Create Merge Object",
   UPDATE = "[Merge Object] Update Merge Object",
   DELETE = "[Merge Object] Delete Merge Objects",
+  REMOVE_MERGE_OBJECT = "[Merge Object] Remove Merge Object from Collection",
 
   ADD_OBJECT_TO_OBJECTS = "[Merge Object] Add Merge Object To Objects",
 
@@ -64,7 +65,7 @@ export const deleteMergeObjectAction = createAction(
 );
 
 export const removeMergeObjectAction = createAction(
-  MergeObjectTypes.DELETE,
+  MergeObjectTypes.REMOVE_MERGE_OBJECT,
   props<{ payload: MergeObject }>()
 );
 

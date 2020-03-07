@@ -24,7 +24,7 @@ export class MergeObjectApiService implements IMergeObjectApi {
       id: Math.floor(Math.random() * 1000000),
       fields: [],
       objects: []
-    }
+    };
   }
 
   private populateChildren(item: MergeObject, items: MergeObject[]) {
@@ -49,7 +49,6 @@ export class MergeObjectApiService implements IMergeObjectApi {
     });
     mergeObjects.splice(mergeObjects.indexOf(mergeObject));
   }
-
 
   get(): Observable<MergeObject[]> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
@@ -83,7 +82,10 @@ export class MergeObjectApiService implements IMergeObjectApi {
     return this.get();
   }
 
-  addField(field: MergeField, mergeObject: MergeObject): Observable<MergeObject> {
+  addField(
+    field: MergeField,
+    mergeObject: MergeObject
+  ): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     let item = items.find(x => x.id == mergeObject.id);
     item.fields.push(field);
@@ -91,18 +93,28 @@ export class MergeObjectApiService implements IMergeObjectApi {
     return of(this.root(item));
   }
 
-  addObject(fieldName: string, mergeObject: MergeObject): Observable<MergeObject> {
+  addObject(
+    fieldName: string,
+    mergeObject: MergeObject
+  ): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     let item = items.find(x => x.id == mergeObject.id);
-    let newObj = this.createNew({ fieldName, id: null, fields: null, objects: null });
+    let newObj = this.createNew({
+      fieldName,
+      id: null,
+      fields: null,
+      objects: null
+    });
     newObj[PARENT_ID] = item.id;
     items.push(newObj);
     this.storage.set(MERGE_OBJECT_KEY, items);
     return of(this.root(item));
-
   }
 
-  removeField(field: MergeField, mergeObject: MergeObject): Observable<MergeObject> {
+  removeField(
+    field: MergeField,
+    mergeObject: MergeObject
+  ): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
     let item = items.find(x => x.id == mergeObject.id);
     item.fields = item.fields.filter(x => x.id != field.id);
@@ -112,13 +124,17 @@ export class MergeObjectApiService implements IMergeObjectApi {
 
   removeObject(mergeObject: MergeObject): Observable<MergeObject> {
     let items = <MergeObject[]>this.storage.get(MERGE_OBJECT_KEY);
-    //let item = items.find(x => x.id == mergeObject.id);
-    console.log(mergeObject);
-    console.log(items);
-    //console.log(item)
-    // let rootId = this.root(item).id
-    // this.purge(item, items);
-    // this.storage.set(MERGE_OBJECT_KEY, items);
-    return of(this.root(mergeObject));
+    let item = items.find(x => x.id == mergeObject.id);
+    let rootId = this.root(item).id;
+    this.purge(item, items);
+    this.storage.set(MERGE_OBJECT_KEY, items);
+    return of(
+      this.root({
+        id: rootId,
+        fieldName: null,
+        fields: null,
+        objects: null
+      })
+    );
   }
 }
