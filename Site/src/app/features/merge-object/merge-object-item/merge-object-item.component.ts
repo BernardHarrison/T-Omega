@@ -17,7 +17,7 @@ const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
 @Component({
   selector: "app-merge-object-item",
-  templateUrl: "./merge-object-item.component.html",
+  templateUrl: "./merge-object-table.component.html",
   styleUrls: ["./merge-object-item.component.scss"]
 })
 export class MergeObjectItemComponent implements OnInit {
@@ -25,7 +25,7 @@ export class MergeObjectItemComponent implements OnInit {
     private store: Store<AppState>,
     private modalService: BsModalService,
     private alertService: AlertService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.store
@@ -51,8 +51,8 @@ export class MergeObjectItemComponent implements OnInit {
     //TODO: Remove this Array check. Let it fail.
     return this.mergeObject.fields instanceof Array
       ? this.mergeFields.filter(x =>
-        this.mergeObject.fields.find(y => y.id == x.id) ? false : true
-      )
+          this.mergeObject.fields.find(y => y.id == x.id) ? false : true
+        )
       : [];
   }
 

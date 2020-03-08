@@ -28,6 +28,7 @@ import { MergeObjectStoreModule } from "./stores/merge-object-store/merge-object
 import { ModelApiService } from "./apis/model-api.service";
 import { MODEL_STORE_API } from "./stores/model-store";
 import { ModelStoreModule } from "./stores/model-store/model-store.module";
+import { ModelManagerModule } from "./features/model-manager/model-manager.module";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ModelStoreModule } from "./stores/model-store/model-store.module";
     ModelStoreModule,
     MergeObjectStoreModule,
     MergeObjectModule,
+    ModelManagerModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),

@@ -15,6 +15,10 @@
               <ul id="dropdown-basic"
                   *dropdownMenu
                   class="dropdown-menu dropdown-menu-right">
+                     <li role="menuitem"><a class="dropdown-item"
+                               [routerLink]="['model-manager']"
+                               routerLinkActive="router-link-active"><i class="fas fa-sitemap"></i> Model Builder</a>
+                     </li>
 
                      <li role="menuitem"><a class="dropdown-item"
                                [routerLink]="['merge-fields']"

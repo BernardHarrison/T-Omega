@@ -1,0 +1,61 @@
+<div class="row model-builder-header">
+    <div class="col-sm-6 mt-4">
+        <h3><i class="fas fa-sitemap"></i> Model Manager</h3>
+    </div>
+    <div class="mt-4 col-sm-3"
+         dropdown>
+        <button class="btn btn-warning"
+                dropdownToggle
+                title="Switch to another model"><i class="fas fa-exchange-alt"></i> Select different Model</button>
+        <ul id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu"
+            role="menu"
+            aria-labelledby="button-basic">
+            <li role="menuitem"
+                class="text-center dropdown-model-item"
+                *ngFor="let item of list$ | async"
+                (click)="selectModel(item)">{{item.fieldName}}</li>
+        </ul>
+    </div>
+
+    <div class="text-right mt-4 col-sm-3">
+        <button class="btn btn-success"
+                (click)="openModal(createTemplate)"
+                title="Create New Model"><i class="fas fa-plus"></i> Create New Model</button>
+    </div>
+
+</div>
+
+<ng-template #createTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Create Model Object</h4>
+        <button type="button"
+                class="close pull-right"
+                aria-label="Close"
+                (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fCreate="ngForm"
+              (ngSubmit)="onCreate()"
+              novalidate>
+            <div class="form-group">
+                <label for="createName">Model Object Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="createName"
+                       [(ngModel)]="createMergeObject.fieldName"
+                       name="name"
+                       required
+                       #name="ngModel"
+                       placeholder="Container Name">
+            </div>
+
+            <button class="btn btn-success"
+                    [disabled]="fCreate.invalid">Create</button>
+
+        </form>
+    </div>
+</ng-template>
