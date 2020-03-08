@@ -20,7 +20,7 @@
             <li role="menuitem"
                 class="text-center dropdown-model-item"
                 *ngFor="let item of list$ | async"
-                (click)="selectModel(item)">{{item.fieldName}}</li>
+                (click)="onSelectModel(item)">{{item.fieldName}}</li>
         </ul>
     </div>
 
@@ -30,6 +30,17 @@
                 title="Create New Model"><i class="fas fa-plus"></i> Create New Model</button>
     </div>
 
+</div>
+<div class="row text-center bg-secondary mt-2 text-dark"
+     *ngIf="!currentModel">
+    <div class="empty-model col-12 pt-4 pb-4">
+        <p class="mt-4 mb-4">Create New Model Field</p>
+        <div class="empty-model-icon mt-4 mb-4">
+            <a (click)="openModal(createTemplate)">
+                <i class="fas fa-code"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <ng-template #createTemplate>

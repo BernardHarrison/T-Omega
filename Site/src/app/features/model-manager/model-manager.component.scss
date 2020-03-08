@@ -31,3 +31,11 @@
 .dropdown-model-item {
   cursor: pointer;
 }
+.empty-model {
+  font-size: 30px;
+}
+.empty-model-icon a:hover {
+  color: #fff;
+  cursor: pointer;
+  display: block;
+}

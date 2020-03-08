@@ -47,5 +47,7 @@ export class ModelManagerComponent implements OnInit {
 
   deleteObject() {}
 
-  selectModel(mergeObject: MergeObject) {}
+  onSelectModel(mergeObject: MergeObject) {
+    this.currentModel = mergeObject;
+  }
 }
