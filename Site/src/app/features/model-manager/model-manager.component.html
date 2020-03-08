@@ -42,6 +42,14 @@
         </div>
     </div>
 </div>
+<div class="row text-center bg-secondary mt-2 text-dark"
+     *ngIf="currentModel">
+    <div class="text-right col-sm-12">
+        <button class="btn btn-danger"
+                (click)="onDelete()"
+                title="Delete Model Permanently "><i class="fas fa-dumpster"></i> Delete Model Permanently</button>
+    </div>
+</div>
 
 <ng-template #createTemplate>
     <div class="modal-header">

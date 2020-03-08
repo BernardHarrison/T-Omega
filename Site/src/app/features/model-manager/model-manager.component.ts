@@ -45,7 +45,15 @@ export class ModelManagerComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  deleteObject() {}
+  onDelete() {
+    this.alertService.danger("Deleting Model");
+    this.store.dispatch(
+      fromMergeObjectActions.deleteMergeObjectAction({
+        payload: this.currentModel
+      })
+    );
+    this.currentModel = null;
+  }
 
   onSelectModel(mergeObject: MergeObject) {
     this.currentModel = mergeObject;
