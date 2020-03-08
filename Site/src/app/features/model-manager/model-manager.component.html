@@ -1,6 +1,11 @@
 <div class="row model-builder-header">
-    <div class="col-sm-6 mt-4">
+    <div class="col-sm-6 mt-4"
+         *ngIf="!currentModel">
         <h3><i class="fas fa-sitemap"></i> Model Manager</h3>
+    </div>
+    <div class="col-sm-6 mt-4"
+         *ngIf="currentModel">
+        <h3><i class="far fa-file-code"></i> {{currentModel.fieldName}}</h3>
     </div>
     <div class="mt-4 col-sm-3"
          dropdown>

@@ -15,7 +15,8 @@ import { Observable } from "rxjs";
 export class ModelManagerComponent implements OnInit {
   list$: Observable<MergeObject[]>;
   modalRef: BsModalRef;
-  createMergeObject: MergeObject;
+  createMergeObject: MergeObject = new MergeObject();
+  currentModel: MergeObject;
 
   constructor(
     private store: Store<AppState>,
@@ -39,6 +40,7 @@ export class ModelManagerComponent implements OnInit {
         payload: this.createMergeObject
       })
     );
+    this.currentModel = this.createMergeObject;
     this.createMergeObject = new MergeObject();
     this.modalRef.hide();
   }
