@@ -1,0 +1,76 @@
+<div class="text-info  mt-2">{{ mergeObject.fieldName + ": {" }}
+	<div class="btn-toolbar toolbar-container"
+		role="toolbar"
+		aria-label="Toolbar with button groups">
+		<div class="btn-group mr-2"
+			dropdown
+			role="group"
+			aria-label="First group">
+			<button type="button"
+				class="btn btn-info"
+				title="Create Merge Object"
+				(click)="openModal(createTemplate)"><i class="far fa-plus-square"></i></button>
+			<button type="button"
+				*ngIf="availableMergeFields && availableMergeFields.length"
+				dropdownToggle
+				class="btn btn-warning"> <i class="fas fa-plus"></i> Add Merge Field</button>
+			<ul id="dropdown-basic"
+				*dropdownMenu
+				class="dropdown-menu"
+				role="menu"
+				aria-labelledby="button-basic">
+				<li role="menuitem"
+					*ngFor="let mergeField of availableMergeFields"
+					(click)="addMergeField(mergeField)">{{mergeField.name}}</li>
+			</ul>
+
+			<button type="button"
+				class="btn btn-danger"
+				title="Remove Object"
+				(click)="removeMergeObject()"><i class="fas fa-trash-alt"></i></button>
+		</div>
+
+	</div>
+	<div class="field-list">
+		<app-merge-field-item *ngFor="let field of mergeObject.fields"
+			[field]="field"
+			(removeRequest)="removeMergeField($event)"></app-merge-field-item>
+		<app-merge-object-item *ngFor="let mergeItem of mergeObject.objects"
+			[mergeObject]="mergeItem"></app-merge-object-item>
+	</div>
+	<p class="text-info">{{ "}" }}</p>
+
+	<ng-template #createTemplate>
+		<div class="modal-header">
+			<h4 class="modal-title pull-left">Create New Object</h4>
+			<button type="button"
+				class="close pull-right"
+				aria-label="Close"
+				(click)="modalRef.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form #fCreate="ngForm"
+				(ngSubmit)="addMergeObject(fCreate)"
+				novalidate>
+				<div class="form-group">
+					<label for="createName">Create New Object</label>
+					<input type="text"
+						class="form-control"
+						id="createName"
+						[(ngModel)]="newObjectFieldName"
+						name="name"
+						required
+						#name="ngModel"
+						placeholder="Enter Object Name">
+				</div>
+				<button class="btn btn-success"
+					[disabled]="fCreate.invalid">Add</button>
+
+
+			</form>
+		</div>
+	</ng-template>
+
+</div>

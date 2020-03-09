@@ -29,7 +29,7 @@ export class ModelManagerComponent implements OnInit {
     this.list$ = this.store.select(state => state.mergeObjectState.list);
   }
 
-  openModal(template: TemplateRef<any>, mergeObject: MergeObject) {
+  openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
@@ -57,5 +57,25 @@ export class ModelManagerComponent implements OnInit {
 
   onSelectModel(mergeObject: MergeObject) {
     this.currentModel = mergeObject;
+  }
+
+  updateSelectedItem() {
+    this.store
+      .select(state => state.mergeObjectState.item)
+      .subscribe(x => (this.currentModel = x));
+  }
+
+  onCreateMergeObject() {
+    this.alertService.info("Adding Merge Object");
+    this.store.dispatch(
+      fromMergeObjectActions.addObjectToObjectsAction({
+        fieldName: this.createMergeObject.fieldName,
+        model: this.currentModel
+      })
+    );
+
+    this.updateSelectedItem();
+
+    this.modalRef.hide();
   }
 }

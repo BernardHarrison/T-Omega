@@ -42,13 +42,30 @@
         </div>
     </div>
 </div>
-<div class="row text-center bg-secondary mt-2 text-dark"
+
+<div class="row text-center bg-secondary mt-2 pt-2 text-dark"
      *ngIf="currentModel">
-    <div class="text-right col-sm-12">
+    <div class="text-warning col-sm-1 bracket">{{"{" }}</div>
+    <div class="text-right col-sm-11">
+        <button class="btn btn-info mr-1"
+                (click)="openModal(createObject)"
+                title="Add Merge Object"><i class="fas fa-plus-square"></i> Add Merge Object</button>
+        <button class="btn btn-warning mr-1"
+                (click)="onDelete()"
+                title="Add Merge Item"><i class="fas fa-plus"></i> Add Merge Item</button>
+
         <button class="btn btn-danger"
                 (click)="onDelete()"
                 title="Delete Model Permanently "><i class="fas fa-dumpster"></i> Delete Model Permanently</button>
     </div>
+    <div class="field-list ml-5">
+        <!-- <app-merge-field-item *ngFor="let field of mergeObject.fields"
+                              [field]="field"
+                              (removeRequest)="removeMergeField($event)"></app-merge-field-item> -->
+        <app-merge-object-item *ngFor="let mergeItem of currentModel.objects"
+                               [mergeObject]="mergeItem"></app-merge-object-item>
+    </div>
+    <div class="text-left text-warning bracket col-sm-12">{{ "}" }}</div>
 </div>
 
 <ng-template #createTemplate>
@@ -67,6 +84,39 @@
               novalidate>
             <div class="form-group">
                 <label for="createName">Model Object Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="createName"
+                       [(ngModel)]="createMergeObject.fieldName"
+                       name="name"
+                       required
+                       #name="ngModel"
+                       placeholder="Container Name">
+            </div>
+
+            <button class="btn btn-success"
+                    [disabled]="fCreate.invalid">Create</button>
+
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #createObject>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Create Merge Object</h4>
+        <button type="button"
+                class="close pull-right"
+                aria-label="Close"
+                (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #fCreate="ngForm"
+              (ngSubmit)="onCreateMergeObject()"
+              novalidate>
+            <div class="form-group">
+                <label for="createName">Object Name</label>
                 <input type="text"
                        class="form-control"
                        id="createName"
