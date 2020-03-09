@@ -46,22 +46,37 @@
 <div class="row text-center bg-secondary mt-2 pt-2 text-dark"
      *ngIf="currentModel">
     <div class="text-warning col-sm-1 bracket">{{"{" }}</div>
-    <div class="text-right col-sm-11">
+    <div class="text-right col-sm-11"
+         dropdown>
         <button class="btn btn-info mr-1"
                 (click)="openModal(createObject)"
                 title="Add Merge Object"><i class="fas fa-plus-square"></i> Add Merge Object</button>
-        <button class="btn btn-warning mr-1"
-                (click)="onDelete()"
-                title="Add Merge Item"><i class="fas fa-plus"></i> Add Merge Item</button>
+
+        <div class="btn-group"
+             dropdown>
+            <button type="button"
+                    dropdownToggle
+                    class="btn btn-warning mr-1"> <i class="fas fa-plus"></i> Add Merge Field</button>
+            <ul id="dropdown-basic"
+                *dropdownMenu
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="button-basic">
+                <li role="menuitem"
+                    class="text-center select-merge-field"
+                    *ngFor="let mergeField of availableMergeFields"
+                    (click)="addMergeField(mergeField)">{{mergeField.name}}</li>
+            </ul>
+        </div>
 
         <button class="btn btn-danger"
                 (click)="onDelete()"
                 title="Delete Model Permanently "><i class="fas fa-dumpster"></i> Delete Model Permanently</button>
     </div>
     <div class="field-list ml-5">
-        <!-- <app-merge-field-item *ngFor="let field of mergeObject.fields"
+        <app-merge-field-item *ngFor="let field of currentModel.fields"
                               [field]="field"
-                              (removeRequest)="removeMergeField($event)"></app-merge-field-item> -->
+                              (removeRequest)="removeMergeField($event)"></app-merge-field-item>
         <app-merge-object-item *ngFor="let mergeItem of currentModel.objects"
                                [mergeObject]="mergeItem"></app-merge-object-item>
     </div>

@@ -6,9 +6,14 @@ import { ModelManagerComponent } from "./model-manager.component";
 import { FormsModule } from "@angular/forms";
 import { BsDropdownModule } from "ngx-bootstrap";
 import { MergeObjectItemComponent } from "./merge-object-item/merge-object-item.component";
+import { MergeFieldItemComponent } from "./merge-field-item/merge-field-item.component";
 
 @NgModule({
-  declarations: [ModelManagerComponent, MergeObjectItemComponent],
+  declarations: [
+    ModelManagerComponent,
+    MergeObjectItemComponent,
+    MergeFieldItemComponent
+  ],
   imports: [
     CommonModule,
     ModelManagerRoutingModule,

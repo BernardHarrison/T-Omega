@@ -6,6 +6,10 @@ import { AppState } from "src/app/app.state";
 import { Store } from "@ngrx/store";
 import * as fromMergeObjectActions from "src/app/stores/merge-object-store/merge-object.actions";
 import { Observable } from "rxjs";
+import { MergeField } from "src/app/stores/merge-field-store";
+import { take } from "rxjs/operators";
+
+const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 
 @Component({
   selector: "app-model-manager",
@@ -17,6 +21,8 @@ export class ModelManagerComponent implements OnInit {
   modalRef: BsModalRef;
   createMergeObject: MergeObject = new MergeObject();
   currentModel: MergeObject;
+  selectedField: any = DEFAULT_PLACEHOLDER; //Needed to capture the users selcted mergeField
+  mergeFields: MergeField[];
 
   constructor(
     private store: Store<AppState>,
@@ -27,6 +33,10 @@ export class ModelManagerComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(fromMergeObjectActions.loadMergeObjectsAction());
     this.list$ = this.store.select(state => state.mergeObjectState.list);
+
+    this.store
+      .select(state => state.mergeField.list)
+      .subscribe(x => (this.mergeFields = x));
   }
 
   openModal(template: TemplateRef<any>) {
@@ -73,9 +83,39 @@ export class ModelManagerComponent implements OnInit {
         model: this.currentModel
       })
     );
-
     this.updateSelectedItem();
-
     this.modalRef.hide();
+  }
+
+  get availableMergeFields(): MergeField[] {
+    this.selectedField = DEFAULT_PLACEHOLDER;
+    //TODO: Remove this Array check. Let it fail.
+    return this.currentModel.fields instanceof Array
+      ? this.mergeFields.filter(x =>
+          this.currentModel.fields.find(y => y.id == x.id) ? false : true
+        )
+      : [];
+  }
+
+  addMergeField(field: MergeField) {
+    this.alertService.warning("Adding Merge Field");
+    this.store.dispatch(
+      fromMergeObjectActions.addMergeToFieldsAction({
+        field,
+        model: this.currentModel
+      })
+    );
+    this.updateSelectedItem();
+  }
+
+  removeMergeField(field: MergeField) {
+    this.alertService.danger("Removing Merge Field");
+    this.store.dispatch(
+      fromMergeObjectActions.removeMergeFromFieldsAction({
+        field,
+        model: this.currentModel
+      })
+    );
+    this.updateSelectedItem();
   }
 }
