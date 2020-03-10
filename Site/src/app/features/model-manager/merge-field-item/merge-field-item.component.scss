@@ -5,4 +5,13 @@
 .delete-merge-field {
   padding: 3px 6px;
   font-size: 10px;
+  margin-left: 20px;
+}
+
+.hidden-action {
+  visibility: hidden;
+}
+
+.hover-hidden-action:hover .hidden-action {
+  visibility: visible;
 }
