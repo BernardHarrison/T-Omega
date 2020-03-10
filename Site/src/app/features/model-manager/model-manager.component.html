@@ -148,3 +148,11 @@
         </form>
     </div>
 </ng-template>
+
+<div class="spinner-custom-container"
+     *ngIf="busy$ | async ">
+    <div class="spinner-border text-danger"
+         role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>

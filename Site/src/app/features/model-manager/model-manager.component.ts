@@ -18,6 +18,7 @@ const DEFAULT_PLACEHOLDER = "DEFAULT_PLACEHOLDER";
 })
 export class ModelManagerComponent implements OnInit {
   list$: Observable<MergeObject[]>;
+  busy$: Observable<boolean>;
   modalRef: BsModalRef;
   createMergeObject: MergeObject = new MergeObject();
   currentModel: MergeObject;
@@ -33,6 +34,7 @@ export class ModelManagerComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(fromMergeObjectActions.loadMergeObjectsAction());
     this.list$ = this.store.select(state => state.mergeObjectState.list);
+    this.busy$ = this.store.select(state => state.mergeObjectState.busy);
 
     this.store
       .select(state => state.mergeField.list)
